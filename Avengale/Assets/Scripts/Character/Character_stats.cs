@@ -13,8 +13,8 @@ public class Character_stats : MonoBehaviour
     public int Local_health = 0;
     public int Local_max_resource = 0;
     public int Local_resource = 0;
-    public int Local_ranged_damage = 0;
-    public int Local_physical_damage = 0;
+    public int Local_damage = 0;
+
 
     [Header("Completed things")]
 
@@ -93,8 +93,7 @@ public class Character_stats : MonoBehaviour
         var _statistics = Statistics.GetComponent<TextMeshProUGUI>();
         Statistics.GetComponent<Text_animation>().startAnim("Health: " + Local_max_health + "\n" +
             "Resource: " + Local_max_resource + "\n" +
-            "Ranged: " + Local_ranged_damage + "\n" +
-            "Physical: " + Local_physical_damage, 5f);
+            "Damage: " + Local_damage, 5f);
 
         updateMoneyStat();
     }
@@ -122,8 +121,7 @@ public class Character_stats : MonoBehaviour
     {
         Local_max_health -= _itemScript.items[Equipments[slot_id]].attributes[0];
         Local_max_resource -= _itemScript.items[Equipments[slot_id]].attributes[1];
-        Local_ranged_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
-        Local_physical_damage -= _itemScript.items[Equipments[slot_id]].attributes[3];
+        Local_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
 
         itemPickup(Equipments[slot_id], false);
         _itemScript.GetComponent<Character_stats>().Equipments[slot_id] = 0;
@@ -136,15 +134,14 @@ public class Character_stats : MonoBehaviour
 
         Local_max_health -= _itemScript.items[Equipments[equipment_slot_id]].attributes[0];
         Local_max_resource -= _itemScript.items[Equipments[equipment_slot_id]].attributes[1];
-        Local_ranged_damage -= _itemScript.items[Equipments[equipment_slot_id]].attributes[2];
-        Local_physical_damage -= _itemScript.items[Equipments[equipment_slot_id]].attributes[3];
+        Local_damage -= _itemScript.items[Equipments[equipment_slot_id]].attributes[2];
+
 
         Equipments[equipment_slot_id] = item_id;
 
         Local_max_health += _itemScript.items[item_id].attributes[0];
         Local_max_resource += _itemScript.items[item_id].attributes[1];
-        Local_ranged_damage += _itemScript.items[item_id].attributes[2];
-        Local_physical_damage += _itemScript.items[item_id].attributes[3];
+        Local_damage += _itemScript.items[item_id].attributes[2];
 
         Inventory[sender_slot_id] = tmp;
 
@@ -165,8 +162,7 @@ public class Character_stats : MonoBehaviour
                 Equipments[slot_id] = item_id;
                 Local_max_health += _itemScript.items[item_id].attributes[0];
                 Local_max_resource += _itemScript.items[item_id].attributes[1];
-                Local_ranged_damage += _itemScript.items[item_id].attributes[2];
-                Local_physical_damage += _itemScript.items[item_id].attributes[3];
+                Local_damage += _itemScript.items[item_id].attributes[2];
 
                 Inventory[sender_slot_id] = 0;
 
@@ -192,7 +188,9 @@ public class Character_stats : MonoBehaviour
         {
 
             var item = _itemScript.items[_itemScript.GetComponent<Character_stats>().Inventory[slot_id]];
-            _itemScript.GetComponent<Character_stats>().getMoney(item.attributes[4]);
+
+            _itemScript.GetComponent<Character_stats>().getMoney(item.attributes[3]);
+
             _itemScript.GetComponent<Character_stats>().Inventory[slot_id] = 0;
             var exit_btn = GameObject.Find("Exit button item_preview");
             exit_btn.GetComponent<Close_button_script>().Close();
@@ -204,10 +202,10 @@ public class Character_stats : MonoBehaviour
 
             Local_max_health -= _itemScript.items[Equipments[slot_id]].attributes[0];
             Local_max_resource -= _itemScript.items[Equipments[slot_id]].attributes[1];
-            Local_ranged_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
-            Local_physical_damage -= _itemScript.items[Equipments[slot_id]].attributes[3];
+            Local_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
 
-            _itemScript.GetComponent<Character_stats>().getMoney(item.attributes[4]);
+            _itemScript.GetComponent<Character_stats>().getMoney(item.attributes[3]);
+
             _itemScript.GetComponent<Character_stats>().Equipments[slot_id] = 0;
             var exit_btn = GameObject.Find("Exit button item_preview");
             exit_btn.GetComponent<Close_button_script>().Close();
@@ -302,8 +300,8 @@ public class Character_stats : MonoBehaviour
 
                     var tmp_item = new Item(_itemScript.items.Count, dec_items.name, dec_items.type, dec_items.rarity, dec_items.min_rarity,
                     dec_items.max_rarity, dec_items.level, dec_items.description, dec_items.icon, dec_items.sprite,
-                    dec_items.attributes[0], dec_items.attributes[1], dec_items.attributes[2], dec_items.attributes[3], dec_items.attributes[4]);
-                    tmp_item.randomizeStats(10, 10, 10, 10, 0, 5);
+                    dec_items.attributes[0], dec_items.attributes[1], dec_items.attributes[2], dec_items.attributes[3]);
+                    tmp_item.randomizeStats(10, 10, 10, 0, 5);
 
                     _itemScript.items.Add(tmp_item);
                     Inventory[i] = tmp_item.id;

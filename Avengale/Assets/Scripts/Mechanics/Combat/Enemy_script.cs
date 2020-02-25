@@ -89,6 +89,35 @@ public class Enemy_script : MonoBehaviour
         var _playerManager = GameObject.Find("Character").GetComponent<Character_manager>();
         _characterStats.looseHealth(_characterStats.getPercentOfHealth(enemies[id].damage));
         _playerManager.spell_animation.Play(enemies[id].attackAnimation);
+
+
+        int random_hit = UnityEngine.Random.Range(1, 7);
+        string _hitAnimation = "";
+
+        switch (random_hit)
+        {
+            case 1:
+                _hitAnimation = "hit_1";
+                break;
+            case 2:
+                _hitAnimation = "hit_2";
+                break;
+            case 3:
+                _hitAnimation = "hit_3";
+                break;
+            case 4:
+                _hitAnimation = "hit_4";
+                break;
+            case 5:
+                _hitAnimation = "hit_5";
+                break;
+            case 6:
+                _hitAnimation = "hit_6";
+                break;
+        }
+        _playerManager.damage_text.GetComponent<Animator>().Play(_hitAnimation);
+        _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + enemies[id].damage, 0.05f);
+
         Debug.Log(enemies[id].enemy_name + "'s attack animaton: " + enemies[id].attackAnimation);
     }
 
@@ -128,7 +157,7 @@ public class Enemy_script : MonoBehaviour
         {
             _characterStats.getXP(_rewards[2]);
         }
-        if (_rewards[3]!=0)
+        if (_rewards[3] != 0)
         {
             _characterStats.getMoney(_rewards[3]);
         }

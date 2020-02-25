@@ -35,6 +35,11 @@ public class Open_button_script : MonoBehaviour
 
                 return;
             }
+            else if (mode=="Inventory" && GameObject.Find("Inventory slots").GetComponent<Visibility_script>().isOpened)
+            {
+                GameObject.Find("Inventory_exit_button").GetComponent<Close_button_script>().Close();
+                return;
+            }
             Open();
         }
     }

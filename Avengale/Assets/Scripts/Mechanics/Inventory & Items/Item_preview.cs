@@ -15,8 +15,7 @@ public class Item_preview : MonoBehaviour
     [Header("Item attributes")]
     public GameObject attr_health;
     public GameObject attr_resource;
-    public GameObject attr_ranged_damage;
-    public GameObject attr_physical_damage;
+    public GameObject attr_damage;
     public GameObject attr_value;
 
     public GameObject slot_border;
@@ -75,16 +74,15 @@ public class Item_preview : MonoBehaviour
         level.GetComponent<Text_animation>().startAnim("<b>level " + gameManager.items[item_id].level, 1f);
         attr_health.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[0] + " health", 0.05f);
         attr_resource.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[1] + " resource", 0.05f);
-        attr_ranged_damage.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[2] + " ranged damage", 0.05f);
-        attr_physical_damage.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[3] + " physical damage", 0.05f);
-        attr_value.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[4] + " credit", 0.05f);
+        attr_damage.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[2] + " damage", 0.05f);
+
+        attr_value.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[3] + " credit", 0.05f);
 
 
         //Attributes
         attr_health.GetComponent<TextMeshPro>().color = white;
         attr_resource.GetComponent<TextMeshPro>().color = white;
-        attr_ranged_damage.GetComponent<TextMeshPro>().color = white;
-        attr_physical_damage.GetComponent<TextMeshPro>().color = white;
+        attr_damage.GetComponent<TextMeshPro>().color = white;
 
         //Quality
         if (gameManager.items[item_id].rarity == "quest")
@@ -194,8 +192,7 @@ public class Item_preview : MonoBehaviour
         var character_stats = gameManager.GetComponent<Character_stats>();
         int health_to_compare = 0;
         int resource_to_compare = 0;
-        int ranged_to_compare = 0;
-        int physical_to_compare = 0;
+        int damage_to_compare = 0;
 
         int slot_id = 0;
         #region compare_switch
@@ -204,57 +201,50 @@ public class Item_preview : MonoBehaviour
             case "head":
                 health_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[2];
+
                 slot_id = 0;
                 break;
             case "body":
                 health_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[2];
                 slot_id = 1;
                 break;
             case "legs":
                 health_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[2];
                 slot_id = 2;
                 break;
             case "left arm":
                 health_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[2];
                 slot_id = 3;
                 break;
             case "shoulder":
                 health_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[2];
                 slot_id = 4;
                 break;
             case "gadget":
                 health_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[2];
                 slot_id = 5;
                 break;
             case "feet":
                 health_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[2];
                 slot_id = 6;
                 break;
             case "right arm":
                 health_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[1];
-                ranged_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[2];
-                physical_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[3];
+                damage_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[2];
                 slot_id = 7;
                 break;
             default:
@@ -268,19 +258,17 @@ public class Item_preview : MonoBehaviour
             " health (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[0]) + " ¤ " + (gameManager.items[item_id].attributes[0]) + ")", 0.05f);
             attr_resource.GetComponent<Text_animation>().startAnim("+" + gameManager.items[item_id].attributes[1] +
             " resource (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[1]) + " ¤ " + (gameManager.items[item_id].attributes[1]) + ")", 0.05f);
-            attr_ranged_damage.GetComponent<Text_animation>().startAnim("+" + gameManager.items[item_id].attributes[2] +
-            " ranged damage (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[2]) + " ¤ " + (gameManager.items[item_id].attributes[2]) + ")", 0.05f);
-            attr_physical_damage.GetComponent<Text_animation>().startAnim("+" + gameManager.items[item_id].attributes[3] +
-            " physical damage (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[3]) + " ¤ " + (gameManager.items[item_id].attributes[3]) + ")", 0.05f);
-            attr_value.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[4] + " credit", 0.05f);
+            attr_damage.GetComponent<Text_animation>().startAnim("+" + gameManager.items[item_id].attributes[2] +
+            " damage (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[2]) + " ¤ " + (gameManager.items[item_id].attributes[2]) + ")", 0.05f);
+            
+            attr_value.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[3] + " credit", 0.05f);
         }
         else
         {
             level.GetComponent<Text_animation>().startAnim("", 1f);
             attr_health.GetComponent<Text_animation>().startAnim("", 1f);
             attr_resource.GetComponent<Text_animation>().startAnim("", 1f);
-            attr_ranged_damage.GetComponent<Text_animation>().startAnim("", 1f);
-            attr_physical_damage.GetComponent<Text_animation>().startAnim("", 1f);
+            attr_damage.GetComponent<Text_animation>().startAnim("", 1f);
             attr_value.GetComponent<Text_animation>().startAnim("", 1f);
         }
 
@@ -299,19 +287,13 @@ public class Item_preview : MonoBehaviour
         else if (resource_to_compare == gameManager.items[item_id].attributes[1])
         { attr_resource.GetComponent<TextMeshPro>().color = white; }
 
-        if (ranged_to_compare < gameManager.items[item_id].attributes[2])
-        { attr_ranged_damage.GetComponent<TextMeshPro>().color = green; }
-        else if (ranged_to_compare > gameManager.items[item_id].attributes[2])
-        { attr_ranged_damage.GetComponent<TextMeshPro>().color = red; }
-        else if (ranged_to_compare == gameManager.items[item_id].attributes[2])
-        { attr_ranged_damage.GetComponent<TextMeshPro>().color = white; }
+        if (damage_to_compare < gameManager.items[item_id].attributes[2])
+        { attr_damage.GetComponent<TextMeshPro>().color = green; }
+        else if (damage_to_compare > gameManager.items[item_id].attributes[2])
+        { attr_damage.GetComponent<TextMeshPro>().color = red; }
+        else if (damage_to_compare == gameManager.items[item_id].attributes[2])
+        { attr_damage.GetComponent<TextMeshPro>().color = white; }
 
-        if (physical_to_compare < gameManager.items[item_id].attributes[3])
-        { attr_physical_damage.GetComponent<TextMeshPro>().color = green; }
-        else if (physical_to_compare > gameManager.items[item_id].attributes[3])
-        { attr_physical_damage.GetComponent<TextMeshPro>().color = red; }
-        else if (physical_to_compare == gameManager.items[item_id].attributes[3])
-        { attr_physical_damage.GetComponent<TextMeshPro>().color = white; }
 
         //Quality
 

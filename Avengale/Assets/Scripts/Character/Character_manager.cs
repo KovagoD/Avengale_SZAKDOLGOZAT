@@ -35,6 +35,7 @@ public class Character_manager : MonoBehaviour
     public GameObject turn_sign;
     public Animator spell_animation;
 
+    public GameObject damage_text;
 
 
 

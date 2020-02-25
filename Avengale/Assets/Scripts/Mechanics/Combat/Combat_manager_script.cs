@@ -30,10 +30,12 @@ public class Combat_manager_script : MonoBehaviour
     private Character_manager _characterManager;
     private Enemy_manager_script _enemyManagerScript;
     private Item_script _itemScript;
+    private Spell_script _spellScript;
 
     private Bar_script _healthBar;
     private Bar_script _resourceBar;
     private Animator _spellbarAnimator;
+
     public int currentOpponentID;
 
     private bool _isOpponentAttacked;
@@ -45,6 +47,7 @@ public class Combat_manager_script : MonoBehaviour
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
         _enemyManagerScript = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
         _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
+        _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
     }
 
     private void Update()
@@ -66,6 +69,8 @@ public class Combat_manager_script : MonoBehaviour
     public void initializeBattle(int id)
     {
         isPaused = false;
+
+        _spellScript.setupAttributes();
 
         _healthBar = GameObject.Find("Health_bar").GetComponent<Bar_script>();
         _resourceBar = GameObject.Find("Resource_bar").GetComponent<Bar_script>();

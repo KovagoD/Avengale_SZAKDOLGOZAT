@@ -5,6 +5,7 @@ using UnityEngine;
 public class Store_manager : MonoBehaviour
 {
     public int[] Store = new int[10];
+    public int storeRestockTime;
     private Ingame_notification_script _notification;
 
     void Start()
@@ -16,7 +17,7 @@ public class Store_manager : MonoBehaviour
 
     IEnumerator Restock()
     {
-        yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(storeRestockTime);
         restockItems();
         Debug.Log("The store has been restocked!");
         _notification.message("The store has been restocked!", 3);
