@@ -75,7 +75,7 @@ public class Enemy_script : MonoBehaviour
     public void opponentTakeDamage(int amount)
     {
         enemy_health -= amount;
-        Debug.Log(enemies[id].enemy_name + ": " + enemies[id].health + "/" + enemy_health + " hp");
+        //Debug.Log(enemies[id].enemy_name + ": " + enemies[id].health + "/" + enemy_health + " hp");
         opponentUpdateHealthBar();
         if (enemy_health <= 0)
         {
@@ -118,7 +118,7 @@ public class Enemy_script : MonoBehaviour
         _playerManager.damage_text.GetComponent<Animator>().Play(_hitAnimation);
         _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + enemies[id].damage, 0.05f);
 
-        Debug.Log(enemies[id].enemy_name + "'s attack animaton: " + enemies[id].attackAnimation);
+        //Debug.Log(enemies[id].enemy_name + "'s attack animaton: " + enemies[id].attackAnimation);
     }
 
     public void opponentDie()

@@ -26,19 +26,12 @@ public class Game_manager : MonoBehaviour
     void Start()
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
-        //SetupAndroidTheme(ToARGB(Color.black), ToARGB(Color.black));
         current_screen = GameObject.Find("Character_screen_UI");
         GameObject.Find("Character_screen_UI").SetActive(true);
 
         GameObject.Find("Store_screen_UI").SetActive(false);
         GameObject.Find("Combat_screen_UI").SetActive(false);
         GameObject.Find("Quest_screen_UI").SetActive(false);
-
-        /*
-        GameObject.Find("Store_screen_UI").GetComponent<Animator>().Play("Screen_to_inactive");
-        GameObject.Find("Combat_screen_UI").GetComponent<Animator>().Play("Screen_to_inactive");
-        GameObject.Find("Quest_screen_UI").GetComponent<Animator>().Play("Screen_to_inactive");
-        */
 
 
     }
@@ -59,7 +52,7 @@ public class Game_manager : MonoBehaviour
         }
         else if (current_screen.GetComponent<Screen_script>().order > target.GetComponent<Screen_script>().order)
         {
-        current_screen.GetComponent<Animator>().Play("Screen_to_inactive_right_anim");
+            current_screen.GetComponent<Animator>().Play("Screen_to_inactive_right_anim");
         }
         /*
         if (current_screen.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Screen_to_inactive"))
@@ -67,7 +60,7 @@ public class Game_manager : MonoBehaviour
             current_screen.SetActive(false);
         }
         */
-        
+
 
         target.SetActive(true);
 
@@ -139,3 +132,5 @@ public class Game_manager : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 }
+
+

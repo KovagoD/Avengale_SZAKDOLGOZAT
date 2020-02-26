@@ -19,7 +19,7 @@ public class Battle_pause_button_script : MonoBehaviour
             {
                 _combatManager.pauseBattle();
                 gameObject.GetComponent<SpriteRenderer>().sprite = resumeSprite;
-                Debug.Log("Battle paused");
+                //Debug.Log("Battle paused");
             }
             else
             {
@@ -33,7 +33,7 @@ public class Battle_pause_button_script : MonoBehaviour
             {
                 _combatManager.skipEnemyRound();
                 gameObject.GetComponent<SpriteRenderer>().sprite = resumeSprite;
-                Debug.Log("Battle paused");
+                //Debug.Log("Battle paused");
             }
             else
             {

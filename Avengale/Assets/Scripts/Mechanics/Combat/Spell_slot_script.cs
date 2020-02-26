@@ -52,7 +52,7 @@ public class Spell_slot_script : MonoBehaviour
             if (_combatManager.getRound() == "Player")
             {
                 slot.GetComponent<Image>().sprite = slot_sprite_activated;
-                Debug.Log(spell.resource_cost + " " + _characterStats.Local_resource);
+                //Debug.Log(spell.resource_cost + " " + _characterStats.Local_resource);
 
                 if ((spell.resource_cost <= _characterStats.Local_resource))
                 {
