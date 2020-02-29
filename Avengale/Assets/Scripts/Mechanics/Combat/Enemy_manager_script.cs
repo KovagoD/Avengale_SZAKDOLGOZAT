@@ -22,7 +22,7 @@ public class Enemy_manager_script : MonoBehaviour
 
     }
 }
-
+[System.Serializable]
 public class Enemy
 {
     public int id;

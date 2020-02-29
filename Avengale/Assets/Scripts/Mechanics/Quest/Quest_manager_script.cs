@@ -149,7 +149,7 @@ public class Quest_manager_script : MonoBehaviour
 
 
 }
-
+[System.Serializable]
 public class Quest
 {
     public int id;

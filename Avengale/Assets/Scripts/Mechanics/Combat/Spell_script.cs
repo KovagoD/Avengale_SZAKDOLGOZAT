@@ -114,6 +114,8 @@ public class Spell
             if (target != null && target.GetComponent<Enemy_script>().enemy_health > 0)
             {
                 target.GetComponent<Character_manager>().spell_animation.Play(animation);
+                GameObject.Find("Battle_scene").GetComponent<Animator>().Play("Screen_shake_1");
+
                 target.GetComponent<Enemy_script>().opponentTakeDamage(attribute);
 
                 int random_hit = UnityEngine.Random.Range(1, 7);

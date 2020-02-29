@@ -322,7 +322,7 @@ public class Conversation_script : MonoBehaviour
         else { closeConversation(); }
     }
 }
-
+[System.Serializable]
 public class Conversation
 {
     public int id;

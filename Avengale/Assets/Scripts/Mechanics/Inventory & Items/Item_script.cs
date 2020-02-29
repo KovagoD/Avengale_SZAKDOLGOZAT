@@ -42,7 +42,22 @@ public class Item_script : MonoBehaviour
         gameObject.GetComponent<Character_stats>().updateStats();
     }
 
+    public void saveItems()
+    {
+        Save_script.saveItems(this);
+        Debug.Log("Item data saved!");
+    }
+
+    public void loadItems()
+    {
+        ItemData data = Save_script.loadItems();
+        items=data.items;
+        
+    }
+
+
 }
+[System.Serializable]
 public class Item
 {
     public int id;

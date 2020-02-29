@@ -69,6 +69,44 @@ public class Character_stats : MonoBehaviour
         _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
     }
+
+    public void savePlayer()
+    {
+        Save_script.savePlayer(this);
+        Debug.Log("Player data saved!");
+        _notification.message("Player data saved!", 3, "legendary");
+    }
+
+    public void loadPlayer()
+    {
+        CharacterData data = Save_script.loadPlayer();
+
+        //customization
+        Local_name = data.Local_name;
+        Local_title = data.Local_title;
+        Local_class = data.Local_class;
+        Local_talent = data.Local_talent;
+        hair_id = data.hair_id;
+        eyes_id = data.eyes_id;
+        nose_id = data.nose_id;
+        mouth_id = data.mouth_id;
+        body_id = data.body_id;
+        //stats
+        Local_xp = data.Local_xp;
+        Local_needed_xp = data.Local_needed_xp;
+        Local_level = data.Local_level;
+        Local_money = data.Local_money;
+        Inventory = data.Inventory;
+        Equipments = data.Equipments;
+        Spells = data.Spells;
+        Local_max_health = data.Local_max_health;
+        Local_max_resource = data.Local_max_resource;
+        Local_damage = data.Local_damage;
+        defeated_enemies = data.defeated_enemies;
+        completed_conversations = data.completed_conversations;
+        accepted_quests = data.accepted_quests;
+        completed_quests = data.completed_quests;
+    }
     public void getXP(int xp)
     {
         Local_xp += xp;
