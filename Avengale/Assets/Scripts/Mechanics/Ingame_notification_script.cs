@@ -5,19 +5,22 @@ using UnityEngine;
 
 public class Ingame_notification_script : MonoBehaviour
 {
+
+    public GameObject notificationText;
+
     private bool CR_running = false;
     public void message(string input_text, int duration)
     {
-        var colors = GameObject.Find("Game manager").GetComponent<Game_manager>();
+        Colors colors = new Colors();
         gameObject.GetComponent<Animator>().Play("Notification_fade_in");
 
-        GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.white;
+        notificationText.GetComponent<TextMeshPro>().color = colors.white;
 
         if (CR_running == false)
         {
             gameObject.GetComponent<Visibility_script>().setVisible();
 
-            GameObject.Find("Notification text").GetComponent<Text_animation>().startAnim(input_text, 0.05f);
+            notificationText.GetComponent<Text_animation>().startAnim(input_text, 0.05f);
             StartCoroutine("Wait", duration);
         }
         else
@@ -25,8 +28,8 @@ public class Ingame_notification_script : MonoBehaviour
             StopCoroutine("Wait");
             gameObject.GetComponent<Visibility_script>().setVisible();
 
-            GameObject.Find("Notification text").GetComponent<Text_animation>().startAnim(input_text, 0.05f);
-            StartCoroutine("Wait", duration);        
+            notificationText.GetComponent<Text_animation>().startAnim(input_text, 0.05f);
+            StartCoroutine("Wait", duration);
 
         }
 
@@ -39,51 +42,45 @@ public class Ingame_notification_script : MonoBehaviour
         CR_running = false;
         gameObject.GetComponent<Animator>().Play("Notification_fade_in");
 
+        var textColor = notificationText.GetComponent<TextMeshPro>().color;
 
         if (CR_running == false)
         {
 
             gameObject.GetComponent<Visibility_script>().setVisible();
 
+            Colors colors = new Colors();
 
-            var colors = GameObject.Find("Game manager").GetComponent<Game_manager>();
-
-            if (color == "poor")
+            switch (color)
             {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.gray;
-
-            }
-            if (color == "common")
-            {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.white;
-            }
-            if (color == "uncommon")
-            {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.green;
-            }
-            if (color == "rare")
-            {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.blue;
-            }
-            if (color == "epic")
-            {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.purple;
-            }
-            if (color == "legendary")
-            {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.yellow;
-            }
-
-            if (color == "red")
-            {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.red;
-            }
-            if (color == "blue")
-            {
-                GameObject.Find("Notification text").GetComponent<TextMeshPro>().color = colors.blue;
+                case "poor":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.gray;
+                    break;
+                case "common":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.white;
+                    break;
+                case "uncommon":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.green;
+                    break;
+                case "rare":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.blue;
+                    break;
+                case "epic":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.purple;
+                    break;
+                case "legendary":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.yellow;
+                    break;
+                case "red":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.red;
+                    break;
+                case "blue":
+                    notificationText.GetComponent<TextMeshPro>().color = colors.blue;
+                    break;
             }
 
             GameObject.Find("Notification text").GetComponent<Text_animation>().startAnim(input_text, 0.05f);
+            //Debug.Log(notificationText.GetComponent<TextMeshPro>().color);
             StartCoroutine("Wait", duration);
         }
         else

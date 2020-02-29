@@ -13,7 +13,7 @@ public class CharacterData
 
     [Header("Completed things")]
 
-    public List<Enemy> defeated_enemies;
+    //public List<Enemy> defeated_enemies;
     public List<Conversation> completed_conversations;
     public int[] accepted_quests;
     public List<Quest> completed_quests;
@@ -67,7 +67,7 @@ public class CharacterData
         Local_max_health = player.Local_max_health;
         Local_max_resource = player.Local_max_resource;
         Local_damage = player.Local_damage;
-        defeated_enemies = player.defeated_enemies;
+        //defeated_enemies = player.defeated_enemies;
         completed_conversations = player.completed_conversations;
         accepted_quests = player.accepted_quests;
         completed_quests = player.completed_quests;

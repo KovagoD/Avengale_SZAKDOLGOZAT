@@ -385,7 +385,7 @@ public class Combat_manager_script : MonoBehaviour
 
     public void skipEnemyRound()
     {
-        if (round[round_counter] != "Player" && _isOpponentAttacked == false)
+        if (round[round_counter] != "Player" && _isOpponentAttacked == false && opponents[currentOpponentID].GetComponent<Enemy_script>().isAlive())
         {
             opponents[currentOpponentID].GetComponent<Enemy_script>().opponentAttack();
         }

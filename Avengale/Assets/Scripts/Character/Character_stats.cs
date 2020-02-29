@@ -102,10 +102,14 @@ public class Character_stats : MonoBehaviour
         Local_max_health = data.Local_max_health;
         Local_max_resource = data.Local_max_resource;
         Local_damage = data.Local_damage;
-        defeated_enemies = data.defeated_enemies;
+        //defeated_enemies = data.defeated_enemies;
         completed_conversations = data.completed_conversations;
         accepted_quests = data.accepted_quests;
         completed_quests = data.completed_quests;
+
+        updateStats();
+        GameObject.Find("XP_bar").GetComponent<Bar_script>().updateXP();
+        _notification.message("Save loaded!", 3, "rare");
     }
     public void getXP(int xp)
     {
@@ -133,7 +137,9 @@ public class Character_stats : MonoBehaviour
             "Resource: " + Local_max_resource + "\n" +
             "Damage: " + Local_damage, 5f);
 
+
         updateMoneyStat();
+
     }
 
     public void updateMoneyStat()

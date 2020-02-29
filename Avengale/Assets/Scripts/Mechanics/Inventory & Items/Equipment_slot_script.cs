@@ -72,31 +72,31 @@ public class Equipment_slot_script : MonoBehaviour
 
         item_id = _characterStats.Equipments[ID];
         SpriteRenderer _slotBorder = slot_border.GetComponent<SpriteRenderer>();
-
+        Colors colors = new Colors();
 
         if (_characterStats.Equipments[ID] != 0 && _characterStats.Equipments[ID] == item_id)
         {
-            item_slot.GetComponent<SpriteRenderer>().sprite = _itemScript.items[item_id].icon;
+            item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_itemScript.items[item_id].icon);
 
             switch (_itemScript.items[item_id].rarity)
             {
                 case "poor":
-                    _slotBorder.color = _gameManagerScript.gray;
+                    _slotBorder.color = colors.gray;
                     break;
                 case "common":
-                    _slotBorder.color = _gameManagerScript.white;
+                    _slotBorder.color = colors.white;
                     break;
                 case "uncommon":
-                   _slotBorder.color = _gameManagerScript.green;
+                   _slotBorder.color = colors.green;
                     break;
                 case "rare":
-                    _slotBorder.color = _gameManagerScript.blue;
+                    _slotBorder.color = colors.blue;
                     break;
                 case "epic":
-                    _slotBorder.color = _gameManagerScript.purple;
+                    _slotBorder.color = colors.purple;
                     break;
                 case "legendary":
-                   _slotBorder.color = _gameManagerScript.yellow;
+                   _slotBorder.color = colors.yellow;
                     break;
                 default:
                     break;
@@ -107,7 +107,7 @@ public class Equipment_slot_script : MonoBehaviour
         if (_characterStats.Equipments[ID] == 0)
         {
             item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Empty");
-            _slotBorder.color = _gameManagerScript.transparent;
+            _slotBorder.color = colors.transparent;
         }
     }
 

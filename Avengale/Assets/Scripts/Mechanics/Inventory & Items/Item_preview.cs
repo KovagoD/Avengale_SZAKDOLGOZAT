@@ -21,29 +21,11 @@ public class Item_preview : MonoBehaviour
     public GameObject slot_border;
 
 
-    static Color32 red;
-    static Color32 gray;
-    static Color32 white;
-    static Color32 green;
-    static Color32 blue;
-    static Color32 purple;
-    static Color32 yellow;
-    static Color32 quest;
 
 
     private void Start()
     {
 
-        var colors = GameObject.Find("Game manager").GetComponent<Game_manager>();
-
-        red = colors.red;
-        gray = colors.gray;
-        white = colors.white;
-        green = colors.green;
-        blue = colors.blue;
-        purple = colors.purple;
-        yellow = colors.yellow;
-        quest = colors.quest;
 
     }
 
@@ -65,11 +47,13 @@ public class Item_preview : MonoBehaviour
 
         var gameManager = GameObject.Find("Game manager").GetComponent<Item_script>();
 
+        Colors colors = new Colors();
+
         item_name.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].name, 0.05f);
         item_description.GetComponent<Text_animation>().startAnim("<i>" + gameManager.items[item_id].description, 1f);
         item_rarity_and_type.GetComponent<Text_animation>().startAnim("[" + gameManager.items[item_id].rarity + " " + gameManager.items[item_id].type + "]", 1f);
 
-        item_icon.GetComponent<SpriteRenderer>().sprite = gameManager.items[item_id].icon;
+        item_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(gameManager.items[item_id].icon);
 
         level.GetComponent<Text_animation>().startAnim("<b>level " + gameManager.items[item_id].level, 1f);
         attr_health.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[0] + " health", 0.05f);
@@ -80,64 +64,64 @@ public class Item_preview : MonoBehaviour
 
 
         //Attributes
-        attr_health.GetComponent<TextMeshPro>().color = white;
-        attr_resource.GetComponent<TextMeshPro>().color = white;
-        attr_damage.GetComponent<TextMeshPro>().color = white;
+        attr_health.GetComponent<TextMeshPro>().color = colors.white;
+        attr_resource.GetComponent<TextMeshPro>().color = colors.white;
+        attr_damage.GetComponent<TextMeshPro>().color = colors.white;
 
         //Quality
         if (gameManager.items[item_id].rarity == "quest")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = quest;
-            item_description.GetComponent<TextMeshPro>().color = quest;
-            item_name.GetComponent<TextMeshPro>().color = quest;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().quest;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.quest;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.quest;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.quest;
         }
 
         if (gameManager.items[item_id].rarity == "poor")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = gray;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = gray;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().gray;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.gray;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.gray;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.gray;
 
         }
         if (gameManager.items[item_id].rarity == "common")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = white;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = white;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().white;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.white;
+            item_description.GetComponent<TextMeshPro>().color = colors.white;
+            item_name.GetComponent<TextMeshPro>().color = colors.white;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.white;
         }
 
         if (gameManager.items[item_id].rarity == "uncommon")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = green;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = green;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().green;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.green;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.green;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.green;
         }
         if (gameManager.items[item_id].rarity == "rare")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = blue;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = blue;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().blue;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.blue;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.blue;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.blue;
         }
 
         if (gameManager.items[item_id].rarity == "epic")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = purple;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = purple;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().purple;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.purple;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.purple;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.purple;
         }
 
         if (gameManager.items[item_id].rarity == "legendary")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = yellow;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = yellow;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().yellow;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.yellow;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.yellow;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.yellow;
         }
 
 
@@ -150,6 +134,8 @@ public class Item_preview : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().Play("Item_preview_slide_in_anim", -1, 0f);
         gameObject.GetComponent<Animator>().Play("Item_preview_slide_in_anim");
+
+        Colors colors = new Colors();
 
         var gameManager = GameObject.Find("Game manager").GetComponent<Item_script>();
         item_name.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].name, 0.05f);
@@ -164,13 +150,13 @@ public class Item_preview : MonoBehaviour
             item_rarity_and_type.GetComponent<Text_animation>().startAnim("[" + gameManager.items[item_id].type + "]", 1f);
         }
 
-        item_icon.GetComponent<SpriteRenderer>().sprite = gameManager.items[item_id].icon;
+        item_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(gameManager.items[item_id].icon);
 
         if (gameManager.items[item_id].level > GameObject.Find("Game manager").GetComponent<Character_stats>().Local_level)
         {
-            level.GetComponent<TextMeshPro>().color = red;
+            level.GetComponent<TextMeshPro>().color = colors.red;
         }
-        else { level.GetComponent<TextMeshPro>().color = white; }
+        else { level.GetComponent<TextMeshPro>().color = colors.white; }
         level.GetComponent<Text_animation>().startAnim("requires <b>level " + gameManager.items[item_id].level, 1f);
 
         if (!isStore)
@@ -274,82 +260,82 @@ public class Item_preview : MonoBehaviour
 
         //Attributes
         if (health_to_compare < gameManager.items[item_id].attributes[0])
-        { attr_health.GetComponent<TextMeshPro>().color = green; }
+        { attr_health.GetComponent<TextMeshPro>().color = colors.green; }
         else if (health_to_compare > gameManager.items[item_id].attributes[0])
-        { attr_health.GetComponent<TextMeshPro>().color = red; }
+        { attr_health.GetComponent<TextMeshPro>().color = colors.red; }
         else if (health_to_compare == gameManager.items[item_id].attributes[0])
-        { attr_health.GetComponent<TextMeshPro>().color = white; }
+        { attr_health.GetComponent<TextMeshPro>().color = colors.white; }
 
         if (resource_to_compare < gameManager.items[item_id].attributes[1])
-        { attr_resource.GetComponent<TextMeshPro>().color = green; }
+        { attr_resource.GetComponent<TextMeshPro>().color = colors.green; }
         else if (resource_to_compare > gameManager.items[item_id].attributes[1])
-        { attr_resource.GetComponent<TextMeshPro>().color = red; }
+        { attr_resource.GetComponent<TextMeshPro>().color = colors.red; }
         else if (resource_to_compare == gameManager.items[item_id].attributes[1])
-        { attr_resource.GetComponent<TextMeshPro>().color = white; }
+        { attr_resource.GetComponent<TextMeshPro>().color = colors.white; }
 
         if (damage_to_compare < gameManager.items[item_id].attributes[2])
-        { attr_damage.GetComponent<TextMeshPro>().color = green; }
+        { attr_damage.GetComponent<TextMeshPro>().color = colors.green; }
         else if (damage_to_compare > gameManager.items[item_id].attributes[2])
-        { attr_damage.GetComponent<TextMeshPro>().color = red; }
+        { attr_damage.GetComponent<TextMeshPro>().color = colors.red; }
         else if (damage_to_compare == gameManager.items[item_id].attributes[2])
-        { attr_damage.GetComponent<TextMeshPro>().color = white; }
+        { attr_damage.GetComponent<TextMeshPro>().color = colors.white; }
 
 
         //Quality
 
         if (gameManager.items[item_id].rarity == "quest")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = quest;
-            item_description.GetComponent<TextMeshPro>().color = quest;
-            item_name.GetComponent<TextMeshPro>().color = quest;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().quest;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.quest;
+            item_description.GetComponent<TextMeshPro>().color = colors.quest;
+            item_name.GetComponent<TextMeshPro>().color = colors.quest;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.quest;
         }
 
         if (gameManager.items[item_id].rarity == "poor")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = gray;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = gray;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().gray;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.gray;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.gray;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.gray;
 
         }
         if (gameManager.items[item_id].rarity == "common")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = white;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = white;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().white;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.white;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.white;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.white;
         }
 
         if (gameManager.items[item_id].rarity == "uncommon")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = green;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = green;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().green;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.green;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.green;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.green;
         }
         if (gameManager.items[item_id].rarity == "rare")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = blue;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = blue;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().blue;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.blue;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.blue;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.blue;
         }
 
         if (gameManager.items[item_id].rarity == "epic")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = purple;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = purple;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().purple;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.purple;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.purple;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.purple;
         }
 
         if (gameManager.items[item_id].rarity == "legendary")
         {
-            item_rarity_and_type.GetComponent<TextMeshPro>().color = yellow;
-            item_description.GetComponent<TextMeshPro>().color = gray;
-            item_name.GetComponent<TextMeshPro>().color = yellow;
-            slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().yellow;
+            item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.yellow;
+            item_description.GetComponent<TextMeshPro>().color = colors.gray;
+            item_name.GetComponent<TextMeshPro>().color = colors.yellow;
+            slot_border.GetComponent<SpriteRenderer>().color = colors.yellow;
         }
     }
 }

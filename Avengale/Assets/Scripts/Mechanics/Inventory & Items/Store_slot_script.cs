@@ -20,6 +20,7 @@ public class Store_slot_script : MonoBehaviour
     public Sprite slot_sprite;
     public Sprite slot_sprite_activated;
     public GameObject slot_border;
+    public Colors colors;
 
     private void Start()
     {
@@ -35,6 +36,7 @@ public class Store_slot_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen.name == "Store_screen_UI")
         {
             item_id = gameManager.GetComponent<Store_manager>().Store[ID];
@@ -42,39 +44,39 @@ public class Store_slot_script : MonoBehaviour
             if (gameManager.GetComponent<Store_manager>().Store[ID] == 0)
             {
                 item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Empty");
-                slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().transparent;
+                slot_border.GetComponent<SpriteRenderer>().color = colors.transparent;
             }
 
             if (gameManager.GetComponent<Store_manager>().Store[ID] != 0 && gameManager.GetComponent<Store_manager>().Store[ID] == item_id)
             {
-                item_slot.GetComponent<SpriteRenderer>().sprite = item.items[item_id].icon;
+                item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(item.items[item_id].icon);
             }
 
             var items = gameManager.GetComponent<Item_script>().items;
 
             if (items[item_id].rarity == "poor")
             {
-                slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().gray;
+                slot_border.GetComponent<SpriteRenderer>().color = colors.gray;
             }
             if (items[item_id].rarity == "common")
             {
-                slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().white;
+                slot_border.GetComponent<SpriteRenderer>().color = colors.white;
             }
             if (items[item_id].rarity == "uncommon")
             {
-                slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().green;
+                slot_border.GetComponent<SpriteRenderer>().color = colors.green;
             }
             if (items[item_id].rarity == "rare")
             {
-                slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().blue;
+                slot_border.GetComponent<SpriteRenderer>().color = colors.blue;
             }
             if (items[item_id].rarity == "epic")
             {
-                slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().purple;
+                slot_border.GetComponent<SpriteRenderer>().color = colors.purple;
             }
             if (items[item_id].rarity == "legendary")
             {
-                slot_border.GetComponent<SpriteRenderer>().color = gameManager.GetComponent<Game_manager>().yellow;
+                slot_border.GetComponent<SpriteRenderer>().color = colors.yellow;
             }
         }
 
