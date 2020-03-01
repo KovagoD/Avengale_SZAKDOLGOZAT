@@ -87,11 +87,11 @@ public class Item
         this.icon = icon;
         this.sprite = sprite;
 
-        int[] tmp = new int[5];
+        int[] tmp = new int[4];
         tmp[0] = health;
         tmp[1] = resource;
         tmp[2] = damage;
-        tmp[4] = value;
+        tmp[3] = value;
         this.attributes = tmp;
         randomizeRarity(min_rarity, max_rarity);
     }

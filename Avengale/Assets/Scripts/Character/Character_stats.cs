@@ -74,7 +74,7 @@ public class Character_stats : MonoBehaviour
     {
         Save_script.savePlayer(this);
         Debug.Log("Player data saved!");
-        _notification.message("Player data saved!", 3, "legendary");
+        _notification.message("Player data saved!", 3, "white");
     }
 
     public void loadPlayer()
@@ -107,9 +107,10 @@ public class Character_stats : MonoBehaviour
         accepted_quests = data.accepted_quests;
         completed_quests = data.completed_quests;
 
-        updateStats();
-        GameObject.Find("XP_bar").GetComponent<Bar_script>().updateXP();
-        _notification.message("Save loaded!", 3, "rare");
+
+        //updateStats();
+
+        _notification.message("Save loaded!", 3, "white");
     }
     public void getXP(int xp)
     {
@@ -121,7 +122,7 @@ public class Character_stats : MonoBehaviour
             Local_level++;
             Local_needed_xp += 50;
 
-            _notification.message("You gained a level!", 3, "legendary");
+            _notification.message("You gained a level!", 3, "yellow");
         }
 
         XP_bar.GetComponent<Bar_script>().updateXP();
@@ -138,6 +139,7 @@ public class Character_stats : MonoBehaviour
             "Damage: " + Local_damage, 5f);
 
 
+        GameObject.Find("XP_bar").GetComponent<Bar_script>().updateXP();
         updateMoneyStat();
 
     }
@@ -149,9 +151,9 @@ public class Character_stats : MonoBehaviour
 
     public void buyItem(int slot_id)
     {
-        if (Local_money >= gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[4])
+        if (Local_money >= gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[3])
         {
-            giveMoney(gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[4]);
+            giveMoney(gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[3]);
             itemPickup(gameObject.GetComponent<Store_manager>().Store[slot_id], false);
             gameObject.GetComponent<Store_manager>().Store[slot_id] = 0;
         }
@@ -264,7 +266,7 @@ public class Character_stats : MonoBehaviour
         {
             for (int j = i + 1; j < Inventory.Length; j++)
             {
-                int _compareQuality_1 = 0;
+                int _compareQuality_1 = -1;
 
                 switch (_itemScript.items[Inventory[i]].rarity)
                 {

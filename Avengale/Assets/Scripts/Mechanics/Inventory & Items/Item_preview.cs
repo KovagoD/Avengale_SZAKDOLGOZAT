@@ -141,6 +141,9 @@ public class Item_preview : MonoBehaviour
         item_name.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].name, 0.05f);
         item_description.GetComponent<Text_animation>().startAnim("<i>" + gameManager.items[item_id].description, 1f);
 
+        attr_value.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[3] + " credit", 0.05f);
+        
+
         if (gameManager.items[item_id].type != "quest")
         {
             item_rarity_and_type.GetComponent<Text_animation>().startAnim("[" + gameManager.items[item_id].rarity + " " + gameManager.items[item_id].type + "]", 1f);
@@ -247,8 +250,7 @@ public class Item_preview : MonoBehaviour
             attr_damage.GetComponent<Text_animation>().startAnim("+" + gameManager.items[item_id].attributes[2] +
             " damage (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[2]) + " ¤ " + (gameManager.items[item_id].attributes[2]) + ")", 0.05f);
             
-            attr_value.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[3] + " credit", 0.05f);
-        }
+            }
         else
         {
             level.GetComponent<Text_animation>().startAnim("", 1f);

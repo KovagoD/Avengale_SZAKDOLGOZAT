@@ -89,6 +89,7 @@ public class Enemy_script : MonoBehaviour
         var _playerManager = GameObject.Find("Character").GetComponent<Character_manager>();
         _characterStats.looseHealth(_characterStats.getPercentOfHealth(enemies[id].damage));
         _playerManager.spell_animation.Play(enemies[id].attackAnimation);
+        Handheld.Vibrate();
 
 
         int random_hit = UnityEngine.Random.Range(1, 7);

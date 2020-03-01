@@ -53,29 +53,32 @@ public class Ingame_notification_script : MonoBehaviour
 
             switch (color)
             {
+                case "gray":
                 case "poor":
                     notificationText.GetComponent<TextMeshPro>().color = colors.gray;
                     break;
+                case "white":
                 case "common":
                     notificationText.GetComponent<TextMeshPro>().color = colors.white;
                     break;
+                case "green":
                 case "uncommon":
                     notificationText.GetComponent<TextMeshPro>().color = colors.green;
                     break;
+                case "blue":
                 case "rare":
                     notificationText.GetComponent<TextMeshPro>().color = colors.blue;
                     break;
+                case "purple":
                 case "epic":
                     notificationText.GetComponent<TextMeshPro>().color = colors.purple;
                     break;
+                case "yellow":
                 case "legendary":
                     notificationText.GetComponent<TextMeshPro>().color = colors.yellow;
                     break;
                 case "red":
                     notificationText.GetComponent<TextMeshPro>().color = colors.red;
-                    break;
-                case "blue":
-                    notificationText.GetComponent<TextMeshPro>().color = colors.blue;
                     break;
             }
 
