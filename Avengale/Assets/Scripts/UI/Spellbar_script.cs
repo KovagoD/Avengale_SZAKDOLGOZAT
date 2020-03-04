@@ -11,7 +11,8 @@ public class Spellbar_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen.name=="Combat_screen_UI")
+        var _currentScreen = GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen.name;
+        if (_currentScreen=="Combat_screen_UI" || _currentScreen=="Spell_screen_UI")
         {
             gameObject.GetComponent<Image>().enabled=true;
             foreach (var slot in spell_slots)

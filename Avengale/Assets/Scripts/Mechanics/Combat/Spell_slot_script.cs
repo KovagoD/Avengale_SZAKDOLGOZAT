@@ -16,15 +16,23 @@ public class Spell_slot_script : MonoBehaviour
 
     private Spell spell;
     private Character_stats _characterStats;
+
+    private Spell_script _spellScript;
     private Combat_manager_script _combatManager;
     private Ingame_notification_script _notification;
+    private Game_manager _gameManager;
     void Start()
     {
+        _gameManager = GameObject.Find("Game manager").GetComponent<Game_manager>();
         _combatManager = GameObject.Find("Game manager").GetComponent<Combat_manager_script>();
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
-        spell_id = GameObject.Find("Game manager").GetComponent<Character_stats>().Spells[id];
-        spell = GameObject.Find("Game manager").GetComponent<Spell_script>().spells[spell_id];
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
+    }
+
+    private void Update() {
+        spell_id = _characterStats.Spells[id];
+        spell = _spellScript.spells[spell_id];
         spell_slot.GetComponent<Image>().sprite = spell.icon;
     }
     public void SetEnabled()
@@ -45,20 +53,18 @@ public class Spell_slot_script : MonoBehaviour
     }
     void OnMouseUp()
     {
-        GameObject.Find("Spell_preview").GetComponent<Close_button_script>().Close();
-
-        if (!_combatManager.isPaused)
+        if (!_combatManager.isPaused && _gameManager.current_screen.name == "Combat_screen_UI")
         {
+        GameObject.Find("Spell_preview").GetComponent<Close_button_script>().Close();
+        
             if (_combatManager.getRound() == "Player")
             {
                 slot.GetComponent<Image>().sprite = slot_sprite_activated;
-                //Debug.Log(spell.resource_cost + " " + _characterStats.Local_resource);
-
                 if ((spell.resource_cost <= _characterStats.Local_resource))
                 {
-                    if (GameObject.Find("Game manager").GetComponent<Spell_script>().target != null)
+                    if (_spellScript.target != null)
                     {
-                        spell.Activate(GameObject.Find("Game manager").GetComponent<Spell_script>().target);
+                        spell.Activate(_spellScript.target);
 
                         GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
                         GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();

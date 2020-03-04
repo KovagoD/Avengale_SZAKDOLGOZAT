@@ -86,8 +86,10 @@ public class Enemy_script : MonoBehaviour
 
     public void opponentAttack()
     {
+
         var _playerManager = GameObject.Find("Character").GetComponent<Character_manager>();
-        _characterStats.looseHealth(_characterStats.getPercentOfHealth(enemies[id].damage));
+        var _playerHealthPercent = _characterStats.getPercentOfHealth(enemies[id].damage);
+        _characterStats.looseHealth(_playerHealthPercent);
         _playerManager.spell_animation.Play(enemies[id].attackAnimation);
         Handheld.Vibrate();
 
@@ -118,7 +120,7 @@ public class Enemy_script : MonoBehaviour
         }
         _playerManager.damage_text.GetComponent<Animator>().Play(_hitAnimation);
         GameObject.Find("Battle_scene").GetComponent<Animator>().Play("Screen_shake_1");
-        _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + enemies[id].damage, 0.05f);
+        _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + _playerHealthPercent, 0.05f);
 
         //Debug.Log(enemies[id].enemy_name + "'s attack animaton: " + enemies[id].attackAnimation);
     }

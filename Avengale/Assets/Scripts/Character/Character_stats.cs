@@ -49,7 +49,9 @@ public class Character_stats : MonoBehaviour
     public int[] Equipments = new int[8];
 
     [Header("Spells")]
+    public int Local_spell_points = 0;
     public int[] Spells = new int[5];
+    public int[] Talents = new int[10];
 
     [Header("References")]
     public TextMeshProUGUI NameAndTitle;
@@ -139,7 +141,7 @@ public class Character_stats : MonoBehaviour
             "Damage: " + Local_damage, 5f);
 
 
-        GameObject.Find("XP_bar").GetComponent<Bar_script>().updateXP();
+        //GameObject.Find("XP_bar").GetComponent<Bar_script>().updateXP();
         updateMoneyStat();
 
     }

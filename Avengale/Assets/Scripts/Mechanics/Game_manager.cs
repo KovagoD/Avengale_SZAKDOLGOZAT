@@ -16,12 +16,14 @@ public class Game_manager : MonoBehaviour
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         current_screen = GameObject.Find("Character_screen_UI");
-        
+
         GameObject.Find("Character_screen_UI").SetActive(true);
         GameObject.Find("Store_screen_UI").SetActive(false);
         GameObject.Find("Combat_screen_UI").SetActive(false);
         GameObject.Find("Quest_screen_UI").SetActive(false);
         GameObject.Find("Map_screen_UI").SetActive(false);
+        GameObject.Find("Spell_screen_UI").SetActive(false);
+
 
     }
     void Update()
@@ -111,6 +113,13 @@ public class Game_manager : MonoBehaviour
             GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();
             GameObject.Find("Spell_preview").GetComponent<Visibility_script>().setInvisible();
         }
+
+        if (current_screen == GameObject.Find("Spell_screen_UI"))
+        {
+
+        }
+
+        
 
         _characterStats.updateMoneyStat();
 

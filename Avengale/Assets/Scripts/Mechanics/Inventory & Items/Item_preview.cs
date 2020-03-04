@@ -231,9 +231,9 @@ public class Item_preview : MonoBehaviour
                 slot_id = 6;
                 break;
             case "right arm":
-                health_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[0];
-                resource_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[1];
-                damage_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[2];
+                health_to_compare = gameManager.items[character_stats.Equipments[7]].attributes[0];
+                resource_to_compare = gameManager.items[character_stats.Equipments[7]].attributes[1];
+                damage_to_compare = gameManager.items[character_stats.Equipments[7]].attributes[2];
                 slot_id = 7;
                 break;
             default:

@@ -18,10 +18,11 @@ public class Spell_script : MonoBehaviour
             ID, NAME, TYPE, CHARACTER CLASS, DESCRIPTION, ATTRIBUTE, ATTRIBUTE VALUE, RESOURCE COST, ICON, ANIMATION
         */
 
-        spells.Add(new Spell(0, "", "", "", "", ".", 0, 0, Resources.Load<Sprite>("nothing"), null));
-        spells.Add(new Spell(1, "Enraged attack", "attack", "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1"));
-        spells.Add(new Spell(2, "Heal me", "healing", "warrior", "Heal <b>yourself</b>.", "health.%", stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), null));
-        spells.Add(new Spell(3, "Shield", "buff", "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null));
+        spells.Add(new Spell(0, "", "", "", "", ".", 0, 0, 0, Resources.Load<Sprite>("nothing"), null, 0));
+        spells.Add(new Spell(1, "Attack", "attack", "warrior", "ATTACC", "damage.", 0, 0, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 5));
+        spells.Add(new Spell(2, "Enraged attack", "attack", "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1", 10));
+        spells.Add(new Spell(3, "Heal me", "healing", "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), null, 5));
+        spells.Add(new Spell(4, "Shield", "buff", "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null, 10));
     }
 
     public void setTarget(GameObject input_target)
@@ -35,7 +36,7 @@ public class Spell_script : MonoBehaviour
         {
             if (spell.type == "attack")
             {
-                spell.attribute = spell.attribute + GameObject.Find("Game manager").GetComponent<Character_stats>().Local_damage;
+                spell.attribute = spell.starterAttribute + GameObject.Find("Game manager").GetComponent<Character_stats>().Local_damage;
             }
 
             if (spell.type == "healing")
@@ -65,9 +66,14 @@ public class Spell
     public string attribute_type;
     public int attribute;
 
+    public int starterAttribute;
     public string animation;
 
     public int resource_cost;
+
+
+    public int spell_points;
+    public int level_requirement;
 
     public Sprite icon;
     private Ingame_notification_script _notification;
@@ -81,7 +87,7 @@ public class Spell
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _characterManager = GameObject.Find("Character").GetComponent<Character_manager>();
     }
-    public Spell(int id, string name, string type, string char_class, string description, string attribute_name, int attribute, int resource_cost, Sprite icon, string animation)
+    public Spell(int id, string name, string type, string char_class, string description, string attribute_name, int starterAttribute, int attribute, int resource_cost, Sprite icon, string animation, int spell_points)
     {
         this.id = id;
         this.name = name;
@@ -90,6 +96,7 @@ public class Spell
         this.description = description;
         this.attribute_name = attribute_name;
         this.attribute = attribute;
+        this.starterAttribute = starterAttribute;
         this.resource_cost = resource_cost;
         this.icon = icon;
 
@@ -101,6 +108,8 @@ public class Spell
         {
             this.attribute_type = "%";
         }
+
+        this.spell_points = spell_points;
 
     }
 
@@ -144,6 +153,7 @@ public class Spell
                 }
 
                 target.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(_hitAnimation);
+                Handheld.Vibrate();
                 target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute, 0.05f);
             }
             else { _notification.message("Need to select a target first!", 3, "red"); }
