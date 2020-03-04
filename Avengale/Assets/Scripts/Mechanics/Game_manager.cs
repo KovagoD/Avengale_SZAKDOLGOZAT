@@ -116,7 +116,7 @@ public class Game_manager : MonoBehaviour
 
         if (current_screen == GameObject.Find("Spell_screen_UI"))
         {
-
+            GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: "+_characterStats.Local_spell_points, 0.05f);
         }
 
         

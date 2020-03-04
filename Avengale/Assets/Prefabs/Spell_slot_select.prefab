@@ -628,6 +628,7 @@ GameObject:
   - component: {fileID: 9036314548133387835}
   - component: {fileID: 8092483856534831158}
   - component: {fileID: 6194618517788288699}
+  - component: {fileID: 2778741951726305295}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -820,6 +821,23 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
+--- !u!114 &2778741951726305295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5782106632844514010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ef5a5fc4c13c243ad6273e56b461f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ugui: {fileID: 0}
+  generic: {fileID: 6194618517788288699}
+  Text: Select a slot!
+  speed: 0.01
+  start: 1
 --- !u!1 &7216448027550894175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,6 +1108,7 @@ MonoBehaviour:
   - {fileID: 2341032596488712442}
   - {fileID: 1160847465004001753}
   - {fileID: 3052101426607822770}
+  spell_id: 0
 --- !u!1 &8958440802461765751
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,30 +8,35 @@ public class Spell_slot_select_script : MonoBehaviour
     private Character_stats _characterStats;
     private Spell_script _spellScript;
     public int spell_id;
+
+    private GameObject _sender;
     void Start()
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
     }
 
-    public void showSlotSelect(int input_spell_id)
+    public void showSlotSelect(int input_spell_id, GameObject sender)
     {
+        _sender=sender;
         spell_id=input_spell_id;
         gameObject.GetComponent<Animator>().Play("Slot_select_slide_in_anim");
         foreach (var slot in selectable_slots)
         {
             slot.GetComponent<SpriteRenderer>().sprite = _spellScript.spells[_characterStats.Spells[slot.GetComponent<Slot_select_script>().ID]].icon;
-            //_characterStats.Spells[slot.GetComponent<Slot_select_script>().ID]
         }
+
     }
 
     public void closeSlotSelect()
     {
         gameObject.GetComponent<Animator>().Play("Slot_select_slide_out_anim");
+
     }
 
     public void chooseSlot(int ID)
     {
         _characterStats.Spells[ID] = spell_id;
+        _sender.GetComponent<Talent_slot_script>().addSpellPoint();
     }
 }

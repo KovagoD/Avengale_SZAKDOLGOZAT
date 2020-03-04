@@ -9,6 +9,9 @@ public class Spell_script : MonoBehaviour
 
 
 
+    public int firstRowPoints; public GameObject[] firstRow;
+    public int secondRowPoints; public GameObject[] secondRow; public bool secondRowEnabled = false;
+    public int thirdRowPoints; public GameObject[] thirdRow;
 
     void Awake()
     {
@@ -52,6 +55,24 @@ public class Spell_script : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        firstRowPoints = 0;
+        foreach (var slot in firstRow)
+        {
+            firstRowPoints += slot.GetComponent<Talent_slot_script>().spell_points;
+        }
+
+        if (firstRowPoints >= 5)
+        {
+            secondRowEnabled = true;
+            foreach (var slot in secondRow)
+            {
+                slot.GetComponent<Talent_slot_script>().setEnabled();
+            }
+        }
+
+    }
 
 }
 
