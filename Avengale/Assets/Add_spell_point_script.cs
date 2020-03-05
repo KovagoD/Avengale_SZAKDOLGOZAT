@@ -13,6 +13,7 @@ public class Add_spell_point_script : MonoBehaviour
     }
     void OnMouseDown()
     {
-        _talentSlot.showSpellSlotSelect();
+        //_talentSlot.showSpellSlotSelect();
+        _talentSlot.addSpellPoint();
     }
 }

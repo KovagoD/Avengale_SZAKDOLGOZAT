@@ -10,12 +10,14 @@ public class Game_manager : MonoBehaviour
     public GameObject[] buttons;
     public GameObject current_screen;
 
+    private Spell_script _spellScript;
     private Character_stats _characterStats;
 
     void Start()
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         current_screen = GameObject.Find("Character_screen_UI");
+        _spellScript= gameObject.GetComponent<Spell_script>();
 
         GameObject.Find("Character_screen_UI").SetActive(true);
         GameObject.Find("Store_screen_UI").SetActive(false);
@@ -117,6 +119,16 @@ public class Game_manager : MonoBehaviour
         if (current_screen == GameObject.Find("Spell_screen_UI"))
         {
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: "+_characterStats.Local_spell_points, 0.05f);
+
+            foreach (var slot in _spellScript.firstRow)
+            {
+                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(slot.GetComponent<Talent_slot_script>().spell_points.ToString() + "/" + slot.GetComponent<Talent_slot_script>().max_spell_points.ToString(), 0.05f);  
+            }
+            foreach (var slot in _spellScript.secondRow)
+            {
+                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(slot.GetComponent<Talent_slot_script>().spell_points.ToString() + "/" + slot.GetComponent<Talent_slot_script>().max_spell_points.ToString(), 0.05f);  
+            }            
+            
         }
 
         

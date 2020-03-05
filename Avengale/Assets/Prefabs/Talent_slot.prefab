@@ -325,7 +325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -98.6}
+  m_AnchoredPosition: {x: 0, y: -116.8}
   m_SizeDelta: {x: 192, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &18262176558249938
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: nononono
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e20564920d36a1a44b1edc0b8e27fbe1, type: 2}
   m_sharedMaterial: {fileID: 1592661887041926852, guid: e20564920d36a1a44b1edc0b8e27fbe1,
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 357136257455493926}
-    characterCount: 1
+    characterCount: 8
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -508,7 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ugui: {fileID: 0}
   generic: {fileID: 357136257455493926}
-  Text: 0
+  Text: nononono
   speed: 0.01
   start: 1
 --- !u!1 &6847751494445810092

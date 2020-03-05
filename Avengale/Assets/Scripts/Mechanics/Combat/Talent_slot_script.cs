@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Talent_slot_script : MonoBehaviour
@@ -20,34 +21,47 @@ public class Talent_slot_script : MonoBehaviour
 
     private Spell_script _spellScript;
     private Character_stats _characterStats;
+    private Spell_slot_select_script _spellSlotSelect;
 
     void Start()
     {
         _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        _spellSlotSelect = GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>();
         spell_id = GameObject.Find("Game manager").GetComponent<Character_stats>().Talents[ID];
         spell_icon.GetComponent<SpriteRenderer>().sprite = _spellScript.spells[spell_id].icon;
 
-        setEnabled();
-        if (row==2)
-        {
-            setDisabled();
-        }
+        max_spell_points = _spellScript.spells[spell_id].spell_points;
 
     }
     void Update()
     {
-        //if (row == 2 && !_spellScript.secondRowEnabled)
-        if (_characterStats.Local_spell_points == 0)
+        if (isAvailable())
+        {
+            setEnabled();
+        }
+        else
         {
             setDisabled();
         }
-
-
+    }
+    public bool isAvailable()
+    {
+        if ((spell_id == 0) ||
+            (_characterStats.Local_spell_points == 0) ||
+        (row == 2 && !_spellScript.secondRowEnabled) ||
+        (_spellScript.spells[spell_id].level_requirement > _characterStats.Local_level))
+        {
+            return false;
+        }
+        return true;
     }
     void OnMouseDown()
     {
-        GameObject.Find("Spell_preview").GetComponent<Spell_preview_script>().showSpell(spell_id);
+        if (!_spellSlotSelect.isOpened)
+        {
+            GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id);
+        }
     }
 
     public void setEnabled()
@@ -68,28 +82,17 @@ public class Talent_slot_script : MonoBehaviour
         if (_characterStats.Local_spell_points > 0 && spell_points < max_spell_points)
         {
             _characterStats.Local_spell_points--;
-
             spell_points++;
-            spell_points_text.GetComponent<Text_animation>().startAnim(spell_points.ToString(), 0.5f);
-            Debug.Log(_characterStats.Local_spell_points);
+            spell_points_text.GetComponent<Text_animation>().startAnim(spell_points.ToString() + "/" + max_spell_points.ToString(), 0.05f);
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
 
         }
-
-
-
-        /*
-        if (row == 2 && _spellScript.secondRowEnabled && _characterStats.Local_spell_points > 0)
-        {
-            setEnabled();
-        }
-        else { setDisabled(); }
-        */
+        _spellScript.checkRowAvailability();
     }
 
     public void showSpellSlotSelect()
     {
-        GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>().showSlotSelect(spell_id, gameObject);
+        GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>().showSlotSelect(spell_id);
     }
 
 }

@@ -21,11 +21,11 @@ public class Spell_script : MonoBehaviour
             ID, NAME, TYPE, CHARACTER CLASS, DESCRIPTION, ATTRIBUTE, ATTRIBUTE VALUE, RESOURCE COST, ICON, ANIMATION
         */
 
-        spells.Add(new Spell(0, "", "", "", "", ".", 0, 0, 0, Resources.Load<Sprite>("nothing"), null, 0));
-        spells.Add(new Spell(1, "Attack", "attack", "warrior", "ATTACC", "damage.", 0, 0, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 5));
-        spells.Add(new Spell(2, "Enraged attack", "attack", "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1", 10));
-        spells.Add(new Spell(3, "Heal me", "healing", "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), null, 5));
-        spells.Add(new Spell(4, "Shield", "buff", "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null, 10));
+        spells.Add(new Spell(0, "", "", "", "", ".", 0, 0, 0, Resources.Load<Sprite>("nothing"), null, 0, 0));
+        spells.Add(new Spell(1, "Attack", "attack", "warrior", "ATTACC", "damage.", 0, 0, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 0, 5));
+        spells.Add(new Spell(2, "Enraged attack", "attack", "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1", 2, 3));
+        spells.Add(new Spell(3, "Heal me", "healing", "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), null, 2, 5));
+        spells.Add(new Spell(4, "Shield", "buff", "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null, 5, 10));
     }
 
     public void setTarget(GameObject input_target)
@@ -57,6 +57,11 @@ public class Spell_script : MonoBehaviour
 
     private void Update()
     {
+        //checkRowAvailability();
+    }
+
+    public void checkRowAvailability()
+    {
         firstRowPoints = 0;
         foreach (var slot in firstRow)
         {
@@ -71,10 +76,10 @@ public class Spell_script : MonoBehaviour
                 slot.GetComponent<Talent_slot_script>().setEnabled();
             }
         }
-
     }
-
 }
+
+
 
 public class Spell
 {
@@ -95,7 +100,6 @@ public class Spell
 
     public int spell_points;
     public int level_requirement;
-
     public Sprite icon;
     private Ingame_notification_script _notification;
     private Character_stats _characterStats;
@@ -108,7 +112,7 @@ public class Spell
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _characterManager = GameObject.Find("Character").GetComponent<Character_manager>();
     }
-    public Spell(int id, string name, string type, string char_class, string description, string attribute_name, int starterAttribute, int attribute, int resource_cost, Sprite icon, string animation, int spell_points)
+    public Spell(int id, string name, string type, string char_class, string description, string attribute_name, int starterAttribute, int attribute, int resource_cost, Sprite icon, string animation, int level_requirement, int spell_points)
     {
         this.id = id;
         this.name = name;
@@ -130,6 +134,7 @@ public class Spell
             this.attribute_type = "%";
         }
 
+        this.level_requirement = level_requirement;
         this.spell_points = spell_points;
 
     }
