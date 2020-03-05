@@ -18,28 +18,28 @@ public class Item_equip_script : MonoBehaviour
 
                 switch (item.type)
                 {
-                    case "head":
+                    case item_type.head:
                         gameManager.GetComponent<Character_stats>().equipItem(0, item.id, slot_id);
                         break;
-                    case "body":
+                    case item_type.body:
                         gameManager.GetComponent<Character_stats>().equipItem(1, item.id, slot_id);
                         break;
-                    case "legs":
+                    case item_type.legs:
                         gameManager.GetComponent<Character_stats>().equipItem(2, item.id, slot_id);
                         break;
-                    case "left arm":
+                    case item_type.left_arm:
                         gameManager.GetComponent<Character_stats>().equipItem(3, item.id, slot_id);
                         break;
-                    case "shoulder":
+                    case item_type.shoulder:
                         gameManager.GetComponent<Character_stats>().equipItem(4, item.id, slot_id);
                         break;
-                    case "gadget":
+                    case item_type.gadget:
                         gameManager.GetComponent<Character_stats>().equipItem(5, item.id, slot_id);
                         break;
-                    case "feet":
+                    case item_type.feet:
                         gameManager.GetComponent<Character_stats>().equipItem(6, item.id, slot_id);
                         break;
-                    case "right arm":
+                    case item_type.right_arm:
                         gameManager.GetComponent<Character_stats>().equipItem(7, item.id, slot_id);
                         break;
                     default:
@@ -58,28 +58,28 @@ public class Item_equip_script : MonoBehaviour
 
                 switch (item.type)
                 {
-                    case "head":
+                    case item_type.head:
                         gameManager.GetComponent<Character_stats>().unequipItem(0);
                         break;
-                    case "body":
+                    case item_type.body:
                         gameManager.GetComponent<Character_stats>().unequipItem(1);
                         break;
-                    case "legs":
+                    case item_type.legs:
                         gameManager.GetComponent<Character_stats>().unequipItem(2);
                         break;
-                    case "left arm":
+                    case item_type.left_arm:
                         gameManager.GetComponent<Character_stats>().unequipItem(3);
                         break;
-                    case "shoulder":
+                    case item_type.shoulder:
                         gameManager.GetComponent<Character_stats>().unequipItem(4);
                         break;
-                    case "gadget":
+                    case item_type.gadget:
                         gameManager.GetComponent<Character_stats>().unequipItem(5);
                         break;
-                    case "feet":
+                    case item_type.feet:
                         gameManager.GetComponent<Character_stats>().unequipItem(6);
                         break;
-                    case "right arm":
+                    case item_type.right_arm:
                         gameManager.GetComponent<Character_stats>().unequipItem(7);
                         break;
                     default:

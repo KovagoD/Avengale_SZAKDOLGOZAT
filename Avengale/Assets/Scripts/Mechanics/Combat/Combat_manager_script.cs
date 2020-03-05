@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum battleRound {Player, Opponent_1, Opponent_2}
+
 public class Combat_manager_script : MonoBehaviour
 {
     [Header("Battle details")]
     public bool isPaused;
-    public string[] round;
-    public string current_round;
+    public battleRound[] round;
+    public battleRound current_round;
 
     public int round_counter;
 
@@ -132,27 +134,27 @@ public class Combat_manager_script : MonoBehaviour
 
     private void generateSequence()
     {
-        round = new string[3];
+        round = new battleRound[3];
 
         int rnd = UnityEngine.Random.Range(0, 3);
 
         if (rnd == 0)
         {
-            round[0] = "Player";
-            round[1] = "Opponent_1";
-            round[2] = "Opponent_2";
+            round[0] = battleRound.Player;
+            round[1] = battleRound.Opponent_1;
+            round[2] = battleRound.Opponent_2;
         }
         else if (rnd == 1)
         {
-            round[0] = "Opponent_1";
-            round[1] = "Player";
-            round[2] = "Opponent_2";
+            round[0] = battleRound.Opponent_1;
+            round[1] = battleRound.Player;
+            round[2] = battleRound.Opponent_2;
         }
         else if (rnd == 2)
         {
-            round[0] = "Opponent_1";
-            round[1] = "Opponent_2";
-            round[2] = "Player";
+            round[0] = battleRound.Opponent_1;
+            round[1] = battleRound.Opponent_2;
+            round[2] = battleRound.Player;
         }
     }
 
@@ -201,8 +203,9 @@ public class Combat_manager_script : MonoBehaviour
 
         //Debug.Log(round[round_counter]);
 
-        if (round[round_counter] == "Opponent_1" && opponents[0].GetComponent<Enemy_script>().isAlive())
+        if (round[round_counter] == battleRound.Opponent_1 && opponents[0].GetComponent<Enemy_script>().isAlive())
         {
+            current_round=battleRound.Opponent_1;
             setTurnSign(0);
             currentOpponentID = battles[battle_id].opponent_ids[0];
             round_text.GetComponent<Text_animation>().startAnim(_enemyManagerScript.enemies[battles[battle_id].opponent_ids[0]].enemy_name, 0.05f);
@@ -212,12 +215,13 @@ public class Combat_manager_script : MonoBehaviour
 
 
         }
-        else if (round[round_counter] == "Opponent_1" && !opponents[0].GetComponent<Enemy_script>().isAlive())
+        else if (round[round_counter] == battleRound.Opponent_1 && !opponents[0].GetComponent<Enemy_script>().isAlive())
         {
             changeRound();
         }
-        else if (round[round_counter] == "Opponent_2" && opponents[1].GetComponent<Enemy_script>().isAlive())
+        else if (round[round_counter] == battleRound.Opponent_2 && opponents[1].GetComponent<Enemy_script>().isAlive())
         {
+            current_round=battleRound.Opponent_2;
             setTurnSign(1);
 
             currentOpponentID = battles[battle_id].opponent_ids[1];
@@ -226,12 +230,13 @@ public class Combat_manager_script : MonoBehaviour
             _isOpponentAttacked = false;
             StartCoroutine("enemyopponentAttack", 1);
         }
-        else if (round[round_counter] == "Opponent_2" && !opponents[1].GetComponent<Enemy_script>().isAlive())
+        else if (round[round_counter] == battleRound.Opponent_2 && !opponents[1].GetComponent<Enemy_script>().isAlive())
         {
             changeRound();
         }
-        else if (round[round_counter] == "Player")
+        else if (round[round_counter] == battleRound.Player)
         {
+            current_round=battleRound.Player;
             setTurnSign(2);
             round_text.GetComponent<Text_animation>().startAnim(_characterStats.Local_name + " " + _characterStats.Local_title, 0.05f);
             _notification.message(_characterStats.Local_name + " " + _characterStats.Local_title + "'s round!", 3);
@@ -251,12 +256,12 @@ public class Combat_manager_script : MonoBehaviour
     public void spellbarController()
     {
 
-        if (round[round_counter] == "Player")
+        if (round[round_counter] == battleRound.Player)
         {
             _spellbarAnimator.Play("Spellbar_slide_in_anim");
             isSpellbarActive = true;
         }
-        else if (round[round_counter] != "Player" && isSpellbarActive)
+        else if (round[round_counter] != battleRound.Player && isSpellbarActive)
         {
             _spellbarAnimator.Play("Spellbar_slide_out_anim");
         }
@@ -353,7 +358,7 @@ public class Combat_manager_script : MonoBehaviour
         result_battle_rewards.GetComponent<Text_animation>().startAnim("<b>Rewards:</b>\n" + _battleRewards, 0.05f);
     }
 
-    public string getRound()
+    public battleRound getRound()
     {
         return round[round_counter];
     }
@@ -386,7 +391,7 @@ public class Combat_manager_script : MonoBehaviour
     public void skipEnemyRound()
     {
         //resumeBattle();
-        if (round[round_counter] != "Player" && _isOpponentAttacked == false && opponents[currentOpponentID].GetComponent<Enemy_script>().isAlive())
+        if (round[round_counter] != battleRound.Player && _isOpponentAttacked == false && opponents[currentOpponentID].GetComponent<Enemy_script>().isAlive())
         {
             opponents[currentOpponentID].GetComponent<Enemy_script>().opponentAttack();
         }

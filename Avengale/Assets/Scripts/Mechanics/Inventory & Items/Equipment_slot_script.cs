@@ -80,22 +80,22 @@ public class Equipment_slot_script : MonoBehaviour
 
             switch (_itemScript.items[item_id].rarity)
             {
-                case "poor":
+                case rarity.poor:
                     _slotBorder.color = colors.gray;
                     break;
-                case "common":
+                case rarity.common:
                     _slotBorder.color = colors.white;
                     break;
-                case "uncommon":
+                case rarity.uncommon:
                    _slotBorder.color = colors.green;
                     break;
-                case "rare":
+                case rarity.rare:
                     _slotBorder.color = colors.blue;
                     break;
-                case "epic":
+                case rarity.epic:
                     _slotBorder.color = colors.purple;
                     break;
-                case "legendary":
+                case rarity.legendary:
                    _slotBorder.color = colors.yellow;
                     break;
                 default:

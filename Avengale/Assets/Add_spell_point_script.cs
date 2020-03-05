@@ -11,9 +11,10 @@ public class Add_spell_point_script : MonoBehaviour
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
     }
+
     void OnMouseDown()
     {
-        //_talentSlot.showSpellSlotSelect();
         _talentSlot.addSpellPoint();
     }
+
 }

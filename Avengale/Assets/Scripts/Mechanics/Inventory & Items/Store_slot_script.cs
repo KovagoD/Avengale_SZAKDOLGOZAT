@@ -54,27 +54,27 @@ public class Store_slot_script : MonoBehaviour
 
             var items = gameManager.GetComponent<Item_script>().items;
 
-            if (items[item_id].rarity == "poor")
+            if (items[item_id].rarity == rarity.poor)
             {
                 slot_border.GetComponent<SpriteRenderer>().color = colors.gray;
             }
-            if (items[item_id].rarity == "common")
+            if (items[item_id].rarity == rarity.common)
             {
                 slot_border.GetComponent<SpriteRenderer>().color = colors.white;
             }
-            if (items[item_id].rarity == "uncommon")
+            if (items[item_id].rarity == rarity.uncommon)
             {
                 slot_border.GetComponent<SpriteRenderer>().color = colors.green;
             }
-            if (items[item_id].rarity == "rare")
+            if (items[item_id].rarity == rarity.rare)
             {
                 slot_border.GetComponent<SpriteRenderer>().color = colors.blue;
             }
-            if (items[item_id].rarity == "epic")
+            if (items[item_id].rarity == rarity.epic)
             {
                 slot_border.GetComponent<SpriteRenderer>().color = colors.purple;
             }
-            if (items[item_id].rarity == "legendary")
+            if (items[item_id].rarity == rarity.legendary)
             {
                 slot_border.GetComponent<SpriteRenderer>().color = colors.yellow;
             }

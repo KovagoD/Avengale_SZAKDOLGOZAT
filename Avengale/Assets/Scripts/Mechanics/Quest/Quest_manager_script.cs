@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum quest_types{combat, conversation, item}
 public class Quest_manager_script : MonoBehaviour
 {
     [Header("References")]
@@ -18,11 +19,11 @@ public class Quest_manager_script : MonoBehaviour
             ID, NAME, TYPE, DESCRIPTION, LONG DESCRIPTION, OBJECTIVE, XP, ITEM
         */
 
-        quests.Add(new Quest(0, "", "", "", "", 0, 0, 0));
-        quests.Add(new Quest(1, "Combat test quest", "combat", "defeat Szisz", "Ayaya? Aya! AYAYA!...AYAYA\n AYAYA AYAYA AYAYA (yamete)", 1, 100, 5));
-        quests.Add(new Quest(2, "Conversation test quest", "conversation", "Speak with David", "gfngfner434534", 3, 100, 6));
-        quests.Add(new Quest(3, "Item test quest", "item", "Get the quest item", "sadsd21dasdasdasdsad", 11, 100, 6));
-        quests.Add(new Quest(4, "Item reeeee", "item", "Get the quest item", "sadsd21dasdasdasdsad", 12, 100, 6));
+        quests.Add(new Quest(0, "", quest_types.combat, "", "", 0, 0, 0));
+        quests.Add(new Quest(1, "Combat test quest", quest_types.combat, "defeat Szisz", "Ayaya? Aya! AYAYA!...AYAYA\n AYAYA AYAYA AYAYA (yamete)", 1, 100, 5));
+        quests.Add(new Quest(2, "Conversation test quest", quest_types.conversation, "Speak with David", "gfngfner434534", 3, 100, 6));
+        quests.Add(new Quest(3, "Item test quest", quest_types.item, "Get the quest item", "sadsd21dasdasdasdsad", 11, 100, 6));
+        quests.Add(new Quest(4, "Item reeeee", quest_types.item, "Get the quest item", "sadsd21dasdasdasdsad", 12, 100, 6));
 
     }
 
@@ -97,7 +98,7 @@ public class Quest_manager_script : MonoBehaviour
     public void isQuestCompleted(int slot_id, int quest_id)
     {
 
-        if (quests[quest_id].type == "combat")
+        if (quests[quest_id].type == quest_types.combat)
         {
             if (_characterStats.defeated_enemies.Contains(GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[quests[quest_id].objective]))
             {
@@ -108,7 +109,7 @@ public class Quest_manager_script : MonoBehaviour
             }
             else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
         }
-        else if (quests[quest_id].type == "conversation")
+        else if (quests[quest_id].type == quest_types.conversation)
         {
             if (_characterStats.completed_conversations.Contains(GameObject.Find("Conversation").GetComponent<Conversation_script>().conversations[quests[quest_id].objective]))
             {
@@ -119,7 +120,7 @@ public class Quest_manager_script : MonoBehaviour
             }
             else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
         }
-        else if (quests[quest_id].type == "item")
+        else if (quests[quest_id].type == quest_types.item)
         {
             bool haveItem = false;
             var inventory = _characterStats.Inventory;
@@ -154,7 +155,7 @@ public class Quest
 {
     public int id;
     public string name;
-    public string type;
+    public quest_types type;
     public string description;
     public string long_description;
     public int objective;
@@ -163,7 +164,7 @@ public class Quest
     public int item;
     public int money;
 
-    public Quest(int id, string name, string type, string description, string long_description, int objective, int xp, int item)
+    public Quest(int id, string name, quest_types type, string description, string long_description, int objective, int xp, int item)
     {
         this.id = id;
         this.name = name;

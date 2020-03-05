@@ -29,12 +29,13 @@ public class Item_preview : MonoBehaviour
 
     }
 
-    private void Update() {
-        if(gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Item_preview_slide_out_anim") && gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+    private void Update()
+    {
+        if (gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Item_preview_slide_out_anim") && gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {
             GameObject.Find("Exit button item_preview").GetComponent<Close_button_script>().Close();
         }
-        
+
     }
 
 
@@ -69,7 +70,7 @@ public class Item_preview : MonoBehaviour
         attr_damage.GetComponent<TextMeshPro>().color = colors.white;
 
         //Quality
-        if (gameManager.items[item_id].rarity == "quest")
+        if (gameManager.items[item_id].rarity == rarity.quest)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.quest;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -77,7 +78,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.quest;
         }
 
-        if (gameManager.items[item_id].rarity == "poor")
+        if (gameManager.items[item_id].rarity == rarity.poor)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.gray;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -85,7 +86,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.gray;
 
         }
-        if (gameManager.items[item_id].rarity == "common")
+        if (gameManager.items[item_id].rarity == rarity.common)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.white;
             item_description.GetComponent<TextMeshPro>().color = colors.white;
@@ -93,14 +94,14 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.white;
         }
 
-        if (gameManager.items[item_id].rarity == "uncommon")
+        if (gameManager.items[item_id].rarity == rarity.uncommon)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.green;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
             item_name.GetComponent<TextMeshPro>().color = colors.green;
             slot_border.GetComponent<SpriteRenderer>().color = colors.green;
         }
-        if (gameManager.items[item_id].rarity == "rare")
+        if (gameManager.items[item_id].rarity == rarity.rare)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.blue;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -108,7 +109,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.blue;
         }
 
-        if (gameManager.items[item_id].rarity == "epic")
+        if (gameManager.items[item_id].rarity == rarity.epic)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.purple;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -116,7 +117,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.purple;
         }
 
-        if (gameManager.items[item_id].rarity == "legendary")
+        if (gameManager.items[item_id].rarity == rarity.legendary)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.yellow;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -142,13 +143,13 @@ public class Item_preview : MonoBehaviour
         item_description.GetComponent<Text_animation>().startAnim("<i>" + gameManager.items[item_id].description, 1f);
 
         attr_value.GetComponent<Text_animation>().startAnim(gameManager.items[item_id].attributes[3] + " credit", 0.05f);
-        
 
-        if (gameManager.items[item_id].type != "quest")
+
+        if (gameManager.items[item_id].type != item_type.quest)
         {
             item_rarity_and_type.GetComponent<Text_animation>().startAnim("[" + gameManager.items[item_id].rarity + " " + gameManager.items[item_id].type + "]", 1f);
         }
-        else if (gameManager.items[item_id].type == "quest")
+        else if (gameManager.items[item_id].type == item_type.quest)
         {
             item_rarity_and_type.GetComponent<Text_animation>().startAnim("[" + gameManager.items[item_id].type + "]", 1f);
         }
@@ -187,50 +188,50 @@ public class Item_preview : MonoBehaviour
         #region compare_switch
         switch (gameManager.items[item_id].type)
         {
-            case "head":
+            case item_type.head:
                 health_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[0]].attributes[2];
 
                 slot_id = 0;
                 break;
-            case "body":
+            case item_type.body:
                 health_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[1]].attributes[2];
                 slot_id = 1;
                 break;
-            case "legs":
+            case item_type.legs:
                 health_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[2]].attributes[2];
                 slot_id = 2;
                 break;
-            case "left arm":
+            case item_type.left_arm:
                 health_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[3]].attributes[2];
                 slot_id = 3;
                 break;
-            case "shoulder":
+            case item_type.shoulder:
                 health_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[4]].attributes[2];
                 slot_id = 4;
                 break;
-            case "gadget":
+            case item_type.gadget:
                 health_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[5]].attributes[2];
                 slot_id = 5;
                 break;
-            case "feet":
+            case item_type.feet:
                 health_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[6]].attributes[2];
                 slot_id = 6;
                 break;
-            case "right arm":
+            case item_type.right_arm:
                 health_to_compare = gameManager.items[character_stats.Equipments[7]].attributes[0];
                 resource_to_compare = gameManager.items[character_stats.Equipments[7]].attributes[1];
                 damage_to_compare = gameManager.items[character_stats.Equipments[7]].attributes[2];
@@ -241,7 +242,7 @@ public class Item_preview : MonoBehaviour
         }
         #endregion
 
-        if (gameManager.items[item_id].type != "quest")
+        if (gameManager.items[item_id].type != item_type.quest)
         {
             attr_health.GetComponent<Text_animation>().startAnim("+" + gameManager.items[item_id].attributes[0] +
             " health (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[0]) + " ¤ " + (gameManager.items[item_id].attributes[0]) + ")", 0.05f);
@@ -249,8 +250,8 @@ public class Item_preview : MonoBehaviour
             " resource (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[1]) + " ¤ " + (gameManager.items[item_id].attributes[1]) + ")", 0.05f);
             attr_damage.GetComponent<Text_animation>().startAnim("+" + gameManager.items[item_id].attributes[2] +
             " damage (" + (gameManager.items[character_stats.Equipments[slot_id]].attributes[2]) + " ¤ " + (gameManager.items[item_id].attributes[2]) + ")", 0.05f);
-            
-            }
+
+        }
         else
         {
             level.GetComponent<Text_animation>().startAnim("", 1f);
@@ -285,7 +286,7 @@ public class Item_preview : MonoBehaviour
 
         //Quality
 
-        if (gameManager.items[item_id].rarity == "quest")
+        if (gameManager.items[item_id].rarity == rarity.quest)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.quest;
             item_description.GetComponent<TextMeshPro>().color = colors.quest;
@@ -293,7 +294,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.quest;
         }
 
-        if (gameManager.items[item_id].rarity == "poor")
+        if (gameManager.items[item_id].rarity == rarity.poor)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.gray;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -301,7 +302,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.gray;
 
         }
-        if (gameManager.items[item_id].rarity == "common")
+        if (gameManager.items[item_id].rarity == rarity.common)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.white;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -309,14 +310,14 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.white;
         }
 
-        if (gameManager.items[item_id].rarity == "uncommon")
+        if (gameManager.items[item_id].rarity == rarity.uncommon)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.green;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
             item_name.GetComponent<TextMeshPro>().color = colors.green;
             slot_border.GetComponent<SpriteRenderer>().color = colors.green;
         }
-        if (gameManager.items[item_id].rarity == "rare")
+        if (gameManager.items[item_id].rarity == rarity.rare)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.blue;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -324,7 +325,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.blue;
         }
 
-        if (gameManager.items[item_id].rarity == "epic")
+        if (gameManager.items[item_id].rarity == rarity.epic)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.purple;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;
@@ -332,7 +333,7 @@ public class Item_preview : MonoBehaviour
             slot_border.GetComponent<SpriteRenderer>().color = colors.purple;
         }
 
-        if (gameManager.items[item_id].rarity == "legendary")
+        if (gameManager.items[item_id].rarity == rarity.legendary)
         {
             item_rarity_and_type.GetComponent<TextMeshPro>().color = colors.yellow;
             item_description.GetComponent<TextMeshPro>().color = colors.gray;

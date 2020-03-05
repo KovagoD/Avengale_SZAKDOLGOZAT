@@ -272,25 +272,25 @@ public class Character_stats : MonoBehaviour
 
                 switch (_itemScript.items[Inventory[i]].rarity)
                 {
-                    case "legendary":
+                    case rarity.legendary:
                         _compareQuality_1 = 6;
                         break;
-                    case "epic":
+                    case rarity.epic:
                         _compareQuality_1 = 5;
                         break;
-                    case "rare":
+                    case rarity.rare:
                         _compareQuality_1 = 4;
                         break;
-                    case "uncommon":
+                    case rarity.uncommon:
                         _compareQuality_1 = 3;
                         break;
-                    case "common":
+                    case rarity.common:
                         _compareQuality_1 = 2;
                         break;
-                    case "poor":
+                    case rarity.poor:
                         _compareQuality_1 = 1;
                         break;
-                    case "quest":
+                    case rarity.quest:
                         _compareQuality_1 = 0;
                         break;
                     default:
@@ -300,25 +300,25 @@ public class Character_stats : MonoBehaviour
                 int _compareQuality_2 = 0;
                 switch (_itemScript.items[Inventory[j]].rarity)
                 {
-                    case "legendary":
+                    case rarity.legendary:
                         _compareQuality_2 = 6;
                         break;
-                    case "epic":
+                    case rarity.epic:
                         _compareQuality_2 = 5;
                         break;
-                    case "rare":
+                    case rarity.rare:
                         _compareQuality_2 = 4;
                         break;
-                    case "uncommon":
+                    case rarity.uncommon:
                         _compareQuality_2 = 3;
                         break;
-                    case "common":
+                    case rarity.common:
                         _compareQuality_2 = 2;
                         break;
-                    case "poor":
+                    case rarity.poor:
                         _compareQuality_2 = 1;
                         break;
-                    case "quest":
+                    case rarity.quest:
                         _compareQuality_1 = 0;
                         break;
                     default:
@@ -353,7 +353,7 @@ public class Character_stats : MonoBehaviour
 
                     _itemScript.items.Add(tmp_item);
                     Inventory[i] = tmp_item.id;
-                    _notification.message(_itemScript.items[item_id].name + " picked up.", 3, tmp_item.rarity);
+                    _notification.message(_itemScript.items[item_id].name + " picked up.", 3, tmp_item.rarity.ToString());
 
                     break;
                 }

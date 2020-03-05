@@ -57,7 +57,7 @@ public class Spell_slot_script : MonoBehaviour
         {
         GameObject.Find("Spell_preview").GetComponent<Close_button_script>().Close();
         
-            if (_combatManager.getRound() == "Player")
+            if (_combatManager.getRound() == battleRound.Player)
             {
                 slot.GetComponent<Image>().sprite = slot_sprite_activated;
                 if ((spell.resource_cost <= _characterStats.Local_resource))

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum spell_types { damage, heal, support, passive }
 public class Spell_script : MonoBehaviour
 {
     public List<Spell> spells = new List<Spell>();
@@ -21,11 +22,12 @@ public class Spell_script : MonoBehaviour
             ID, NAME, TYPE, CHARACTER CLASS, DESCRIPTION, ATTRIBUTE, ATTRIBUTE VALUE, RESOURCE COST, ICON, ANIMATION
         */
 
-        spells.Add(new Spell(0, "", "", "", "", ".", 0, 0, 0, Resources.Load<Sprite>("nothing"), null, 0, 0));
-        spells.Add(new Spell(1, "Attack", "attack", "warrior", "ATTACC", "damage.", 0, 0, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 0, 5));
-        spells.Add(new Spell(2, "Enraged attack", "attack", "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1", 2, 3));
-        spells.Add(new Spell(3, "Heal me", "healing", "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), null, 2, 5));
-        spells.Add(new Spell(4, "Shield", "buff", "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null, 5, 10));
+        spells.Add(new Spell(0, "", spell_types.damage, "", "", ".", 0, 0, 0, Resources.Load<Sprite>("nothing"), null, 0, 0));
+        spells.Add(new Spell(1, "Attack", spell_types.damage, "warrior", "ATTACC", "damage.", 0, 0, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 1, 5));
+        spells.Add(new Spell(2, "Enraged attack", spell_types.damage, "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1", 2, 3));
+        spells.Add(new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), null, 2, 5));
+        spells.Add(new Spell(4, "Shield", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null, 5, 10));
+        spells.Add(new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", "health.", 100, 100, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 1, 5));
     }
 
     public void setTarget(GameObject input_target)
@@ -37,17 +39,17 @@ public class Spell_script : MonoBehaviour
     {
         foreach (var spell in spells)
         {
-            if (spell.type == "attack")
+            if (spell.type == spell_types.damage)
             {
                 spell.attribute = spell.starterAttribute + GameObject.Find("Game manager").GetComponent<Character_stats>().Local_damage;
             }
 
-            if (spell.type == "healing")
+            if (spell.type == spell_types.heal)
             {
                 spell.attribute = GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_health;
             }
 
-            if (spell.type == "buff")
+            if (spell.type == spell_types.support)
             {
                 spell.attribute = GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_resource;
             }
@@ -85,7 +87,7 @@ public class Spell
 {
     public int id;
     public string name;
-    public string type;
+    public spell_types type;
     public string char_class;
     public string description;
     public string attribute_name;
@@ -112,7 +114,7 @@ public class Spell
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _characterManager = GameObject.Find("Character").GetComponent<Character_manager>();
     }
-    public Spell(int id, string name, string type, string char_class, string description, string attribute_name, int starterAttribute, int attribute, int resource_cost, Sprite icon, string animation, int level_requirement, int spell_points)
+    public Spell(int id, string name, spell_types type, string char_class, string description, string attribute_name, int starterAttribute, int attribute, int resource_cost, Sprite icon, string animation, int level_requirement, int spell_points)
     {
         this.id = id;
         this.name = name;
@@ -144,7 +146,7 @@ public class Spell
 
         GameObject.Find("Game manager").GetComponent<Character_stats>().looseResource(resource_cost);
 
-        if (type == "attack" && target != null)
+        if (type == spell_types.damage && target != null)
         {
             if (target != null && target.GetComponent<Enemy_script>().enemy_health > 0)
             {
@@ -185,7 +187,7 @@ public class Spell
             else { _notification.message("Need to select a target first!", 3, "red"); }
         }
 
-        if (type == "healing")
+        if (type == spell_types.heal)
         {
             if (attribute_type == "%")
             {
@@ -203,7 +205,7 @@ public class Spell
 
         }
 
-        if (type == "buff")
+        if (type == spell_types.support)
         {
             _characterStats.getResource(attribute);
             Debug.Log("Done");

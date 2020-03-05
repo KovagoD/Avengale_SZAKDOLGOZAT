@@ -24,6 +24,7 @@ public class Spell_slot_select_script : MonoBehaviour
         isOpened=true;
         spell_id=input_spell_id;
         gameObject.GetComponent<Animator>().Play("Slot_select_slide_in_anim");
+        GameObject.Find("Title").GetComponent<Text_animation>().restartAnim();
 
         foreach (var slot in selectable_slots)
         {
