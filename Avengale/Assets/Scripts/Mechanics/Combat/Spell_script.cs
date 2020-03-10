@@ -153,61 +153,80 @@ public class Spell
                 target.GetComponent<Character_manager>().spell_animation.Play(animation);
                 GameObject.Find("Battle_scene").GetComponent<Animator>().Play("Screen_shake_1");
 
-                target.GetComponent<Enemy_script>().opponentTakeDamage(attribute);
 
-                int random_hit = UnityEngine.Random.Range(1, 7);
                 string _hitAnimation = "";
+                int random_crit = UnityEngine.Random.Range(0, 100);
 
-                switch (random_hit)
+                if (random_crit > 90)
                 {
-                    case 1:
-                        _hitAnimation = "hit_1";
-                        break;
-                    case 2:
-                        _hitAnimation = "hit_2";
-                        break;
-                    case 3:
-                        _hitAnimation = "hit_3";
-                        break;
-                    case 4:
-                        _hitAnimation = "hit_4";
-                        break;
-                    case 5:
-                        _hitAnimation = "hit_5";
-                        break;
-                    case 6:
-                        _hitAnimation = "hit_6";
-                        break;
+                    target.GetComponent<Enemy_script>().opponentTakeDamage(attribute * 2);
+                    _hitAnimation = "crit_hit_1";
+                    target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute * 2 +" CRITICAL!", 0.05f);
                 }
+                else
+                {
+                    target.GetComponent<Enemy_script>().opponentTakeDamage(attribute);
+
+                    int random_hit = UnityEngine.Random.Range(1, 7);
+
+
+                    switch (random_hit)
+                    {
+                        case 1:
+                            _hitAnimation = "hit_1";
+                            break;
+                        case 2:
+                            _hitAnimation = "hit_2";
+                            break;
+                        case 3:
+                            _hitAnimation = "hit_3";
+                            break;
+                        case 4:
+                            _hitAnimation = "hit_4";
+                            break;
+                        case 5:
+                            _hitAnimation = "hit_5";
+                            break;
+                        case 6:
+                            _hitAnimation = "hit_6";
+                            break;
+                    }
+                    target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute, 0.05f);
+                }
+
 
                 target.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(_hitAnimation);
                 Handheld.Vibrate();
-                target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute, 0.05f);
             }
             else { _notification.message("Need to select a target first!", 3, "red"); }
         }
 
-        if (type == spell_types.heal)
+        if (type == spell_types.heal )
         {
+            target = GameObject.Find("Game manager");
+            //target.GetComponent<Character_stats>().getHealth(100);
+            
             if (attribute_type == "%")
             {
-                _characterStats.getHealth(_characterStats.getPercentOfHealth(attribute));
+                target.GetComponent<Character_stats>().getHealth(target.GetComponent<Character_stats>().getPercentOfHealth(attribute));
 
                 Debug.Log("Done");
 
             }
             else
             {
-                _characterStats.getHealth(attribute);
+                target.GetComponent<Character_stats>().getHealth(attribute);
 
                 Debug.Log("Done");
             }
+            
 
         }
 
         if (type == spell_types.support)
         {
-            _characterStats.getResource(attribute);
+            target=GameObject.Find("Game manager");
+            target.GetComponent<Character_stats>().getResource(attribute);
             Debug.Log("Done");
         }
 

@@ -6,18 +6,19 @@ using UnityEngine;
 public class Visibility_script : MonoBehaviour
 {
     public bool isOpened = false;
+
     public GameObject[] children;
     public GameObject[] children_text;
     public GameObject[] children_text_gui;
     void Start()
     {
+
         if (isOpened == false)
         {
             setInvisible();
         }
         else { setVisible(); }
     }
-
 
     public void setVisible()
     {

@@ -86,43 +86,55 @@ public class Enemy_script : MonoBehaviour
 
     public void opponentAttack()
     {
-
         var _playerManager = GameObject.Find("Character").GetComponent<Character_manager>();
         var _playerHealthPercent = _characterStats.getPercentOfHealth(enemies[id].damage);
-        _characterStats.looseHealth(_playerHealthPercent);
+        
         _playerManager.spell_animation.Play(enemies[id].attackAnimation);
         Handheld.Vibrate();
 
 
-        int random_hit = UnityEngine.Random.Range(1, 7);
         string _hitAnimation = "";
 
-        switch (random_hit)
-        {
-            case 1:
-                _hitAnimation = "hit_1";
-                break;
-            case 2:
-                _hitAnimation = "hit_2";
-                break;
-            case 3:
-                _hitAnimation = "hit_3";
-                break;
-            case 4:
-                _hitAnimation = "hit_4";
-                break;
-            case 5:
-                _hitAnimation = "hit_5";
-                break;
-            case 6:
-                _hitAnimation = "hit_6";
-                break;
-        }
-        _playerManager.damage_text.GetComponent<Animator>().Play(_hitAnimation);
-        GameObject.Find("Battle_scene").GetComponent<Animator>().Play("Screen_shake_1");
-        _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + _playerHealthPercent, 0.05f);
 
-        //Debug.Log(enemies[id].enemy_name + "'s attack animaton: " + enemies[id].attackAnimation);
+        int random_crit = UnityEngine.Random.Range(0, 100);
+
+        if (random_crit > 90)
+        {
+            _characterStats.looseHealth(_playerHealthPercent * 2);
+            _hitAnimation = "crit_hit_1";
+            _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + _playerHealthPercent * 2 + " CRITICAL!", 0.05f);
+        }
+        else
+        {
+            _characterStats.looseHealth(_playerHealthPercent);
+            int random_hit = UnityEngine.Random.Range(1, 7);
+            switch (random_hit)
+            {
+                case 1:
+                    _hitAnimation = "hit_1";
+                    break;
+                case 2:
+                    _hitAnimation = "hit_2";
+                    break;
+                case 3:
+                    _hitAnimation = "hit_3";
+                    break;
+                case 4:
+                    _hitAnimation = "hit_4";
+                    break;
+                case 5:
+                    _hitAnimation = "hit_5";
+                    break;
+                case 6:
+                    _hitAnimation = "hit_6";
+                    break;
+            }
+            _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + _playerHealthPercent, 0.05f);
+
+            //Debug.Log(enemies[id].enemy_name + "'s attack animaton: " + enemies[id].attackAnimation);
+        }
+            _playerManager.damage_text.GetComponent<Animator>().Play(_hitAnimation);
+            GameObject.Find("Battle_scene").GetComponent<Animator>().Play("Screen_shake_1");
     }
 
     public void opponentDie()

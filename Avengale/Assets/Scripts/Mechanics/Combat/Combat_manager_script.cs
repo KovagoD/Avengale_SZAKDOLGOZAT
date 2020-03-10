@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum battleRound {Player, Opponent_1, Opponent_2}
+public enum battleRound { Player, Opponent_1, Opponent_2 }
 
 public class Combat_manager_script : MonoBehaviour
 {
@@ -26,6 +26,7 @@ public class Combat_manager_script : MonoBehaviour
     public GameObject[] opponents;
     public GameObject remaining_time;
     public GameObject round_text;
+    public GameObject battle_background;
 
     private Ingame_notification_script _notification;
     private Character_stats _characterStats;
@@ -120,6 +121,8 @@ public class Combat_manager_script : MonoBehaviour
 
         _notification.message("¤" + battles[id].battle_name, 3);
 
+        battle_background.GetComponent<SpriteRenderer>().sprite = battles[id].background;
+
         generateSequence();
 
         round_counter = 0;
@@ -205,7 +208,7 @@ public class Combat_manager_script : MonoBehaviour
 
         if (round[round_counter] == battleRound.Opponent_1 && opponents[0].GetComponent<Enemy_script>().isAlive())
         {
-            current_round=battleRound.Opponent_1;
+            current_round = battleRound.Opponent_1;
             setTurnSign(0);
             currentOpponentID = battles[battle_id].opponent_ids[0];
             round_text.GetComponent<Text_animation>().startAnim(_enemyManagerScript.enemies[battles[battle_id].opponent_ids[0]].enemy_name, 0.05f);
@@ -221,7 +224,7 @@ public class Combat_manager_script : MonoBehaviour
         }
         else if (round[round_counter] == battleRound.Opponent_2 && opponents[1].GetComponent<Enemy_script>().isAlive())
         {
-            current_round=battleRound.Opponent_2;
+            current_round = battleRound.Opponent_2;
             setTurnSign(1);
 
             currentOpponentID = battles[battle_id].opponent_ids[1];
@@ -236,7 +239,7 @@ public class Combat_manager_script : MonoBehaviour
         }
         else if (round[round_counter] == battleRound.Player)
         {
-            current_round=battleRound.Player;
+            current_round = battleRound.Player;
             setTurnSign(2);
             round_text.GetComponent<Text_animation>().startAnim(_characterStats.Local_name + " " + _characterStats.Local_title, 0.05f);
             _notification.message(_characterStats.Local_name + " " + _characterStats.Local_title + "'s round!", 3);
@@ -403,9 +406,9 @@ public class Combat_manager_script : MonoBehaviour
         /*
             ID, OPPONENTS, DESCRIPTON, REWARD[item, quest item, xp, money]
         */
-        battles.Add(new Battle(0, "Test battle", new int[] { 1, 0 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100 }));
-        battles.Add(new Battle(1, "JOGIJOGIJOGI", new int[] { 1, 1 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0 }));
-        battles.Add(new Battle(1, "10 4 dinosaur", new int[] { 0, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000 }));
+        battles.Add(new Battle(0, "Test battle", new int[] { 1, 0 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100 }, Resources.Load<Sprite>("Item_icons/Icon2")));
+        battles.Add(new Battle(1, "JOGIJOGIJOGI", new int[] { 1, 1 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0 }, Resources.Load<Sprite>("Item_icons/Icon2")));
+        battles.Add(new Battle(1, "10 4 dinosaur", new int[] { 0, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000 }, Resources.Load<Sprite>("Item_icons/Icon2")));
     }
 
     public void getBattleReward()
@@ -439,14 +442,16 @@ public class Battle
     public int[] opponent_ids;
     public string description;
     public int[] rewards;
+    public Sprite background;
 
 
-    public Battle(int id, string battle_name, int[] opponent_ids, string description, int[] rewards)
+    public Battle(int id, string battle_name, int[] opponent_ids, string description, int[] rewards, Sprite background)
     {
         this.id = id;
         this.battle_name = battle_name;
         this.opponent_ids = opponent_ids;
         this.description = description;
         this.rewards = rewards;
+        this.background = background;
     }
 }
