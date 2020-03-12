@@ -25,7 +25,7 @@ public class Spell_script : MonoBehaviour
         spells.Add(new Spell(0, "", spell_types.damage, "", "", ".", 0, 0, 0, Resources.Load<Sprite>("nothing"), null, 0, 0));
         spells.Add(new Spell(1, "Attack", spell_types.damage, "warrior", "ATTACC", "damage.", 0, 0, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 1, 5));
         spells.Add(new Spell(2, "Enraged attack", spell_types.damage, "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1", 2, 3));
-        spells.Add(new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), null, 2, 5));
+        spells.Add(new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), "heal_1", 2, 5));
         spells.Add(new Spell(4, "Shield", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null, 5, 10));
         spells.Add(new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", "health.", 100, 100, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 1, 5));
     }
@@ -161,7 +161,7 @@ public class Spell
                 {
                     target.GetComponent<Enemy_script>().opponentTakeDamage(attribute * 2);
                     _hitAnimation = "crit_hit_1";
-                    target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute * 2 +" CRITICAL!", 0.05f);
+                    target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute * 2 + " CRITICAL!", 0.05f);
                 }
                 else
                 {
@@ -201,37 +201,30 @@ public class Spell
             else { _notification.message("Need to select a target first!", 3, "red"); }
         }
 
-        if (type == spell_types.heal )
+        if (type == spell_types.heal)
         {
             target = GameObject.Find("Game manager");
-            //target.GetComponent<Character_stats>().getHealth(100);
-            
+            GameObject local_character = GameObject.Find("Character");
             if (attribute_type == "%")
             {
                 target.GetComponent<Character_stats>().getHealth(target.GetComponent<Character_stats>().getPercentOfHealth(attribute));
-
-                Debug.Log("Done");
-
+                local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + target.GetComponent<Character_stats>().getPercentOfHealth(attribute), 0.05f);
             }
             else
             {
                 target.GetComponent<Character_stats>().getHealth(attribute);
+                local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + attribute, 0.05f);
 
-                Debug.Log("Done");
             }
-            
-
+            local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
         }
 
         if (type == spell_types.support)
         {
-            target=GameObject.Find("Game manager");
+            target = GameObject.Find("Game manager");
             target.GetComponent<Character_stats>().getResource(attribute);
             Debug.Log("Done");
         }
-
-
-
     }
 
 }

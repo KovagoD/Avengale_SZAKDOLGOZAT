@@ -166,6 +166,8 @@ MonoBehaviour:
   slot: {fileID: 7656128716876871879}
   unavailable: {fileID: 6847751494445810092}
   addpoint: {fileID: 3615138472854276989}
+  sprite_normal: {fileID: 21300000, guid: 896ef81877203c94fbcac74e45695ec9, type: 3}
+  sprite_activated: {fileID: 21300000, guid: 9bef2c9e4d4cf934db89764e324e4504, type: 3}
 --- !u!1 &3615138472854276989
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3615138472854276989}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 80, y: -76, z: 0}
+  m_LocalPosition: {x: 80, y: -76, z: -50}
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 8057494215423598042}
@@ -288,6 +290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _talentSlot: {fileID: 8023274266876372125}
+  sprite_normal: {fileID: 21300000, guid: 569c581a258fb694a891d7e4d219461d, type: 3}
+  sprite_activated: {fileID: 21300000, guid: 9e573b66c35c94d48aeca5400f12f63f, type: 3}
 --- !u!1 &5729664570621329408
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +584,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 14
   m_Sprite: {fileID: 21300000, guid: adf6da76208927d43873ae35c7335cd2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

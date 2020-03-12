@@ -23,6 +23,32 @@ public class Talent_slot_script : MonoBehaviour
     private Character_stats _characterStats;
     private Spell_slot_select_script _spellSlotSelect;
 
+    public Sprite sprite_normal;
+    public Sprite sprite_activated;
+
+    void OnMouseOver()
+    {
+        if (sprite_normal != null)
+        {
+            slot.GetComponent<SpriteRenderer>().sprite = sprite_activated;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (sprite_normal != null)
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+            }
+        }
+    }
+    void OnMouseExit()
+    {
+        if (sprite_normal != null)
+        {
+            slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+        }
+    }
+
     void Start()
     {
         _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
@@ -58,6 +84,7 @@ public class Talent_slot_script : MonoBehaviour
     }
     void OnMouseDown()
     {
+        Debug.Log(gameObject.name);
         if (!_spellSlotSelect.isOpened)
         {
             GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);

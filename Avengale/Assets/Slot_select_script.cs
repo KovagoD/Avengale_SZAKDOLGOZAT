@@ -11,6 +11,7 @@ public class Slot_select_script : MonoBehaviour
 
     void OnMouseDown()
     {
+        Debug.Log(gameObject.name);
         selectSlot();
     }
 
