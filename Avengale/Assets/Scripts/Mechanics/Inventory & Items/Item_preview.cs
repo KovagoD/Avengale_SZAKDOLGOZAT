@@ -126,7 +126,7 @@ public class Item_preview : MonoBehaviour
         }
 
 
-        GameObject.Find("Equip_button").GetComponent<Text_animation>().startAnim("<b>Unequip", 0.05f);
+        GameObject.Find("Equip").GetComponent<Text_animation>().startAnim("<b>Unequip", 0.05f);
         GameObject.Find("Equip_button").GetComponent<Item_equip_script>().mode = "unequip";
         GameObject.Find("Delete_button").GetComponent<Item_delete_script>().mode = "unequip";
 
@@ -165,14 +165,14 @@ public class Item_preview : MonoBehaviour
 
         if (!isStore)
         {
-            GameObject.Find("Equip_button").GetComponent<Text_animation>().startAnim("<b>Equip", 0.05f);
+            GameObject.Find("Equip").GetComponent<Text_animation>().startAnim("<b>Equip", 0.05f);
             GameObject.Find("Delete_button").GetComponent<Text_animation>().startAnim("Sell", 0.05f);
             GameObject.Find("Equip_button").GetComponent<Item_equip_script>().mode = "equip";
             GameObject.Find("Delete_button").GetComponent<Item_delete_script>().mode = "equip";
         }
         else
         {
-            GameObject.Find("Equip_button").GetComponent<Text_animation>().startAnim("<b>Buy", 0.05f);
+            GameObject.Find("Equip").GetComponent<Text_animation>().startAnim("<b>Buy", 0.05f);
             GameObject.Find("Delete_button").GetComponent<Text_animation>().startAnim("", 0.05f);
 
             GameObject.Find("Equip_button").GetComponent<Item_equip_script>().mode = "buy";

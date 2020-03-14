@@ -51,12 +51,16 @@ public class Spell_slot_script : MonoBehaviour
     void OnMouseDown()
     {
         slot.GetComponent<Image>().sprite = slot_sprite_activated;
-        GameObject.Find("Spell_preview").GetComponent<Spell_preview_script>().showSpell(spell_id);
+        if (spell_id != 0)
+        {
+            GameObject.Find("Spell_preview").GetComponent<Spell_preview_script>().showSpell(spell_id);
+        }
     }
     void OnMouseUp()
     {
+
         slot.GetComponent<Image>().sprite = slot_sprite;
-        if (!_combatManager.isPaused && _gameManager.current_screen.name == "Combat_screen_UI")
+        if (!_combatManager.isPaused && _gameManager.current_screen.name == "Combat_screen_UI" && spell_id != 0)
         {
             GameObject.Find("Spell_preview").GetComponent<Close_button_script>().Close();
 
@@ -65,21 +69,11 @@ public class Spell_slot_script : MonoBehaviour
                 slot.GetComponent<Image>().sprite = slot_sprite_activated;
                 if ((spell.resource_cost <= _characterStats.Local_resource))
                 {
-                    /*
-                    if (_spellScript.target != null)
-                    {
-                        */
                     spell.Activate(_spellScript.target);
 
                     GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
                     GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();
                     _combatManager.changeRound();
-                    /*}
-                    else
-                    {
-                        _notification.message("You need to select a target first!", 3, "red");
-                    }
-                    */
                 }
                 else
                 {

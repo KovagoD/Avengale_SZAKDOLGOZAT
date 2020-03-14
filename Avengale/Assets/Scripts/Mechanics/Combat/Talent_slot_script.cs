@@ -113,6 +113,7 @@ public class Talent_slot_script : MonoBehaviour
             spell_points_text.GetComponent<Text_animation>().startAnim(spell_points.ToString() + "/" + max_spell_points.ToString(), 0.05f);
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
             GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
+            _characterStats.Local_max_health+=1200;
 
         }
         _spellScript.checkRowAvailability();

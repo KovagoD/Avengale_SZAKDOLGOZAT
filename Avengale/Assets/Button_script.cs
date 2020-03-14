@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Button_script : MonoBehaviour
 {
@@ -9,24 +10,53 @@ public class Button_script : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (sprite_normal != null)
+        if (gameObject.GetComponent<SpriteRenderer>())
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = sprite_activated;
+            if (sprite_normal != null)
+            {
+                gameObject.GetComponent<SpriteRenderer>().sprite = sprite_activated;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (sprite_normal != null)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+                }
+            }
+        }
+        else if (gameObject.GetComponent<Image>())
+        {
+            if (sprite_normal != null)
+            {
+                gameObject.GetComponent<Image>().sprite = sprite_activated;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (sprite_normal != null)
+                {
+                    gameObject.GetComponent<Image>().sprite = sprite_normal;
+                }
+            }
         }
 
-        if (Input.GetMouseButtonUp(0))
+    }
+    void OnMouseExit()
+    {
+        if (gameObject.GetComponent<SpriteRenderer>())
         {
             if (sprite_normal != null)
             {
                 gameObject.GetComponent<SpriteRenderer>().sprite = sprite_normal;
             }
         }
-    }
-    void OnMouseExit()
-    {
-        if (sprite_normal != null)
+        else if (gameObject.GetComponent<Image>())
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+            if (sprite_normal != null)
+            {
+                gameObject.GetComponent<Image>().sprite = sprite_normal;
+            }
         }
     }
 

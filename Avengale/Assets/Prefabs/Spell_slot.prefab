@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6255468007388475819}
   - component: {fileID: 6255468007388475818}
   - component: {fileID: 6255468007388475817}
-  - component: {fileID: 1432158445876001945}
+  - component: {fileID: 7265000945089757440}
   m_Layer: 5
   m_Name: Spell_slot
   m_TagString: Untagged
@@ -122,18 +122,20 @@ MonoBehaviour:
     type: 3}
   slot: {fileID: 6255468007388475823}
   spell_slot: {fileID: 6255468008975557510}
---- !u!225 &1432158445876001945
-CanvasGroup:
+--- !u!114 &7265000945089757440
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6255468007388475823}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19975fb0493b104ebc36bdd2a409920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite_normal: {fileID: 21300000, guid: 896ef81877203c94fbcac74e45695ec9, type: 3}
+  sprite_activated: {fileID: 21300000, guid: 9bef2c9e4d4cf934db89764e324e4504, type: 3}
 --- !u!1 &6255468008975557510
 GameObject:
   m_ObjectHideFlags: 0
