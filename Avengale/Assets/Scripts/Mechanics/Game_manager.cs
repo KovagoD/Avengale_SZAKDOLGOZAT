@@ -95,7 +95,7 @@ public class Game_manager : MonoBehaviour
         {
             for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
             {
-                GameObject.Find("Game manager").GetComponent<Quest_manager_script>().updateQuestSlot(i);
+                GameObject.Find("Game manager").GetComponent<Quest_manager_script>().updateQuestSlot(i);  
             }
             GameObject.Find("Quest_text").GetComponent<Text_animation>().restartAnim();
         }
@@ -119,14 +119,16 @@ public class Game_manager : MonoBehaviour
         if (current_screen == GameObject.Find("Spell_screen_UI"))
         {
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: "+_characterStats.Local_spell_points, 0.05f);
+            _spellScript.setupAttributes();
+            _spellScript.checkRowAvailability();
 
             foreach (var slot in _spellScript.firstRow)
             {
-                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(slot.GetComponent<Talent_slot_script>().spell_points.ToString() + "/" + slot.GetComponent<Talent_slot_script>().max_spell_points.ToString(), 0.05f);  
+                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points + "/" + _spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].max_spell_points, 0.05f);  
             }
             foreach (var slot in _spellScript.secondRow)
             {
-                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(slot.GetComponent<Talent_slot_script>().spell_points.ToString() + "/" + slot.GetComponent<Talent_slot_script>().max_spell_points.ToString(), 0.05f);  
+                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points + "/" + _spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].max_spell_points, 0.05f);  
             }            
             
         }

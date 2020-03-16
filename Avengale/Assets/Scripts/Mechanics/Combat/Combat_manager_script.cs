@@ -127,7 +127,7 @@ public class Combat_manager_script : MonoBehaviour
 
         round_counter = 0;
         timer = 0;
-        StartCoroutine("Secs");
+        //StartCoroutine("Secs");
         changeRound();
 
 
@@ -193,6 +193,8 @@ public class Combat_manager_script : MonoBehaviour
 
     public void changeRound()
     {
+        StopAllCoroutines();
+        StartCoroutine("Secs");
         timer = -1;
 
         if (round_counter != 2)
@@ -209,8 +211,9 @@ public class Combat_manager_script : MonoBehaviour
         if (round[round_counter] == battleRound.Opponent_1 && opponents[0].GetComponent<Enemy_script>().isAlive())
         {
             current_round = battleRound.Opponent_1;
+            //currentOpponentID = battles[battle_id].opponent_ids[0];
+            currentOpponentID = 0;
             setTurnSign(0);
-            currentOpponentID = battles[battle_id].opponent_ids[0];
             round_text.GetComponent<Text_animation>().startAnim(_enemyManagerScript.enemies[battles[battle_id].opponent_ids[0]].enemy_name, 0.05f);
             _notification.message(_enemyManagerScript.enemies[battles[battle_id].opponent_ids[0]].enemy_name + "'s round!", 3);
             _isOpponentAttacked = false;
@@ -225,9 +228,9 @@ public class Combat_manager_script : MonoBehaviour
         else if (round[round_counter] == battleRound.Opponent_2 && opponents[1].GetComponent<Enemy_script>().isAlive())
         {
             current_round = battleRound.Opponent_2;
+            currentOpponentID = 1;
             setTurnSign(1);
 
-            currentOpponentID = battles[battle_id].opponent_ids[1];
             round_text.GetComponent<Text_animation>().startAnim(_enemyManagerScript.enemies[battles[battle_id].opponent_ids[1]].enemy_name, 0.05f);
             _notification.message(_enemyManagerScript.enemies[battles[battle_id].opponent_ids[1]].enemy_name + "'s round!", 3);
             _isOpponentAttacked = false;
@@ -240,6 +243,7 @@ public class Combat_manager_script : MonoBehaviour
         else if (round[round_counter] == battleRound.Player)
         {
             current_round = battleRound.Player;
+
             setTurnSign(2);
             round_text.GetComponent<Text_animation>().startAnim(_characterStats.Local_name + " " + _characterStats.Local_title, 0.05f);
             _notification.message(_characterStats.Local_name + " " + _characterStats.Local_title + "'s round!", 3);
@@ -393,11 +397,13 @@ public class Combat_manager_script : MonoBehaviour
 
     public void skipEnemyRound()
     {
-        //resumeBattle();
-        if (round[round_counter] != battleRound.Player && _isOpponentAttacked == false && opponents[currentOpponentID].GetComponent<Enemy_script>().isAlive())
+
+        if (round[round_counter] != battleRound.Player && !_isOpponentAttacked && opponents[currentOpponentID].GetComponent<Enemy_script>().isAlive())
         {
             opponents[currentOpponentID].GetComponent<Enemy_script>().opponentAttack();
+            StopAllCoroutines();
         }
+
         changeRound();
     }
 
@@ -406,9 +412,12 @@ public class Combat_manager_script : MonoBehaviour
         /*
             ID, OPPONENTS, DESCRIPTON, REWARD[item, quest item, xp, money]
         */
-        battles.Add(new Battle(0, "Test battle", new int[] { 1, 0 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100 }, Resources.Load<Sprite>("Item_icons/Icon2")));
-        battles.Add(new Battle(1, "JOGIJOGIJOGI", new int[] { 1, 1 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0 }, Resources.Load<Sprite>("Item_icons/Icon2")));
-        battles.Add(new Battle(1, "10 4 dinosaur", new int[] { 0, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000 }, Resources.Load<Sprite>("Item_icons/Icon2")));
+        battles.AddRange(new List<Battle>()
+        {
+            {new Battle(0, "Test battle", new int[] { 2, 1 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
+            {new Battle(1, "JOGIJOGIJOGI", new int[] { 2, 2 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
+            {new Battle(1, "10 4 dinosaur", new int[] { 1, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
+        });
     }
 
     public void getBattleReward()

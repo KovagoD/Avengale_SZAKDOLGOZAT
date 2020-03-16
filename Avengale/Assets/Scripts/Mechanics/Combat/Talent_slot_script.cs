@@ -12,9 +12,6 @@ public class Talent_slot_script : MonoBehaviour
     public int ID;
     public int row;
     public int spell_id;
-    public int spell_points = 0;
-    public int max_spell_points = 5;
-
     public GameObject slot;
     public GameObject unavailable;
     public GameObject addpoint;
@@ -26,16 +23,30 @@ public class Talent_slot_script : MonoBehaviour
     public Sprite sprite_normal;
     public Sprite sprite_activated;
 
+    public Sprite passive_spell_normal;
+    public Sprite passive_spell_activated;
+
     void OnMouseOver()
     {
         if (sprite_normal != null)
         {
-            slot.GetComponent<SpriteRenderer>().sprite = sprite_activated;
+            if (_spellScript.spells[spell_id].type == spell_types.passive)
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = passive_spell_activated;
+            }
+            else
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = sprite_activated;
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (sprite_normal != null)
+            if (_spellScript.spells[spell_id].type == spell_types.passive)
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = passive_spell_normal;
+            }
+            else
             {
                 slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
             }
@@ -45,7 +56,14 @@ public class Talent_slot_script : MonoBehaviour
     {
         if (sprite_normal != null)
         {
-            slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+            if (_spellScript.spells[spell_id].type == spell_types.passive)
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = passive_spell_normal;
+            }
+            else
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+            }
         }
     }
 
@@ -55,9 +73,13 @@ public class Talent_slot_script : MonoBehaviour
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _spellSlotSelect = GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>();
         spell_id = GameObject.Find("Game manager").GetComponent<Character_stats>().Talents[ID];
-        spell_icon.GetComponent<SpriteRenderer>().sprite = _spellScript.spells[spell_id].icon;
+        spell_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[spell_id].icon);
 
-        max_spell_points = _spellScript.spells[spell_id].spell_points;
+
+        spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[spell_id].current_spell_points + "/" + _spellScript.spells[spell_id].max_spell_points, 0.05f);
+
+
+
 
     }
     void Update()
@@ -66,9 +88,13 @@ public class Talent_slot_script : MonoBehaviour
         {
             setEnabled();
         }
-        else
+        else if (!isAvailable() && _spellScript.spells[spell_id].current_spell_points == 0)
         {
             setDisabled();
+        }
+        else if (!isAvailable() && _spellScript.spells[spell_id].current_spell_points > 0)
+        {
+            setDisabledButUnlocked();
         }
     }
     public bool isAvailable()
@@ -84,12 +110,12 @@ public class Talent_slot_script : MonoBehaviour
     }
     void OnMouseDown()
     {
-        Debug.Log(gameObject.name);
         if (!_spellSlotSelect.isOpened)
         {
             GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
         }
     }
+
 
     public void setEnabled()
     {
@@ -98,23 +124,34 @@ public class Talent_slot_script : MonoBehaviour
 
     }
 
+
     public void setDisabled()
     {
         unavailable.GetComponent<SpriteRenderer>().enabled = true;
         addpoint.GetComponent<SpriteRenderer>().enabled = false;
     }
+    public void setDisabledButUnlocked()
+    {
+        unavailable.GetComponent<SpriteRenderer>().enabled = false;
+        addpoint.GetComponent<SpriteRenderer>().enabled = false;
+    }
 
     public void addSpellPoint()
     {
-        if (_characterStats.Local_spell_points > 0 && spell_points < max_spell_points)
+        if (_characterStats.Local_spell_points > 0 && _spellScript.spells[spell_id].current_spell_points < _spellScript.spells[spell_id].max_spell_points)
         {
             _characterStats.Local_spell_points--;
-            spell_points++;
-            spell_points_text.GetComponent<Text_animation>().startAnim(spell_points.ToString() + "/" + max_spell_points.ToString(), 0.05f);
-            GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
-            GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
-            _characterStats.Local_max_health+=1200;
+            _spellScript.spells[spell_id].current_spell_points++;
 
+            spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[spell_id].current_spell_points + "/" + _spellScript.spells[spell_id].max_spell_points, 0.05f);
+            GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
+
+            _spellScript.setupAttributes();
+            if (_spellScript.spells[spell_id].type == spell_types.passive)
+            {
+                _spellScript.spells[spell_id].passiveActivate();
+            }
+            GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
         }
         _spellScript.checkRowAvailability();
     }

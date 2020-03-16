@@ -42,6 +42,8 @@ public class CharacterData
 
     [Header("Spells")]
     public int[] Spells;
+    public int[] Talents;
+    public int Local_spell_points;
 
     public CharacterData(Character_stats player)
     {
@@ -63,7 +65,12 @@ public class CharacterData
         Local_money = player.Local_money;
         Inventory = player.Inventory;
         Equipments = player.Equipments;
+
         Spells = player.Spells;
+        Talents= player.Talents;
+        Local_spell_points = player.Local_spell_points;
+
+
         Local_max_health = player.Local_max_health;
         Local_max_resource = player.Local_max_resource;
         Local_damage = player.Local_damage;

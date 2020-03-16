@@ -8,10 +8,10 @@ public class Save_button_script : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0) && !GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
         {
-            GameObject.Find("Game manager").GetComponent<Character_stats>().savePlayer();
-            GameObject.Find("Game manager").GetComponent<Item_script>().saveItems();
-
+            var _gameManager = GameObject.Find("Game manager");
+            _gameManager.GetComponent<Character_stats>().savePlayer();
+            _gameManager.GetComponent<Item_script>().saveItems();
+            _gameManager.GetComponent<Spell_script>().saveSpells();
         }
-
     }
 }

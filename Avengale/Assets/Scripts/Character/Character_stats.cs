@@ -51,6 +51,7 @@ public class Character_stats : MonoBehaviour
     [Header("Spells")]
     public int Local_spell_points = 5;
     public int[] Spells = new int[5];
+    public List<Spell> Passive_spells = new List<Spell>();
     public int[] Talents = new int[10];
 
     [Header("References")]
@@ -101,6 +102,8 @@ public class Character_stats : MonoBehaviour
         Inventory = data.Inventory;
         Equipments = data.Equipments;
         Spells = data.Spells;
+        Talents = data.Talents;
+        Local_spell_points = data.Local_spell_points;
         Local_max_health = data.Local_max_health;
         Local_max_resource = data.Local_max_resource;
         Local_damage = data.Local_damage;
@@ -111,6 +114,7 @@ public class Character_stats : MonoBehaviour
 
 
         //updateStats();
+
 
         _notification.message("Save loaded!", 3, "white");
     }

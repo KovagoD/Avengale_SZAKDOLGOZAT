@@ -42,6 +42,24 @@ public class Button_script : MonoBehaviour
         }
 
     }
+
+    void OnMouseUp()
+    {
+        if (gameObject.GetComponent<SpriteRenderer>())
+        {
+            if (sprite_normal != null)
+            {
+                gameObject.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+            }
+        }
+        else if (gameObject.GetComponent<Image>())
+        {
+            if (sprite_normal != null)
+            {
+                gameObject.GetComponent<Image>().sprite = sprite_normal;
+            }
+        }
+    }
     void OnMouseExit()
     {
         if (gameObject.GetComponent<SpriteRenderer>())

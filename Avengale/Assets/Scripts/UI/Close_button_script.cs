@@ -111,7 +111,5 @@ public class Close_button_script : MonoBehaviour
         {
             item.GetComponent<Visibility_script>().setInvisible();
         }
-
     }
-
 }

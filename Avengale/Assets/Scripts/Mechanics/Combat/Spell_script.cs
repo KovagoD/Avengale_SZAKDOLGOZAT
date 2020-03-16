@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public enum spell_types { damage, heal, support, passive }
+public enum spell_attribute_types { health, resource, damage }
+public enum spell_attribute_value_types { percentage, number }
 public class Spell_script : MonoBehaviour
 {
     public List<Spell> spells = new List<Spell>();
@@ -21,13 +25,28 @@ public class Spell_script : MonoBehaviour
         /*
             ID, NAME, TYPE, CHARACTER CLASS, DESCRIPTION, ATTRIBUTE, ATTRIBUTE VALUE, RESOURCE COST, ICON, ANIMATION
         */
+        spells.AddRange(new List<Spell>()
+        {
+            {new Spell(0, "", spell_types.damage, "", "", spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 0, "nothing", null, 0, 0, 0)},
+            {new Spell(1, "Attack", spell_types.damage, "warrior", "ATTACC", spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 10, "Item_icons/Icon", "attack_1", 1, 5, 2)},
+            {new Spell(2, "Enraged attack", spell_types.damage, "warrior", "attacks the <b>target</b> furiously.", spell_attribute_types.damage, spell_attribute_value_types.number, 15, 15, 10, "Item_icons/Icon2", "attack_1", 2, 3, 0)},
+            {new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", spell_attribute_types.health, spell_attribute_value_types.percentage, 0, stats.getPercentOfHealth(50), 10, "Item_icons/Icon", "heal_1", 2, 5, 0)},
+            {new Spell(4, "Shield", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", spell_attribute_types.resource, spell_attribute_value_types.number, 9999, 9999, 10, "Item_icons/Icon2", null, 5, 5, 0)},
+            {new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.percentage, 20, 100, 10, "Item_icons/Icon", "attack_1", 1, 5, 0)}
+        });
+    }
 
-        spells.Add(new Spell(0, "", spell_types.damage, "", "", ".", 0, 0, 0, Resources.Load<Sprite>("nothing"), null, 0, 0));
-        spells.Add(new Spell(1, "Attack", spell_types.damage, "warrior", "ATTACC", "damage.", 0, 0, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 1, 5));
-        spells.Add(new Spell(2, "Enraged attack", spell_types.damage, "warrior", "attacks the <b>target</b> furiously.", "damage.", 15, 15, 10, Resources.Load<Sprite>("Item_icons/Icon2"), "attack_1", 2, 3));
-        spells.Add(new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", "health.%", 0, stats.getPercentOfHealth(50), 10, Resources.Load<Sprite>("Item_icons/Icon"), "heal_1", 2, 5));
-        spells.Add(new Spell(4, "Shield", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "resource.", 9999, 9999, 10, Resources.Load<Sprite>("Item_icons/Icon2"), null, 5, 10));
-        spells.Add(new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", "health.", 100, 100, 10, Resources.Load<Sprite>("Item_icons/Icon"), "attack_1", 1, 5));
+    public void saveSpells()
+    {
+        Save_script.saveSpells(this);
+        Debug.Log("Item data saved!");
+    }
+
+    public void loadSpells()
+    {
+        SpellData data = Save_script.loadSpells();
+        spells = data.spells;
+
     }
 
     public void setTarget(GameObject input_target)
@@ -37,23 +56,61 @@ public class Spell_script : MonoBehaviour
 
     public void setupAttributes()
     {
+        var _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         foreach (var spell in spells)
         {
+            double _multiplier = 1;
+
+            switch (spell.current_spell_points)
+            {
+                case 0:
+                    _multiplier = 1;
+                    break;
+                case 1:
+                    _multiplier = 1;
+                    break;
+                case 2:
+                    _multiplier = 1.25;
+                    break;
+                case 3:
+                    _multiplier = 1.5;
+                    break;
+                case 4:
+                    _multiplier = 1.75;
+                    break;
+                case 5:
+                    _multiplier = 2;
+                    break;
+            }
+
+
+
             if (spell.type == spell_types.damage)
             {
-                spell.attribute = spell.starterAttribute + GameObject.Find("Game manager").GetComponent<Character_stats>().Local_damage;
+                spell.attribute = Convert.ToInt32((spell.starterAttribute + _characterStats.Local_damage) * _multiplier);
             }
 
             if (spell.type == spell_types.heal)
             {
-                spell.attribute = GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_health;
+                spell.attribute = _characterStats.Local_max_health;
             }
 
             if (spell.type == spell_types.support)
             {
-                spell.attribute = GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_resource;
+                spell.attribute = _characterStats.Local_max_resource;
             }
 
+            if (spell.type == spell_types.passive)
+            {
+                if (spell.attribute_type == spell_attribute_value_types.percentage)
+                {
+                    if (spell.attribute_name == spell_attribute_types.health)
+                    {
+                        spell.lastAttribute = spell.attribute;
+                        spell.attribute = Convert.ToInt32((_characterStats.getPercentOfHealth(spell.starterAttribute) * _multiplier));
+                    }
+                }
+            }
         }
     }
 
@@ -67,7 +124,7 @@ public class Spell_script : MonoBehaviour
         firstRowPoints = 0;
         foreach (var slot in firstRow)
         {
-            firstRowPoints += slot.GetComponent<Talent_slot_script>().spell_points;
+            firstRowPoints += spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points;
         }
 
         if (firstRowPoints >= 5)
@@ -82,7 +139,7 @@ public class Spell_script : MonoBehaviour
 }
 
 
-
+[System.Serializable]
 public class Spell
 {
     public int id;
@@ -90,31 +147,23 @@ public class Spell
     public spell_types type;
     public string char_class;
     public string description;
-    public string attribute_name;
-    public string attribute_type;
+    public spell_attribute_types attribute_name;
+    public spell_attribute_value_types attribute_type;
     public int attribute;
 
     public int starterAttribute;
+    public int lastAttribute;
+
     public string animation;
 
     public int resource_cost;
 
 
-    public int spell_points;
+    public int max_spell_points;
+    public int current_spell_points;
     public int level_requirement;
-    public Sprite icon;
-    private Ingame_notification_script _notification;
-    private Character_stats _characterStats;
-    private Character_manager _characterManager;
-
-
-    private void Start()
-    {
-        _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
-        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
-        _characterManager = GameObject.Find("Character").GetComponent<Character_manager>();
-    }
-    public Spell(int id, string name, spell_types type, string char_class, string description, string attribute_name, int starterAttribute, int attribute, int resource_cost, Sprite icon, string animation, int level_requirement, int spell_points)
+    public string icon;
+    public Spell(int id, string name, spell_types type, string char_class, string description, spell_attribute_types attribute_name, spell_attribute_value_types attribute_type, int starterAttribute, int attribute, int resource_cost, string icon, string animation, int level_requirement, int max_spell_points, int current_spell_points)
     {
         this.id = id;
         this.name = name;
@@ -122,23 +171,41 @@ public class Spell
         this.char_class = char_class;
         this.description = description;
         this.attribute_name = attribute_name;
+
         this.attribute = attribute;
         this.starterAttribute = starterAttribute;
+
         this.resource_cost = resource_cost;
         this.icon = icon;
 
         this.animation = animation;
 
-        var split = attribute_name.Split('.');
-        this.attribute_name = split[0];
-        if (split[1] == "%")
-        {
-            this.attribute_type = "%";
-        }
+        this.attribute_name = attribute_name;
+        this.attribute_type = attribute_type;
 
         this.level_requirement = level_requirement;
-        this.spell_points = spell_points;
+        this.max_spell_points = max_spell_points;
+        this.current_spell_points = current_spell_points;
 
+    }
+    public void passiveActivate()
+    {
+        var _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        
+
+        if (type == spell_types.passive)
+        {
+            if (attribute_name == spell_attribute_types.health)
+            {
+                if (current_spell_points >= 2)
+                {
+                    _characterStats.Local_max_health -= lastAttribute;
+                }
+                _characterStats.Local_max_health += attribute;
+
+                Debug.Log(lastAttribute + " & " + attribute);
+            }
+        }
     }
 
     public void Activate(GameObject target)
@@ -160,7 +227,18 @@ public class Spell
                 if (random_crit > 90)
                 {
                     target.GetComponent<Enemy_script>().opponentTakeDamage(attribute * 2);
-                    _hitAnimation = "crit_hit_1";
+
+                    int random_hit = UnityEngine.Random.Range(1, 3);
+                    switch (random_hit)
+                    {
+                        case 1:
+                            _hitAnimation = "crit_hit_1";
+                            break;
+                        case 2:
+                            _hitAnimation = "crit_hit_2";
+                            break;
+                    }
+
                     target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute * 2 + " CRITICAL!", 0.05f);
                 }
                 else
@@ -198,14 +276,13 @@ public class Spell
                 target.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(_hitAnimation);
                 Handheld.Vibrate();
             }
-            else { _notification.message("Need to select a target first!", 3, "red"); }
         }
 
         if (type == spell_types.heal)
         {
             target = GameObject.Find("Game manager");
             GameObject local_character = GameObject.Find("Character");
-            if (attribute_type == "%")
+            if (attribute_type == spell_attribute_value_types.percentage)
             {
                 target.GetComponent<Character_stats>().getHealth(target.GetComponent<Character_stats>().getPercentOfHealth(attribute));
                 local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + target.GetComponent<Character_stats>().getPercentOfHealth(attribute), 0.05f);
@@ -214,11 +291,9 @@ public class Spell
             {
                 target.GetComponent<Character_stats>().getHealth(attribute);
                 local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + attribute, 0.05f);
-
             }
             local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
         }
-
         if (type == spell_types.support)
         {
             target = GameObject.Find("Game manager");
@@ -226,5 +301,6 @@ public class Spell
             Debug.Log("Done");
         }
     }
+
 
 }

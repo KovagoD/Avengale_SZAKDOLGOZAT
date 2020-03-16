@@ -16,10 +16,13 @@ public class Enemy_manager_script : MonoBehaviour
 
             ID, NAME, IS HUMAN, TYPE, HEALTH, DAMAGE, REWARD, APPEARANCE, ATTACK ANIMATION
         */
-        enemies.Add(new Enemy(0, "Angry thug", true, "melee", 50, 5, new int[]{5,0,100,100}, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, "attack_1"));
-        enemies.Add(new Enemy(1, "Senko-san", false, "long-range", 100, 10, new int[] {0,11,50,50}, Resources.Load<Sprite>("Enemy_appearances/senkosan_1"), "attack_2"));
-        enemies.Add(new Enemy(2, "Unlawful citizen", false, "melee", 200, 50, new int[] {0,0,1000,1000}, Resources.Load<Sprite>("Enemy_appearances/senkosan_2"), "attack_2"));
-
+        enemies.AddRange(new List<Enemy>()
+        {
+            {new Enemy(0, "", true, "", 0, 0, new int[] { 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0, 0, 0 }, "")},
+            {new Enemy(1, "Angry thug", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, "attack_1")},
+            {new Enemy(2, "Senko-san", false, "long-range", 100, 10, new int[] { 0, 11, 50, 50 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_1"), "attack_2")},
+            {new Enemy(3, "Unlawful citizen", false, "melee", 200, 50, new int[] { 0, 0, 1000, 1000 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_2"), "attack_2")}
+        });
     }
 }
 [System.Serializable]

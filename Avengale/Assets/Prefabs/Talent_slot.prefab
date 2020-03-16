@@ -161,13 +161,15 @@ MonoBehaviour:
   ID: 0
   row: 0
   spell_id: 0
-  spell_points: 0
-  max_spell_points: 5
   slot: {fileID: 7656128716876871879}
   unavailable: {fileID: 6847751494445810092}
   addpoint: {fileID: 3615138472854276989}
   sprite_normal: {fileID: 21300000, guid: 896ef81877203c94fbcac74e45695ec9, type: 3}
   sprite_activated: {fileID: 21300000, guid: 9bef2c9e4d4cf934db89764e324e4504, type: 3}
+  passive_spell_normal: {fileID: 21300000, guid: b81213a2d9f795b479d010b7700f9382,
+    type: 3}
+  passive_spell_activated: {fileID: 21300000, guid: 208cee9c0386d5a4089bfd5c1fbab387,
+    type: 3}
 --- !u!1 &3615138472854276989
 GameObject:
   m_ObjectHideFlags: 0

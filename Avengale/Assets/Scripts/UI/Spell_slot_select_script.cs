@@ -28,7 +28,8 @@ public class Spell_slot_select_script : MonoBehaviour
 
         foreach (var slot in selectable_slots)
         {
-            slot.GetComponent<SpriteRenderer>().sprite = _spellScript.spells[_characterStats.Spells[slot.GetComponent<Slot_select_script>().ID]].icon;
+            slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[_characterStats.Spells[slot.GetComponent<Slot_select_script>().ID]].icon);
+            
         }
 
     }
