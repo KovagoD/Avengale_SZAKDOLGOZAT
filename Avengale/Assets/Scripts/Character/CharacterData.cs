@@ -5,46 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public class CharacterData
 {
-    [Header("Combat")]
-    public int Local_max_health;
-    public int Local_max_resource;
-    public int Local_damage;
-
-
-    [Header("Completed things")]
-
-    //public List<Enemy> defeated_enemies;
+    public int Local_max_health, Local_max_resource, Local_damage, Local_money;
     public List<Conversation> completed_conversations;
     public int[] accepted_quests;
     public List<Quest> completed_quests;
-
-    [Header("Customization")]
-    public string Local_name;
-    public string Local_title;
-    public int Local_class;
-    public int Local_talent;
-
-    public int hair_id;
-    public int eyes_id;
-    public int nose_id;
-    public int mouth_id;
-    public int body_id;
-
-    [Header("Stats")]
-    public int Local_xp;
-    public int Local_needed_xp;
-    public int Local_level;
-    public int Local_money;
-
-    [Header("Inventory")]
-    public int[] Inventory;
-    public int[] Equipments;
-
-    [Header("Spells")]
-    public int[] Spells;
-    public int[] Talents;
+    public string Local_name, Local_title;
+    public int Local_class, Local_talent;
+    public int hair_id, eyes_id, nose_id, mouth_id, body_id;
+    public int Local_xp, Local_needed_xp, Local_level;
+    public int[] Inventory, Equipments;
+    public int[] Spells, Talents;
     public int Local_spell_points;
-
     public CharacterData(Character_stats player)
     {
         //customization
@@ -67,7 +38,7 @@ public class CharacterData
         Equipments = player.Equipments;
 
         Spells = player.Spells;
-        Talents= player.Talents;
+        Talents = player.Talents;
         Local_spell_points = player.Local_spell_points;
 
 

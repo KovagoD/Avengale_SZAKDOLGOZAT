@@ -14,6 +14,7 @@ public class Talent_slot_script : MonoBehaviour
     public int spell_id;
     public GameObject slot;
     public GameObject unavailable;
+    public GameObject spell_lock;
     public GameObject addpoint;
 
     private Spell_script _spellScript;
@@ -84,17 +85,28 @@ public class Talent_slot_script : MonoBehaviour
     }
     void Update()
     {
-        if (isAvailable())
+        var spell = _spellScript.spells[spell_id];
+        if (isAvailable() && spell.current_spell_points > 0)
         {
             setEnabled();
         }
-        else if (!isAvailable() && _spellScript.spells[spell_id].current_spell_points == 0)
+        else if (isAvailable() && spell.current_spell_points == 0)
+        {
+            setDisabledButLocked();
+        }
+        else if (!isAvailable() && spell.current_spell_points == 0)
         {
             setDisabled();
         }
-        else if (!isAvailable() && _spellScript.spells[spell_id].current_spell_points > 0)
+        else if (!isAvailable() && spell.current_spell_points > 0)
         {
             setDisabledButUnlocked();
+        }
+
+        if (spell.current_spell_points == spell.max_spell_points)
+        {
+            addpoint.GetComponent<SpriteRenderer>().enabled = false;
+            addpoint.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
     public bool isAvailable()
@@ -120,7 +132,10 @@ public class Talent_slot_script : MonoBehaviour
     public void setEnabled()
     {
         unavailable.GetComponent<SpriteRenderer>().enabled = false;
+        spell_lock.GetComponent<SpriteRenderer>().enabled = false;
+
         addpoint.GetComponent<SpriteRenderer>().enabled = true;
+        addpoint.GetComponent<BoxCollider2D>().enabled = true;
 
     }
 
@@ -128,12 +143,27 @@ public class Talent_slot_script : MonoBehaviour
     public void setDisabled()
     {
         unavailable.GetComponent<SpriteRenderer>().enabled = true;
+        spell_lock.GetComponent<SpriteRenderer>().enabled = true;
+
         addpoint.GetComponent<SpriteRenderer>().enabled = false;
+        addpoint.GetComponent<BoxCollider2D>().enabled = false;
     }
     public void setDisabledButUnlocked()
     {
         unavailable.GetComponent<SpriteRenderer>().enabled = false;
+        spell_lock.GetComponent<SpriteRenderer>().enabled = false;
+
         addpoint.GetComponent<SpriteRenderer>().enabled = false;
+        addpoint.GetComponent<BoxCollider2D>().enabled = false;
+    }
+
+    public void setDisabledButLocked()
+    {
+        unavailable.GetComponent<SpriteRenderer>().enabled = true;
+        spell_lock.GetComponent<SpriteRenderer>().enabled = false;
+
+        addpoint.GetComponent<SpriteRenderer>().enabled = true;
+        addpoint.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     public void addSpellPoint()

@@ -69,15 +69,9 @@ public class Spell_slot_script : MonoBehaviour
                 slot.GetComponent<Image>().sprite = slot_sprite_activated;
                 if ((spell.resource_cost <= _characterStats.Local_resource))
                 {
-                    if (_spellScript.target != null)
-                    {
-                        spell.Activate(_spellScript.target);
-                        _combatManager.changeRound();
-                    }
-                    else
-                    {
-                        _notification.message("You need a <b>target</b> first!", 3, "red");
-                    }
+
+                    spell.Activate(_spellScript.target);
+                    _combatManager.changeRound();
 
                     GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
                     GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();

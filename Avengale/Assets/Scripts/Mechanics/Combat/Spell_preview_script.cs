@@ -58,16 +58,37 @@ public class Spell_preview_script : MonoBehaviour
         spell_type.GetComponent<Text_animation>().startAnim("[" + spell.type + "]", 0.01f);
         spell_rank.GetComponent<Text_animation>().startAnim("rank " + spell.current_spell_points, 0.01f);
         spell_description.GetComponent<Text_animation>().startAnim(spell.description, 0.01f);
-        spell_cost.GetComponent<Text_animation>().startAnim("<color=#2E5AB3>-" + spell.resource_cost + " resource", 0.01f);
 
+        if (spell.type != spell_types.passive)
+        {
+            spell_cost.GetComponent<Visibility_script>().setVisible();
+            spell_cost.GetComponent<Text_animation>().startAnim("Cost: <color=#2E5AB3>-" + spell.resource_cost + " resource", 0.01f);
+        }
+        else
+        {
+            spell_cost.GetComponent<Visibility_script>().setInvisible();
+        }
+
+
+
+        string effect_text = "";
+        
         if (spell.attribute_type == spell_attribute_value_types.percentage)
         {
-            spell_effect.GetComponent<Text_animation>().startAnim("<color=#00FF00>+" + spell.attribute + " % " + spell.attribute_name, 0.01f);
+            effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % " + spell.attribute_name;
         }
         else if (spell.attribute_type == spell_attribute_value_types.number)
         {
-            spell_effect.GetComponent<Text_animation>().startAnim("<color=#00FF00>+" + spell.attribute + " " + spell.attribute_name, 0.01f);
+            effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " " + spell.attribute_name;
         }
+        /*
+        if (spell.type == spell_types.heal) { effect_text += "Recovers " + spell.attribute + " health"; }
+        if (spell.type == spell_types.damage) { effect_text += "Deals " + spell.attribute + " damage to the <b>target</b>"; }
+        */
+
+
+        spell_effect.GetComponent<Text_animation>().startAnim(effect_text, 0.01f);
+
 
         spell_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spell.icon);
 
@@ -85,10 +106,14 @@ public class Spell_preview_script : MonoBehaviour
         if (spell.current_spell_points > 0 && spell.type != spell_types.passive)
         {
             assign_button.GetComponent<Visibility_script>().setVisible();
+            assign_button.GetComponentInChildren<BoxCollider2D>().enabled = true;
+
         }
         else
         {
             assign_button.GetComponent<Visibility_script>().setInvisible();
+            assign_button.GetComponentInChildren<BoxCollider2D>().enabled = false;
+
         }
 
 

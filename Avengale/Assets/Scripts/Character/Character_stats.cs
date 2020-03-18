@@ -8,62 +8,27 @@ using UnityEngine.UI;
 
 public class Character_stats : MonoBehaviour
 {
-    [Header("Combat")]
-    public int Local_max_health = 0;
-    public int Local_health = 0;
-    public int Local_max_resource = 0;
-    public int Local_resource = 0;
-    public int Local_damage = 0;
-
-
-    [Header("Completed things")]
-
+    public int Local_max_health = 0, Local_health = 0, Local_max_resource = 0, Local_resource = 0, Local_damage = 0, Local_money = 0, Local_spell_points = 0;
     public List<Enemy> defeated_enemies = new List<Enemy>();
     public List<Conversation> completed_conversations = new List<Conversation>();
     public int[] accepted_quests = new int[3];
     public List<Quest> completed_quests = new List<Quest>();
-
-
-
-
-    [Header("Customization")]
-    public string Local_name = "Unknown";
-    public string Local_title = "the Anone";
-    public int Local_class = 1;
-    public int Local_talent = 1;
-
-    public int hair_id;
-    public int eyes_id;
-    public int nose_id;
-    public int mouth_id;
-    public int body_id;
-
-    [Header("Stats")]
-    public int Local_xp = 0;
-    public int Local_needed_xp = 150;
-    public int Local_level = 1;
-    public int Local_money = 0;
-
-    [Header("Inventory")]
-    public int[] Inventory = new int[10];
-    public int[] Equipments = new int[8];
-
-    [Header("Spells")]
-    public int Local_spell_points = 5;
-    public int[] Spells = new int[5];
+    public string Local_name = "Unknown", Local_title = "the Anone";
+    public int Local_class = 1, Local_talent = 1;
+    public int hair_id, eyes_id, nose_id, mouth_id, body_id;
+    public int Local_xp = 0, Local_needed_xp = 150, Local_level = 1;
+    public int[] Inventory = new int[10], Equipments = new int[8];
+    public int[] Spells = new int[5], Talents = new int[10];
     public List<Spell> Passive_spells = new List<Spell>();
-    public int[] Talents = new int[10];
 
     [Header("References")]
-    public TextMeshProUGUI NameAndTitle;
-    public TextMeshProUGUI Statistics;
+    public TextMeshProUGUI NameAndTitle, Statistics;
     public GameObject Money;
     public GameObject XP_bar;
 
 
     private Item_script _itemScript;
     private Ingame_notification_script _notification;
-
     public TMP_InputField iField;
 
 
@@ -127,6 +92,8 @@ public class Character_stats : MonoBehaviour
             Local_xp = Local_xp - Local_needed_xp;
             Local_level++;
             Local_needed_xp += 50;
+
+            getSpellPoint(1);
 
             _notification.message("You gained a level!", 3, "yellow");
         }
@@ -443,6 +410,14 @@ public class Character_stats : MonoBehaviour
 
     }
 
+
+    public void getSpellPoint(int amount)
+    {
+        Local_spell_points += amount;
+        _notification.message("+" + amount + " skill point", 3);
+        updateStats();
+    }
+
     public void giveMoney(int amount)
     {
         Local_money -= amount;
@@ -496,6 +471,7 @@ public class Character_stats : MonoBehaviour
 
         _notification.message("+" + amount + " resource", 3, "uncommon");
     }
+
 }
 
 

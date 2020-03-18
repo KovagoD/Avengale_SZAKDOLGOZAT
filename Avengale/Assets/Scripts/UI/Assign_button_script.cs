@@ -14,7 +14,7 @@ public class Assign_button_script : MonoBehaviour
     void OnMouseOver()
     {
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && gameObject.GetComponent<SpriteRenderer>().enabled == true)
         {
             _spellPreview.showSpellSlotSelect();
         }

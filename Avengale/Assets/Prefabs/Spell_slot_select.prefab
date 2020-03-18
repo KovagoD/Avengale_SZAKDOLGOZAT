@@ -1014,6 +1014,7 @@ GameObject:
   - component: {fileID: 2184637991739710122}
   - component: {fileID: 7896457803539507094}
   - component: {fileID: 760531765}
+  - component: {fileID: 9042235748691950989}
   m_Layer: 0
   m_Name: Spell_slot_select
   m_TagString: Untagged
@@ -1130,6 +1131,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9042235748691950989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269856360581046668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52274b6fd07483499cf010e39d0b6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOpened: 0
+  children:
+  - {fileID: 7343965701718316568}
+  - {fileID: 2195439868276363484}
+  - {fileID: 4785284003825982825}
+  - {fileID: 3646815639232016033}
+  - {fileID: 7216448027550894175}
+  - {fileID: 8269856360581046668}
+  children_text:
+  - {fileID: 5782106632844514010}
+  children_text_gui: []
 --- !u!1 &8958440802461765751
 GameObject:
   m_ObjectHideFlags: 0

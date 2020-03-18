@@ -23,7 +23,9 @@ public class Spell_slot_select_script : MonoBehaviour
     {
         isOpened=true;
         spell_id=input_spell_id;
+        gameObject.GetComponent<Visibility_script>().setVisible();
         gameObject.GetComponent<Animator>().Play("Slot_select_slide_in_anim");
+
         GameObject.Find("Title").GetComponent<Text_animation>().restartAnim();
 
         foreach (var slot in selectable_slots)
@@ -39,8 +41,6 @@ public class Spell_slot_select_script : MonoBehaviour
         isOpened=false;
         gameObject.GetComponent<Animator>().Play("Slot_select_slide_out_anim");
         _spellPreview.GetComponent<Animator>().Play("Spell_preview_talent_slide_out_anim");
-
-
     }
 
     public void chooseSlot(int ID)

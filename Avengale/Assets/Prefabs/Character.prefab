@@ -1377,21 +1377,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  equimpent_head: {fileID: 3141238634611079279}
+  equipment_head: {fileID: 3141238634611079279}
+  equipment_body: {fileID: 1236780638997098812}
+  equipment_legs: {fileID: 3416801434475623738}
+  equipment_left: {fileID: 5043863637087018519}
+  equipment_shoulder: {fileID: 9070479356729601938}
+  equipment_gadget: {fileID: 3931850982830749215}
+  equipment_feet: {fileID: 5276343299339767919}
+  equipment_right: {fileID: 4430837665009674080}
   equipment_head_id: 0
-  equimpent_body: {fileID: 1236780638997098812}
   equipment_body_id: 0
-  equimpent_legs: {fileID: 3416801434475623738}
   equipment_legs_id: 0
-  equimpent_left: {fileID: 5043863637087018519}
   equipment_left_id: 0
-  equimpent_shoulder: {fileID: 9070479356729601938}
   equipment_shoulder_id: 0
-  equimpent_gadget: {fileID: 3931850982830749215}
   equipment_gadget_id: 0
-  equimpent_feet: {fileID: 5276343299339767919}
   equipment_feet_id: 0
-  equimpent_right: {fileID: 4430837665009674080}
   equipment_right_id: 0
   turn_sign: {fileID: 5590912314129049163}
   spell_animation: {fileID: 672141715075013709}

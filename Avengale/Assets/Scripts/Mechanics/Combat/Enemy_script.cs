@@ -33,7 +33,6 @@ public class Enemy_script : MonoBehaviour
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         enemies = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies;
-        enemyInitialize(id);
     }
     private void Update()
     {

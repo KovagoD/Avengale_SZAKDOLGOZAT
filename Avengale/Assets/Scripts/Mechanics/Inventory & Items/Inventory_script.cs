@@ -5,19 +5,12 @@ using TMPro;
 
 public class Inventory_script : MonoBehaviour
 {
-    public int ID = 0;
+    public int ID = 0, item_id = 0;
 
-    [Header("Item")]
-    public int item_id = 0;
-    public GameObject item_slot;
-
-    [Header("Slot")]
+    public GameObject item_slot, slot, slot_border, item_availability;
     public bool isOpened = false;
-    public GameObject slot;
-    public Sprite slot_sprite;
-    public Sprite slot_sprite_activated;
-    public GameObject slot_border;
-    public GameObject item_availability;
+    public Sprite slot_sprite, slot_sprite_activated;
+
 
     private Item_script _itemScript;
     private Game_manager _gameManagerScript;
@@ -49,7 +42,7 @@ public class Inventory_script : MonoBehaviour
 
 
 
-           switch (_itemScript.items[item_id].rarity)
+            switch (_itemScript.items[item_id].rarity)
             {
                 case rarity.poor:
                     _slotBorder.color = colors.gray;
@@ -58,7 +51,7 @@ public class Inventory_script : MonoBehaviour
                     _slotBorder.color = colors.white;
                     break;
                 case rarity.uncommon:
-                   _slotBorder.color = colors.green;
+                    _slotBorder.color = colors.green;
                     break;
                 case rarity.rare:
                     _slotBorder.color = colors.blue;
@@ -67,10 +60,10 @@ public class Inventory_script : MonoBehaviour
                     _slotBorder.color = colors.purple;
                     break;
                 case rarity.legendary:
-                   _slotBorder.color = colors.yellow;
+                    _slotBorder.color = colors.yellow;
                     break;
                 case rarity.quest:
-                   _slotBorder.color = colors.quest;
+                    _slotBorder.color = colors.quest;
                     break;
                 default:
                     break;

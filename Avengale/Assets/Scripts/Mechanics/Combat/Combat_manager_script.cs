@@ -294,6 +294,7 @@ public class Combat_manager_script : MonoBehaviour
 
         int _xpRewards = 0;
         int _moneyRewards = 0;
+        //int _spellPointRewards = 0;
 
         if (_rewards[0] != 0)
         {
@@ -311,6 +312,12 @@ public class Combat_manager_script : MonoBehaviour
         {
             _moneyRewards += _rewards[3];
         }
+        /*
+        if (_rewards[4] != 0)
+        {
+            _spellPointRewards += _rewards[4];
+        }
+        */
 
         //Opponent_1
         var _firstOpponentRewards = _enemyManagerScript.enemies[battles[battle_id].opponent_ids[0]].rewards;
@@ -414,9 +421,9 @@ public class Combat_manager_script : MonoBehaviour
         */
         battles.AddRange(new List<Battle>()
         {
-            {new Battle(0, "Test battle", new int[] { 2, 1 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(1, "JOGIJOGIJOGI", new int[] { 2, 2 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(1, "10 4 dinosaur", new int[] { 1, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
+            {new Battle(0, "Test battle", new int[] { 2, 1 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
+            {new Battle(1, "JOGIJOGIJOGI", new int[] { 2, 2 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0, 2 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
+            {new Battle(1, "10 4 dinosaur", new int[] { 1, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000, 3 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
         });
     }
 
@@ -440,6 +447,10 @@ public class Combat_manager_script : MonoBehaviour
         if (_rewards[3] != 0)
         {
             _characterStats.getMoney(_rewards[3]);
+        }
+        if (_rewards[4] != 0)
+        {
+            _characterStats.getSpellPoint(_rewards[4]);
         }
     }
 }

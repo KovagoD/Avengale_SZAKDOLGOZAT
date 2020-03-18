@@ -6,32 +6,10 @@ public class Character_manager : MonoBehaviour
 {
     public bool isPlayer = false;
 
-    [Header("Equipments")]
-    public GameObject equimpent_head;
-    private SpriteRenderer _equimpent_head;
-    public int equipment_head_id;
-    public GameObject equimpent_body;
-    private SpriteRenderer _equimpent_body;
-    public int equipment_body_id;
-    public GameObject equimpent_legs;
-    private SpriteRenderer _equimpent_legs;
-    public int equipment_legs_id;
-    public GameObject equimpent_left;
-    private SpriteRenderer _equimpent_left;
-    public int equipment_left_id;
-    public GameObject equimpent_shoulder;
-    private SpriteRenderer _equimpent_shoulder;
-    public int equipment_shoulder_id;
-    public GameObject equimpent_gadget;
-    private SpriteRenderer _equimpent_gadget;
-    public int equipment_gadget_id;
-    public GameObject equimpent_feet;
-    private SpriteRenderer _equimpent_feet;
-    public int equipment_feet_id;
-    public GameObject equimpent_right;
-    private SpriteRenderer _equimpent_right;
+    public GameObject equipment_head, equipment_body, equipment_legs, equipment_left, equipment_shoulder, equipment_gadget, equipment_feet, equipment_right;
+    private SpriteRenderer _equipment_head, _equipment_body, _equipment_legs, _equipment_left, _equipment_shoulder, _equipment_gadget, _equipment_feet, _equipment_right;
+    public int equipment_head_id, equipment_body_id, equipment_legs_id, equipment_left_id, equipment_shoulder_id, equipment_gadget_id, equipment_feet_id, equipment_right_id;
 
-    public int equipment_right_id;
     public GameObject turn_sign;
     public Animator spell_animation;
 
@@ -39,26 +17,13 @@ public class Character_manager : MonoBehaviour
 
 
 
-    [Header("Stats")]
-    public int hair_id;
-    public int eyes_id;
-    public int nose_id;
-    public int mouth_id;
-    public int body_id;
 
-    [Header("Appearance")]
-    public GameObject hair;
-    private SpriteRenderer _hair;
-    public GameObject eyes;
-    private SpriteRenderer _eyes;
-    public GameObject nose;
-    private SpriteRenderer _nose;
-    public GameObject mouth;
-    private SpriteRenderer _mouth;
-    public GameObject body;
-    private SpriteRenderer _body;
+    public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
 
+
+    public GameObject hair, eyes, nose, mouth, body;
+    private SpriteRenderer _hair, _eyes, _nose, _mouth, _body;
 
     private Item_script _itemScript;
     private Character_stats _characterStats;
@@ -75,14 +40,14 @@ public class Character_manager : MonoBehaviour
         _mouth = mouth.GetComponent<SpriteRenderer>();
         _body = body.GetComponent<SpriteRenderer>();
 
-        _equimpent_head = equimpent_head.GetComponent<SpriteRenderer>();
-        _equimpent_body = equimpent_body.GetComponent<SpriteRenderer>(); ;
-        _equimpent_legs = equimpent_legs.GetComponent<SpriteRenderer>(); ;
-        _equimpent_left = equimpent_left.GetComponent<SpriteRenderer>(); ;
-        _equimpent_shoulder = equimpent_shoulder.GetComponent<SpriteRenderer>(); ;
-        _equimpent_gadget = equimpent_gadget.GetComponent<SpriteRenderer>(); ;
-        _equimpent_feet = equimpent_feet.GetComponent<SpriteRenderer>(); ;
-        _equimpent_right = equimpent_right.GetComponent<SpriteRenderer>(); ;
+        _equipment_head = equipment_head.GetComponent<SpriteRenderer>();
+        _equipment_body = equipment_body.GetComponent<SpriteRenderer>(); ;
+        _equipment_legs = equipment_legs.GetComponent<SpriteRenderer>(); ;
+        _equipment_left = equipment_left.GetComponent<SpriteRenderer>(); ;
+        _equipment_shoulder = equipment_shoulder.GetComponent<SpriteRenderer>(); ;
+        _equipment_gadget = equipment_gadget.GetComponent<SpriteRenderer>(); ;
+        _equipment_feet = equipment_feet.GetComponent<SpriteRenderer>(); ;
+        _equipment_right = equipment_right.GetComponent<SpriteRenderer>(); ;
 
 
         _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
@@ -104,14 +69,14 @@ public class Character_manager : MonoBehaviour
     {
         if (isPlayer)
         {
-            _equimpent_head.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[0]].sprite);
-            _equimpent_body.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[1]].sprite);
-            _equimpent_legs.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[2]].sprite);
-            _equimpent_left.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[3]].sprite);
-            _equimpent_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[4]].sprite);
-            _equimpent_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[5]].sprite);
-            _equimpent_feet.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[6]].sprite);
-            _equimpent_right.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[7]].sprite);
+            _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[0]].sprite);
+            _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[1]].sprite);
+            _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[2]].sprite);
+            _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[3]].sprite);
+            _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[4]].sprite);
+            _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[5]].sprite);
+            _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[6]].sprite);
+            _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[7]].sprite);
 
 
             hair_id = _characterStats.hair_id;
@@ -122,14 +87,14 @@ public class Character_manager : MonoBehaviour
         }
         else
         {
-            _equimpent_head.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_head_id].sprite);
-            _equimpent_body.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_body_id].sprite);
-            _equimpent_legs.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_legs_id].sprite);
-            _equimpent_left.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_left_id].sprite);
-            _equimpent_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_shoulder_id].sprite);
-            _equimpent_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_gadget_id].sprite);
-            _equimpent_feet.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_feet_id].sprite);
-            _equimpent_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite);
+            _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_head_id].sprite);
+            _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_body_id].sprite);
+            _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_legs_id].sprite);
+            _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_left_id].sprite);
+            _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_shoulder_id].sprite);
+            _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_gadget_id].sprite);
+            _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_feet_id].sprite);
+            _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite);
         }
 
         switch (eyes_id)

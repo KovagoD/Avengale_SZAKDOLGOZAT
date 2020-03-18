@@ -1426,21 +1426,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  equimpent_head: {fileID: 2148204138170511799}
+  equipment_head: {fileID: 2148204138170511799}
+  equipment_body: {fileID: 2842319871496435940}
+  equipment_legs: {fileID: 1815783393051442402}
+  equipment_left: {fileID: 8333762591453108175}
+  equipment_shoulder: {fileID: 5456338856610965066}
+  equipment_gadget: {fileID: 56473176614453191}
+  equipment_feet: {fileID: 9178698791845124535}
+  equipment_right: {fileID: 803154539493863096}
   equipment_head_id: 0
-  equimpent_body: {fileID: 2842319871496435940}
   equipment_body_id: 0
-  equimpent_legs: {fileID: 1815783393051442402}
   equipment_legs_id: 0
-  equimpent_left: {fileID: 8333762591453108175}
   equipment_left_id: 0
-  equimpent_shoulder: {fileID: 5456338856610965066}
   equipment_shoulder_id: 0
-  equimpent_gadget: {fileID: 56473176614453191}
   equipment_gadget_id: 0
-  equimpent_feet: {fileID: 9178698791845124535}
   equipment_feet_id: 0
-  equimpent_right: {fileID: 803154539493863096}
   equipment_right_id: 0
   turn_sign: {fileID: 7383650673422769591}
   spell_animation: {fileID: 1431252242223519330}
@@ -1887,7 +1887,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 65329
+    rgba: 4278190335
   m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3

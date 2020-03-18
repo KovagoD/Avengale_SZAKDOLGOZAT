@@ -5,30 +5,33 @@ using UnityEngine.UI;
 
 public class Screen_change_button_script : MonoBehaviour
 {
-    public GameObject target;
-    public GameObject icon;
-    public GameObject selected;
+    public GameObject target, icon;
+
+    public Sprite normal_icon, selected_icon;
 
     public void SetEnabled()
     {
         if(icon!=null){icon.GetComponent<SpriteRenderer>().enabled=true;}
         gameObject.GetComponent<BoxCollider2D>().enabled=true;
+        gameObject.GetComponent<SpriteRenderer>().enabled=true;
     }
 
     public void SetDisabled()
     {
         if(icon!=null){icon.GetComponent<SpriteRenderer>().enabled=false;}
         gameObject.GetComponent<BoxCollider2D>().enabled=false;
+        gameObject.GetComponent<SpriteRenderer>().enabled=false;
     }
 
     private void Update() {
-        if (selected!=null && GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen==target)
+
+        if (icon!=null && GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen==target)
         {
-            selected.GetComponent<SpriteRenderer>().enabled=true;
+            icon.GetComponent<SpriteRenderer>().sprite= selected_icon;
         }
-        else if (selected!=null)
+        else if (icon!=null)
         {
-            selected.GetComponent<SpriteRenderer>().enabled=false;
+            icon.GetComponent<SpriteRenderer>().sprite= normal_icon;
         }
     }
 
