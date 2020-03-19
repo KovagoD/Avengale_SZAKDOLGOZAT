@@ -7,22 +7,13 @@ public class Enemy_script : MonoBehaviour
 {
     [Header("Enemy details")]
     public GameObject selected;
-    public int id;
-    public int enemy_health;
-    public int enemy_damage;
+    public int id, enemy_health, enemy_damage;
 
     [Header("References")]
-    public GameObject health_bar;
-    public GameObject health_text;
-    public GameObject appearance_human;
-    public GameObject appearance_non_human;
-    public GameObject turn_sign;
-
+    public GameObject health_bar, health_text, appearance_human, appearance_non_human, turn_sign;
     public Animator spell_animation;
-
     public SpriteRenderer appearanceSprite;
     public string enemy_name;
-
     private List<Enemy> enemies;
     private Character_stats _characterStats;
     private Character_manager _characterManager;

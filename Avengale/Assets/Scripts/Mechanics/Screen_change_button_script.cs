@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class Screen_change_button_script : MonoBehaviour
 {
     public GameObject target, icon;
-
     public Sprite normal_icon, selected_icon;
-
     public void SetEnabled()
     {
         if(icon!=null){icon.GetComponent<SpriteRenderer>().enabled=true;}

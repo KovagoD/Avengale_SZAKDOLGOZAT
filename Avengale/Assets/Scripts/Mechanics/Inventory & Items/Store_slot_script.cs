@@ -12,31 +12,21 @@ public class Store_slot_script : MonoBehaviour
 
     [Header("Item")]
     public int item_id = 0;
-    public GameObject item_slot;
-
     [Header("Slot")]
     public bool isOpened = true;
-    public GameObject slot;
-    public Sprite slot_sprite;
-    public Sprite slot_sprite_activated;
-    public GameObject slot_border;
+    public GameObject item_slot,slot, slot_border;
+    public Sprite slot_sprite, slot_sprite_activated;
     public Colors colors;
 
     private void Start()
     {
-
         gameManager = GameObject.Find("Game manager");
-
-
         item_id = gameManager.GetComponent<Store_manager>().Store[ID];
         item = gameManager.GetComponent<Item_script>();
 
     }
-
-    // Update is called once per frame
     void Update()
     {
-
         if (GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen.name == "Store_screen_UI")
         {
             item_id = gameManager.GetComponent<Store_manager>().Store[ID];
@@ -89,10 +79,6 @@ public class Store_slot_script : MonoBehaviour
 
             slot.GetComponent<SpriteRenderer>().sprite = slot_sprite_activated;
             var item = GameObject.Find("Game manager").GetComponent<Item_script>().items;
-            //Debug.Log(item_id+": " + item[item_id].name);
-
-
-
             if (Input.GetMouseButtonDown(0) && item_id != 0 && !GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
             {
 
@@ -110,9 +96,7 @@ public class Store_slot_script : MonoBehaviour
                 var exit_btn = GameObject.Find("Exit button item_preview");
                 exit_btn.GetComponent<Close_button_script>().Close();
             }
-
         }
-
     }
 
     void OnMouseExit()

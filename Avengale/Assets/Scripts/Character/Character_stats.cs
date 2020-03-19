@@ -446,6 +446,8 @@ public class Character_stats : MonoBehaviour
         }
         else { Local_health += amount; }
         _notification.message("+" + amount + " health", 3, "uncommon");
+        GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealthAddition();
+
     }
 
     public void looseResource(int amount)

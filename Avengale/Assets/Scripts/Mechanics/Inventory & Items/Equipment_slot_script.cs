@@ -5,33 +5,18 @@ using TMPro;
 
 public class Equipment_slot_script : MonoBehaviour
 {
-    public int ID = 0;
-
-    [Header("References")]
-
-    [Header("Item")]
-    public int item_id = 0;
-    public GameObject item_slot;
-
-    [Header("Slot")]
+    public int ID = 0, item_id = 0;
     public bool isOpened = true;
-    public GameObject slot_text;
-    public GameObject slot;
-    public Sprite slot_sprite;
-    public Sprite slot_sprite_activated;
-    public GameObject slot_border;
-
+    public GameObject item_slot, slot_text, slot, slot_border;
+    public Sprite slot_sprite, slot_sprite_activated;
     private Item_script _itemScript;
     private Game_manager _gameManagerScript;
     private Character_stats _characterStats;
-
-
     void Start()
     {
         _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
         _gameManagerScript = GameObject.Find("Game manager").GetComponent<Game_manager>();
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
-
 
         var tmp = slot_text.GetComponent<TextMeshPro>();
 
@@ -69,7 +54,6 @@ public class Equipment_slot_script : MonoBehaviour
 
     void Update()
     {
-
         item_id = _characterStats.Equipments[ID];
         SpriteRenderer _slotBorder = slot_border.GetComponent<SpriteRenderer>();
         Colors colors = new Colors();
@@ -87,7 +71,7 @@ public class Equipment_slot_script : MonoBehaviour
                     _slotBorder.color = colors.white;
                     break;
                 case rarity.uncommon:
-                   _slotBorder.color = colors.green;
+                    _slotBorder.color = colors.green;
                     break;
                 case rarity.rare:
                     _slotBorder.color = colors.blue;
@@ -96,7 +80,7 @@ public class Equipment_slot_script : MonoBehaviour
                     _slotBorder.color = colors.purple;
                     break;
                 case rarity.legendary:
-                   _slotBorder.color = colors.yellow;
+                    _slotBorder.color = colors.yellow;
                     break;
                 default:
                     break;

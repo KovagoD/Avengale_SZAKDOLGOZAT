@@ -7,16 +7,7 @@ public class Spell_preview_script : MonoBehaviour
 {
     [Header("Spell properties")]
     public int spell_id;
-    public GameObject spell_name;
-    public GameObject spell_type;
-    public GameObject spell_rank;
-    public GameObject spell_description;
-    public GameObject spell_cost;
-    public GameObject spell_effect;
-    public GameObject spell_icon;
-    public GameObject spell_level_requirement;
-    public GameObject assign_button;
-
+    public GameObject spell_name, spell_type, spell_rank,spell_description,spell_cost,spell_effect,spell_icon,spell_level_requirement,assign_button;
     private Character_stats _characterStats;
     private Spell_script _spellScript;
 
@@ -36,8 +27,21 @@ public class Spell_preview_script : MonoBehaviour
         spell_type.GetComponent<Text_animation>().startAnim("[" + spell.type + "]", 0.01f);
         spell_rank.GetComponent<Text_animation>().startAnim("rank " + spell.current_spell_points, 0.01f);
         spell_description.GetComponent<Text_animation>().startAnim(spell.description, 0.01f);
+
+
+        string effect_text="";
+         if (spell.attribute_type == spell_attribute_value_types.percentage)
+        {
+            effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % " + spell.attribute_name;
+        }
+        else if (spell.attribute_type == spell_attribute_value_types.number)
+        {
+            effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " " + spell.attribute_name;
+        }
+
+        spell_effect.GetComponent<Text_animation>().startAnim(effect_text, 0.01f);
+
         spell_cost.GetComponent<Text_animation>().startAnim("<color=#2E5AB3>-" + spell.resource_cost + " resource", 0.01f);
-        spell_effect.GetComponent<Text_animation>().startAnim("<color=#00FF00>+" + spell.attribute + " " + spell.attribute_type + " " + spell.attribute_name, 0.01f);
 
 
         StopCoroutine("Wait");
@@ -81,11 +85,6 @@ public class Spell_preview_script : MonoBehaviour
         {
             effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " " + spell.attribute_name;
         }
-        /*
-        if (spell.type == spell_types.heal) { effect_text += "Recovers " + spell.attribute + " health"; }
-        if (spell.type == spell_types.damage) { effect_text += "Deals " + spell.attribute + " damage to the <b>target</b>"; }
-        */
-
 
         spell_effect.GetComponent<Text_animation>().startAnim(effect_text, 0.01f);
 
@@ -107,7 +106,6 @@ public class Spell_preview_script : MonoBehaviour
         {
             assign_button.GetComponent<Visibility_script>().setVisible();
             assign_button.GetComponentInChildren<BoxCollider2D>().enabled = true;
-
         }
         else
         {
@@ -115,8 +113,6 @@ public class Spell_preview_script : MonoBehaviour
             assign_button.GetComponentInChildren<BoxCollider2D>().enabled = false;
 
         }
-
-
 
         StopCoroutine("Wait");
         StartCoroutine("Wait");

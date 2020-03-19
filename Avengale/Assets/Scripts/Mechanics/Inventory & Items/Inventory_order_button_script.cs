@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Inventory_order_button_script : MonoBehaviour
 {
-    public Sprite sprite_normal;
-    public Sprite sprite_activated;
-
+    public Sprite sprite_normal, sprite_activated;
     void OnMouseOver()
     {
         if (sprite_normal != null)

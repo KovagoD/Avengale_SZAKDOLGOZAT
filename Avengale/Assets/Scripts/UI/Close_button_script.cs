@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class Close_button_script : MonoBehaviour
 {
-    public Sprite sprite_normal;
-    public Sprite sprite_activated;
+    public Sprite sprite_normal, sprite_activated;
     public GameObject[] targets;
 
     void OnMouseOver()

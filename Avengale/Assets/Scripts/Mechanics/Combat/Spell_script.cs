@@ -12,8 +12,6 @@ public class Spell_script : MonoBehaviour
     public List<Spell> spells = new List<Spell>();
     public GameObject target;
 
-
-
     public int firstRowPoints; public GameObject[] firstRow;
     public int secondRowPoints; public GameObject[] secondRow; public bool secondRowEnabled = false;
     public int thirdRowPoints; public GameObject[] thirdRow;
@@ -30,7 +28,7 @@ public class Spell_script : MonoBehaviour
             {new Spell(0, "", spell_types.damage, "", "", spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 0, "nothing", null, 0, 0, 0)},
             {new Spell(1, "Attack", spell_types.damage, "warrior", "Deals ", spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 10, "Item_icons/Icon", "attack_1", 1, 5, 2)},
             {new Spell(2, "Enraged attack", spell_types.damage, "warrior", "attacks the <b>target</b> furiously.", spell_attribute_types.damage, spell_attribute_value_types.number, 15, 15, 10, "Item_icons/Icon2", "attack_1", 2, 3, 0)},
-            {new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", spell_attribute_types.health, spell_attribute_value_types.percentage, 20, 20, 10, "Item_icons/Icon", "heal_1", 2, 5, 0)},
+            {new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", spell_attribute_types.health, spell_attribute_value_types.percentage, 20, 20, 10, "Spell_icons/3", "heal_1", 2, 5, 0)},
             {new Spell(4, "Shield", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", spell_attribute_types.resource, spell_attribute_value_types.number, 9999, 9999, 10, "Item_icons/Icon2", null, 5, 5, 0)},
             {new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100,0, "Item_icons/Icon", "attack_1", 1, 5, 0)}
         });
@@ -315,11 +313,13 @@ public class Spell
             {
                 target.GetComponent<Character_stats>().getHealth(target.GetComponent<Character_stats>().getPercentOfHealth(attribute));
                 local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + target.GetComponent<Character_stats>().getPercentOfHealth(attribute) + " health", 0.05f);
+                GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealthAddition();
             }
             else
             {
                 target.GetComponent<Character_stats>().getHealth(attribute);
                 local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + attribute + " health", 0.05f);
+                GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealthAddition();
             }
             local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
         }

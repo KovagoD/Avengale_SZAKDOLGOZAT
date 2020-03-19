@@ -5,15 +5,10 @@ using UnityEngine;
 
 public class Open_button_script : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Sprite sprite_normal;
-    public Sprite sprite_activated;
+    public Sprite sprite_normal, sprite_activated;
     public GameObject[] targets;
-
     public string mode;
-
     public bool isClickable = true;
-
     void OnMouseOver()
     {
         if (sprite_normal != null && isClickable)

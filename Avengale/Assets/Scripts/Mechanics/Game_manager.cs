@@ -111,8 +111,6 @@ public class Game_manager : MonoBehaviour
 
             _characterStats.Local_health = _characterStats.Local_max_health;
             _characterStats.Local_resource = _characterStats.Local_max_resource;
-            GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
-            GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();
             GameObject.Find("Spell_preview").GetComponent<Visibility_script>().setInvisible();
         }
 

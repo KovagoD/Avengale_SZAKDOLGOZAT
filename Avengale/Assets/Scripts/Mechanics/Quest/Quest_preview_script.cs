@@ -5,12 +5,7 @@ using UnityEngine;
 public class Quest_preview_script : MonoBehaviour
 {
     [Header("Quest properties")]
-    public GameObject quest_name;
-    public GameObject quest_description;
-    public GameObject quest_long_description;
-    public GameObject quest_icon;
-    public GameObject complete_button;
-    public GameObject abandon_button;
+    public GameObject quest_name, quest_description, quest_long_description, quest_icon, complete_button, abandon_button;
     public void showQuest(int slot_id)
     {
         var quests = GameObject.Find("Game manager").GetComponent<Quest_manager_script>().quests;

@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class Ingame_notification_script : MonoBehaviour
 {
-
     public GameObject notificationText;
-
     private bool CR_running = false;
     public void message(string input_text, int duration)
     {
@@ -30,12 +28,8 @@ public class Ingame_notification_script : MonoBehaviour
 
             notificationText.GetComponent<Text_animation>().startAnim(input_text, 0.05f);
             StartCoroutine("Wait", duration);
-
         }
-
     }
-
-
     public void message(string input_text, int duration, string color)
     {
         StopAllCoroutines();
@@ -83,7 +77,6 @@ public class Ingame_notification_script : MonoBehaviour
             }
 
             GameObject.Find("Notification text").GetComponent<Text_animation>().startAnim(input_text, 0.05f);
-            //Debug.Log(notificationText.GetComponent<TextMeshPro>().color);
             StartCoroutine("Wait", duration);
         }
         else
@@ -93,7 +86,6 @@ public class Ingame_notification_script : MonoBehaviour
             GameObject.Find("Notification text").GetComponent<Text_animation>().startAnim(input_text, 0.05f);
             gameObject.GetComponent<Animator>().Play("Notification_fade_out");
             StartCoroutine("Wait", duration);
-
         }
     }
 
@@ -103,9 +95,7 @@ public class Ingame_notification_script : MonoBehaviour
         CR_running = true;
         yield return new WaitForSeconds(duration);
         CR_running = false;
-        //gameObject.GetComponent<Animator>().Play("Notification_anim");
         gameObject.GetComponent<Animator>().Play("Notification_fade_out");
-        //StartCoroutine("WaitForAnimation",3);
     }
 
     IEnumerator WaitForAnimation(int duration)
@@ -113,5 +103,4 @@ public class Ingame_notification_script : MonoBehaviour
         yield return new WaitForSeconds(duration);
         gameObject.GetComponent<Visibility_script>().setInvisible();
     }
-
 }

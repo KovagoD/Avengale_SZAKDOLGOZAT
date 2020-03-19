@@ -5,8 +5,7 @@ using UnityEngine;
 public class Battle_pause_button_script : MonoBehaviour
 {
     private Combat_manager_script _combatManager;
-    public Sprite pauseSprite;
-    public Sprite resumeSprite;
+    public Sprite pauseSprite,resumeSprite;
     private void Start()
     {
         _combatManager = GameObject.Find("Game manager").GetComponent<Combat_manager_script>();
@@ -19,7 +18,6 @@ public class Battle_pause_button_script : MonoBehaviour
             {
                 _combatManager.pauseBattle();
                 gameObject.GetComponent<SpriteRenderer>().sprite = resumeSprite;
-                //Debug.Log("Battle paused");
             }
             else
             {
@@ -33,7 +31,6 @@ public class Battle_pause_button_script : MonoBehaviour
             {
                 _combatManager.skipEnemyRound();
                 gameObject.GetComponent<SpriteRenderer>().sprite = resumeSprite;
-                //Debug.Log("Battle paused");
             }
             else
             {

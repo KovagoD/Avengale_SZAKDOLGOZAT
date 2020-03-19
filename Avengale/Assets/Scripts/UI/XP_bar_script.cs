@@ -8,9 +8,10 @@ public class XP_bar_script : MonoBehaviour
 {
     public GameObject bar;
     public GameObject game_manager;
-    public TextMeshProUGUI xp;
-    public TextMeshProUGUI level;
-    public TextMeshProUGUI percentage;
+    public TextMeshProUGUI xp, level, percentage;
+    public Character_stats _characterStats;
+
+
     public float size;
     private float _percentage;
 
@@ -23,8 +24,9 @@ public class XP_bar_script : MonoBehaviour
 
     void Update()
     {
-        var scrpt = game_manager.GetComponent<Character_stats>();
-        _percentage = ((float)scrpt.Local_xp / (float)scrpt.Local_needed_xp) * size;
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+
+        _percentage = ((float)_characterStats.Local_xp / (float)_characterStats.Local_needed_xp) * size;
         var pos = bar.transform.position;
         pos.x = _percentage;
         bar.transform.position = pos;
@@ -38,10 +40,9 @@ public class XP_bar_script : MonoBehaviour
 
     public void updateXP()
     {
-        var scrpt = game_manager.GetComponent<Character_stats>();
-        xp.GetComponent<Text_animation>().startAnim(scrpt.Local_xp.ToString() + "/" + scrpt.Local_needed_xp.ToString(), 1f);
-        level.GetComponent<Text_animation>().startAnim("Level " + scrpt.Local_level.ToString(), 0.01f);
-        percentage.GetComponent<Text_animation>().startAnim(scrpt.getPercentOfXP().ToString() + " %", 1f);
+        xp.GetComponent<Text_animation>().startAnim(_characterStats.Local_xp.ToString() + "/" + _characterStats.Local_needed_xp.ToString(), 1f);
+        level.GetComponent<Text_animation>().startAnim("Level " + _characterStats.Local_level.ToString(), 0.01f);
+        percentage.GetComponent<Text_animation>().startAnim(_characterStats.getPercentOfXP().ToString() + " %", 1f);
     }
 
     void OnMouseUp()
@@ -49,8 +50,7 @@ public class XP_bar_script : MonoBehaviour
         if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened == false)
         {
             System.Random rnd = new System.Random();
-            var scrpt = game_manager.GetComponent<Character_stats>();
-            scrpt.getXP(rnd.Next(10, 100));
+            _characterStats.getXP(rnd.Next(10, 100));
             updateXP();
         }
 

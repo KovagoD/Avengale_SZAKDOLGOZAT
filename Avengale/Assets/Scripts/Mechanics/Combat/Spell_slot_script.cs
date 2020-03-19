@@ -73,8 +73,8 @@ public class Spell_slot_script : MonoBehaviour
                     spell.Activate(_spellScript.target);
                     _combatManager.changeRound();
 
-                    GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
-                    GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();
+                    //GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
+                    //GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();
                 }
                 else
                 {

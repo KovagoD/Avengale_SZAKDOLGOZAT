@@ -8,83 +8,49 @@ using UnityEngine.UI;
 public class Bar_script : MonoBehaviour
 {
     public GameObject bar;
-    static GameObject game_manager;
-    public TextMeshProUGUI left;
-    public TextMeshProUGUI right;
-    public TextMeshProUGUI center;
-
+    public TextMeshProUGUI left, right, center;
     public string mode;
-    public float size;
-    private float _percentage;
-
-    static Character_stats local;
+    public float size, _percentage;
+    static Character_stats _characterStats;
     void Start()
     {
-        game_manager=GameObject.Find("Game manager");
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         Camera cam = Camera.main;
-        size = (cam.aspect  * 2f)*10f ;
-
-        local=game_manager.GetComponent<Character_stats>();
-
-        if (mode=="health")
+        size = (cam.aspect * 2f) * 10f;
+        if (mode == "health")
         {
             updateHealth();
         }
-        else if (mode=="resource")
+        else if (mode == "resource")
         {
             updateResource();
         }
     }
-    
     void Update()
     {
-        var scrpt = game_manager.GetComponent<Character_stats>();
-
-        if (mode=="health")
+        if (mode == "health")
         {
-            _percentage = ((float)scrpt.Local_health / (float)scrpt.Local_max_health) * size;
+            _percentage = ((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * size;
         }
-        else if (mode=="resource")
+        else if (mode == "resource")
         {
-            _percentage = ((float)scrpt.Local_resource / (float)scrpt.Local_max_resource) * size;
+            _percentage = ((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * size;
         }
-        else if (mode=="xp")
+        else if (mode == "xp")
         {
-            _percentage = ((float)scrpt.Local_xp / (float)scrpt.Local_needed_xp) * size;
+            _percentage = ((float)_characterStats.Local_xp / (float)_characterStats.Local_needed_xp) * size;
         }
-        /*
-        if (GameObject.Find("Character_screen_UI").GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-        {
-            var pos = bar.transform.position;
-            pos.x = _percentage;
-            bar.transform.position = pos;
 
-            if (Math.Round(pos.x) == Math.Round(_percentage))
-            {
-
-                && mode=="xp"
-        */
-        
         var pos = bar.transform.position;
-        /*
-        if (_percentage != 0 )
-        {
-             gameObject.GetComponent<Animator>().enabled=true;
-        }
-        */
+        gameObject.GetComponent<Animator>().enabled = true;
 
-
-        gameObject.GetComponent<Animator>().enabled=true;
-        
         if (Math.Round(pos.x) == Math.Round(_percentage))
         {
-            //Debug.Log(_percentage+" "+pos.x);
-            //Debug.Log(Math.Round(pos.x,2)+" "+Math.Round(_percentage,2));
-            gameObject.GetComponent<Animator>().enabled=false;
+            gameObject.GetComponent<Animator>().enabled = false;
             pos.x = _percentage;
             bar.transform.position = pos;
         }
-        
+
         if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -94,46 +60,50 @@ public class Bar_script : MonoBehaviour
 
     public void updateBar(string left_text, string center_text, string right_text)
     {
-        left.GetComponent<Text_animation>().startAnim(left_text,1f);
-        center.GetComponent<Text_animation>().startAnim(center_text,1f);   
-        right.GetComponent<Text_animation>().startAnim(right_text,0.01f);
+        left.GetComponent<Text_animation>().startAnim(left_text, 1f);
+        center.GetComponent<Text_animation>().startAnim(center_text, 1f);
+        right.GetComponent<Text_animation>().startAnim(right_text, 0.01f);
     }
 
+    public void updateHealthAddition()
+    {
+        gameObject.GetComponent<Animator>().Play("Bar_init");
+        updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
+        , "",
+        (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
+    }
     public void updateHealth()
     {
-        //gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
-        updateBar(GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_health+"/"+GameObject.Find("Game manager").GetComponent<Character_stats>().Local_health.ToString()
-        ,"",
-        (((float)GameObject.Find("Game manager").GetComponent<Character_stats>().Local_health/(float)GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_health)*100f).ToString("0")+" %");
+        updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
+        , "",
+        (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
     }
-    
+    public void updateResourceAddition()
+    {
+        gameObject.GetComponent<Animator>().Play("Bar_init");
+        updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
+        , "",
+        (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");
+    }
     public void updateResource()
     {
-        //gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
-        //right.GetComponent<TextMeshPro>().color=game_manager.GetComponent<Item_script>().blue;
-        updateBar(GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_resource+"/"+GameObject.Find("Game manager").GetComponent<Character_stats>().Local_resource.ToString()
-        ,"",
-        (((float)GameObject.Find("Game manager").GetComponent<Character_stats>().Local_resource/(float)GameObject.Find("Game manager").GetComponent<Character_stats>().Local_max_resource)*100f).ToString("0")+" %");
+        updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
+        , "",
+        (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");
     }
-
     public void updateXP()
     {
-        //gameObject.GetComponent<Animator>().Play("Bar_init");
-        updateBar("Level " + GameObject.Find("Game manager").GetComponent<Character_stats>().Local_level.ToString()
-        ,GameObject.Find("Game manager").GetComponent<Character_stats>().Local_xp+"/"+GameObject.Find("Game manager").GetComponent<Character_stats>().Local_needed_xp.ToString(),
-        GameObject.Find("Game manager").GetComponent<Character_stats>().getPercentOfXP().ToString() + " %");
+        updateBar("Level " + _characterStats.Local_level.ToString()
+        , _characterStats.Local_xp + "/" + _characterStats.Local_needed_xp.ToString(),
+        _characterStats.getPercentOfXP().ToString() + " %");
     }
-
-    
     void OnMouseUp()
     {
         if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened == false)
         {
             System.Random rnd = new System.Random();
-            var scrpt = game_manager.GetComponent<Character_stats>();
-            scrpt.getXP(rnd.Next(10, 100));
+            _characterStats.getXP(rnd.Next(10, 100));
             updateXP();
         }
-
     }
 }

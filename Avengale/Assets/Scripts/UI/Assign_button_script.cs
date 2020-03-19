@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Assign_button_script : MonoBehaviour
 {
-    // Start is called before the first frame update
     private Spell_preview_script _spellPreview;
     void Start()
     {

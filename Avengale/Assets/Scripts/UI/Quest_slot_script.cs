@@ -5,9 +5,7 @@ using UnityEngine;
 public class Quest_slot_script : MonoBehaviour
 {
     public int ID;
-    public GameObject Quest_name;
-    public GameObject Quest_description;
-
+    public GameObject Quest_name, Quest_description;
     void OnMouseDown()
     {
         GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().showQuest(ID);

@@ -6,28 +6,9 @@ using UnityEngine;
 public class Item_preview : MonoBehaviour
 {
     [Header("Item properties")]
-    public GameObject item_name;
-    public GameObject item_description;
-    public GameObject item_icon;
-    public GameObject item_rarity_and_type;
-    public GameObject level;
-
-    [Header("Item attributes")]
-    public GameObject attr_health;
-    public GameObject attr_resource;
-    public GameObject attr_damage;
-    public GameObject attr_value;
-
+    public GameObject item_name,item_description,item_icon,item_rarity_and_type,level;
+    public GameObject attr_health,attr_resource,attr_damage,attr_value;
     public GameObject slot_border;
-
-
-
-
-    private void Start()
-    {
-
-
-    }
 
     private void Update()
     {

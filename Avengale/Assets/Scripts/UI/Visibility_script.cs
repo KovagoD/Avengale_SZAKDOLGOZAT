@@ -6,13 +6,9 @@ using UnityEngine;
 public class Visibility_script : MonoBehaviour
 {
     public bool isOpened = false;
-
-    public GameObject[] children;
-    public GameObject[] children_text;
-    public GameObject[] children_text_gui;
+    public GameObject[] children, children_text, children_text_gui;
     void Start()
     {
-
         if (isOpened == false)
         {
             setInvisible();
@@ -22,7 +18,7 @@ public class Visibility_script : MonoBehaviour
 
     public void setVisible()
     {
-        
+
         isOpened = true;
         if (children.Length > 0)
         {
@@ -50,10 +46,10 @@ public class Visibility_script : MonoBehaviour
 
         if (gameObject.GetComponent<BoxCollider2D>() != null)
         {
-            gameObject.GetComponent<BoxCollider2D>().enabled=true;
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
         }
 
-         if (gameObject.GetComponent<Animation>() != null)
+        if (gameObject.GetComponent<Animation>() != null)
         {
             gameObject.GetComponent<Animation>().Play();
         }

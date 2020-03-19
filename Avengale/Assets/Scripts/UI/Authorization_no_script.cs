@@ -8,7 +8,6 @@ public class Authorization_no_script : MonoBehaviour
     {
         if (gameObject.GetComponent<Visibility_script>().isOpened)
         {
-            //GameObject.Find("Game manager").GetComponent<Character_stats>().deleteItem(mode, slot_id);
             GameObject.Find("Authorization").GetComponent<Authorization_script>().AuthorizationNo();
         }
     }

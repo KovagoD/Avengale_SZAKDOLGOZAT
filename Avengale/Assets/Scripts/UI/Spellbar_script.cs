@@ -7,8 +7,6 @@ public class Spellbar_script : MonoBehaviour
 {
     public GameObject[] spell_slots;
 
-
-    // Update is called once per frame
     void Update()
     {
         var _currentScreen = GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen.name;

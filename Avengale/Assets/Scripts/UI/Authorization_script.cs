@@ -6,7 +6,6 @@ public class Authorization_script : MonoBehaviour
 {
     public string input_mode;
     public int input_id_num;
-
     private void Update() {
          if(gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Authorization_slide_out_anim")
          && gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
@@ -30,12 +29,9 @@ public class Authorization_script : MonoBehaviour
             var item_preview=GameObject.Find("Delete_button").GetComponent<Item_delete_script>();
             GameObject.Find("Game manager").GetComponent<Character_stats>().deleteItem(item_preview.mode, item_preview.slot_id);
             gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");
-            //gameObject.GetComponent<Visibility_script>().setInvisible();
         }
-        
     }
-
-     public void AuthorizationNo()
+    public void AuthorizationNo()
     {
         gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");
     }
