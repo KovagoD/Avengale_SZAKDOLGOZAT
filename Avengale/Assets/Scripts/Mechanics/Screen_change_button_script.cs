@@ -10,6 +10,8 @@ public class Screen_change_button_script : MonoBehaviour
     public void SetEnabled()
     {
         if(icon!=null){icon.GetComponent<SpriteRenderer>().enabled=true;}
+
+
         gameObject.GetComponent<BoxCollider2D>().enabled=true;
         gameObject.GetComponent<SpriteRenderer>().enabled=true;
     }

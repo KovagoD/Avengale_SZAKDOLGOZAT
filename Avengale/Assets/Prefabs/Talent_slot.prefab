@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 424050469106110955}
   - component: {fileID: 3156575886385517082}
   m_Layer: 0
-  m_Name: Item slot
+  m_Name: Spell icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -239,32 +239,33 @@ public class Character_stats : MonoBehaviour
         {
             for (int j = i + 1; j < Inventory.Length; j++)
             {
-                int _compareQuality_1 = -1;
+                int _compareQuality_1 = 0;
 
                 switch (_itemScript.items[Inventory[i]].rarity)
                 {
                     case rarity.legendary:
-                        _compareQuality_1 = 6;
+                        _compareQuality_1 = 7;
                         break;
                     case rarity.epic:
-                        _compareQuality_1 = 5;
+                        _compareQuality_1 = 6;
                         break;
                     case rarity.rare:
-                        _compareQuality_1 = 4;
+                        _compareQuality_1 = 5;
                         break;
                     case rarity.uncommon:
-                        _compareQuality_1 = 3;
+                        _compareQuality_1 = 4;
                         break;
                     case rarity.common:
-                        _compareQuality_1 = 2;
+                        _compareQuality_1 = 3;
                         break;
                     case rarity.poor:
-                        _compareQuality_1 = 1;
+                        _compareQuality_1 = 2;
                         break;
                     case rarity.quest:
-                        _compareQuality_1 = 0;
+                        _compareQuality_1 = 1;
                         break;
-                    default:
+                    case rarity.empty:
+                        _compareQuality_1 = 0;
                         break;
                 }
 
@@ -272,38 +273,44 @@ public class Character_stats : MonoBehaviour
                 switch (_itemScript.items[Inventory[j]].rarity)
                 {
                     case rarity.legendary:
-                        _compareQuality_2 = 6;
+                        _compareQuality_2 = 7;
                         break;
                     case rarity.epic:
-                        _compareQuality_2 = 5;
+                        _compareQuality_2 = 6;
                         break;
                     case rarity.rare:
-                        _compareQuality_2 = 4;
+                        _compareQuality_2 = 5;
                         break;
                     case rarity.uncommon:
-                        _compareQuality_2 = 3;
+                        _compareQuality_2 = 4;
                         break;
                     case rarity.common:
-                        _compareQuality_2 = 2;
+                        _compareQuality_2 = 3;
                         break;
                     case rarity.poor:
-                        _compareQuality_2 = 1;
+                        _compareQuality_2 = 2;
                         break;
                     case rarity.quest:
-                        _compareQuality_1 = 0;
+                        _compareQuality_2 = 1;
                         break;
-                    default:
+                    case rarity.empty:
+                        _compareQuality_2 = 0;
                         break;
                 }
 
                 int temp;
-                if (_compareQuality_1 < _compareQuality_2)
+                if (_compareQuality_1 < _compareQuality_2 || Inventory[i] == 0)
                 {
                     temp = Inventory[i];
                     Inventory[i] = Inventory[j];
                     Inventory[j] = temp;
                 }
             }
+        }
+
+        for (int i = 0; i < Inventory.Length; i++)
+        {
+            Debug.Log(_itemScript.items[Inventory[i]].rarity);
         }
     }
 

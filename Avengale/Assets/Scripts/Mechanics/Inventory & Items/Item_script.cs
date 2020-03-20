@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum item_type { head, body, legs, left_arm, shoulder, gadget, feet, right_arm, quest }
-public enum rarity { poor, common, uncommon, rare, epic, legendary, quest }
+public enum rarity { poor, common, uncommon, rare, epic, legendary, quest, empty }
 
 public class Item_script : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class Item_script : MonoBehaviour
 
         declared_items.AddRange(new List<Item>()
         {
-            {new Item(0, "", item_type.body, rarity.poor, 0, 0, 1, "", null, null, 0, 0, 0, 0)},
+            {new Item(0, "", item_type.body, rarity.empty, 0, 0, 1, "", null, null, 0, 0, 0, 0)},
             {new Item(1, "Test head", item_type.head, rarity.common, 0, 2, 1, "\tDuis facilisis sodales urna, et ultricies nisl. Nullam mattis erat sed quam blandit vehicula. Mauris et iaculis massa.", "Item_icons/001", "Item_appearances/001", 10, 0, 200, 100)},
             {new Item(2, "test_body", item_type.body, rarity.uncommon, 0, 2, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec est eget est mollis venenatis. Praesent consectetur ut tortor vitae rutrum. ", "Item_icons/002", "Item_appearances/002", 50, 9, 1, 210)},
             {new Item(3, "test_legs", item_type.legs, rarity.poor, 0, 2, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin aliquam tortor a augue pulvinar ornare. Nulla pellentesque porttitor erat, semper ultrices ligula pretium quis.", "Item_icons/003", "Item_appearances/003", 0, 0, 0, 10)},

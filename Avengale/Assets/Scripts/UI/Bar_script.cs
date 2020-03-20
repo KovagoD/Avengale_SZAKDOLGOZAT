@@ -74,6 +74,7 @@ public class Bar_script : MonoBehaviour
     }
     public void updateHealth()
     {
+        gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
         updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
         , "",
         (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
@@ -87,6 +88,7 @@ public class Bar_script : MonoBehaviour
     }
     public void updateResource()
     {
+        gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
         updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
         , "",
         (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");

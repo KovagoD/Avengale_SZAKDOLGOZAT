@@ -17,7 +17,7 @@ public class Game_manager : MonoBehaviour
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         current_screen = GameObject.Find("Character_screen_UI");
-        _spellScript= gameObject.GetComponent<Spell_script>();
+        _spellScript = gameObject.GetComponent<Spell_script>();
 
         GameObject.Find("Character_screen_UI").SetActive(true);
         GameObject.Find("Store_screen_UI").SetActive(false);
@@ -53,6 +53,15 @@ public class Game_manager : MonoBehaviour
             current_screen.SetActive(false);
         }
         */
+        if (GameObject.Find("Inventory_back").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Inventory slots").GetComponent<Animator>().Play("Inventory_slide_out_anim");
+        }
+
+        if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Item_preview").GetComponent<Animator>().Play("Item_preview_slide_out_anim");
+        }
 
 
         target.SetActive(true);
@@ -73,14 +82,16 @@ public class Game_manager : MonoBehaviour
         {
             foreach (var button in buttons)
             {
-                button.GetComponent<Screen_change_button_script>().SetDisabled();
+                button.GetComponent<Visibility_script>().setInvisible();
+                GameObject.Find("nav_button_background").GetComponent<Visibility_script>().setInvisible();
             }
         }
         else
         {
             foreach (var button in buttons)
             {
-                button.GetComponent<Screen_change_button_script>().SetEnabled();
+                button.GetComponent<Visibility_script>().setVisible();
+                GameObject.Find("nav_button_background").GetComponent<Visibility_script>().setVisible();
             }
             gameObject.GetComponent<Combat_manager_script>().stopBattle();
         }
@@ -95,7 +106,7 @@ public class Game_manager : MonoBehaviour
         {
             for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
             {
-                GameObject.Find("Game manager").GetComponent<Quest_manager_script>().updateQuestSlot(i);  
+                GameObject.Find("Game manager").GetComponent<Quest_manager_script>().updateQuestSlot(i);
             }
             GameObject.Find("Quest_text").GetComponent<Text_animation>().restartAnim();
         }
@@ -116,22 +127,22 @@ public class Game_manager : MonoBehaviour
 
         if (current_screen == GameObject.Find("Spell_screen_UI"))
         {
-            GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: "+_characterStats.Local_spell_points, 0.05f);
+            GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
             _spellScript.setupAttributes();
             _spellScript.checkRowAvailability();
 
             foreach (var slot in _spellScript.firstRow)
             {
-                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points + "/" + _spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].max_spell_points, 0.05f);  
+                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points + "/" + _spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].max_spell_points, 0.05f);
             }
             foreach (var slot in _spellScript.secondRow)
             {
-                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points + "/" + _spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].max_spell_points, 0.05f);  
-            }            
-            
+                slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points + "/" + _spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].max_spell_points, 0.05f);
+            }
+
         }
 
-        
+
 
         _characterStats.updateMoneyStat();
 

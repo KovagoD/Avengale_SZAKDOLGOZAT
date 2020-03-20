@@ -74,6 +74,7 @@ public class Talent_slot_script : MonoBehaviour
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _spellSlotSelect = GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>();
         spell_id = GameObject.Find("Game manager").GetComponent<Character_stats>().Talents[ID];
+
         spell_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[spell_id].icon);
 
 
@@ -125,6 +126,7 @@ public class Talent_slot_script : MonoBehaviour
         if (!_spellSlotSelect.isOpened)
         {
             GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
+            spell_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[spell_id].icon);
         }
     }
 
