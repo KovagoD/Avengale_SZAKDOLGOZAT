@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Spell_slot_script : MonoBehaviour
 {
+
+    public bool preview_mode;
     public int id = 0;
     public int spell_id = 0;
     public Sprite slot_sprite;
@@ -53,7 +55,14 @@ public class Spell_slot_script : MonoBehaviour
         slot.GetComponent<Image>().sprite = slot_sprite_activated;
         if (spell_id != 0)
         {
-            GameObject.Find("Spell_preview").GetComponent<Spell_preview_script>().showSpell(spell_id);
+            if (preview_mode)
+            {
+                 GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
+            }
+            else
+            {
+                GameObject.Find("Spell_preview").GetComponent<Spell_preview_script>().showSpell(spell_id);
+            }
         }
     }
     void OnMouseUp()

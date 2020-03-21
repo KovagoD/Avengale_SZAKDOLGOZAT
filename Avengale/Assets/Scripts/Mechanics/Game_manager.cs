@@ -8,6 +8,7 @@ public class Game_manager : MonoBehaviour
     [Header("References")]
     public GameObject[] screens;
     public GameObject[] buttons;
+    public GameObject spell_button;
     public GameObject current_screen;
 
     private Spell_script _spellScript;
@@ -34,6 +35,17 @@ public class Game_manager : MonoBehaviour
         {
             Change_screen(screens[0]);
         }
+
+        if (_characterStats.Local_spell_points > 0)
+        {
+            spell_button.GetComponent<Screen_change_button_script>().setNotification();
+        }
+        else
+        {
+            spell_button.GetComponent<Screen_change_button_script>().clearNotification();
+        }
+
+
     }
     public void Change_screen(GameObject target)
     {
@@ -62,6 +74,23 @@ public class Game_manager : MonoBehaviour
         {
             GameObject.Find("Item_preview").GetComponent<Animator>().Play("Item_preview_slide_out_anim");
         }
+
+
+        if (GameObject.Find("Spell_preview_talent") && GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Spell_preview_talent").GetComponent<Animator>().Play("Spell_preview_talent_slide_out_anim");
+        }
+
+
+        if (GameObject.Find("Spell_slot_select") && GameObject.Find("Spell_slot_select").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Spell_slot_select").GetComponent<Animator>().Play("Slot_select_slide_out_anim");
+        }
+
+
+
+
+
 
 
         target.SetActive(true);
@@ -128,6 +157,13 @@ public class Game_manager : MonoBehaviour
         if (current_screen == GameObject.Find("Spell_screen_UI"))
         {
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
+
+            /*
+            GameObject.Find("row_2_unlock_text").GetComponent<Text_animation>().startAnim("Spend " + _spellScript.neededForSecond() + " to unlock these: ", 0.05f);
+            GameObject.Find("row_3_unlock_text").GetComponent<Text_animation>().startAnim("Spend " + _spellScript.neededForThird() + " to unlock these: ", 0.05f);
+            */
+
+
             _spellScript.setupAttributes();
             _spellScript.checkRowAvailability();
 

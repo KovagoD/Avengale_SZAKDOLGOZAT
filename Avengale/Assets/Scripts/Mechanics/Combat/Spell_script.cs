@@ -13,8 +13,8 @@ public class Spell_script : MonoBehaviour
     public GameObject target;
 
     public int firstRowPoints; public GameObject[] firstRow;
-    public int secondRowPoints; public GameObject[] secondRow; public bool secondRowEnabled = false;
-    public int thirdRowPoints; public GameObject[] thirdRow;
+    public int secondRowPoints; public int secondRowNeededPoints = 5; public GameObject[] secondRow; public bool secondRowEnabled = false;
+    public int thirdRowPoints; public int thirdRowNeededPoints = 10; public GameObject[] thirdRow; public bool thirdRowEnabled = false;
     void Awake()
     {
         var stats = GameObject.Find("Game manager").GetComponent<Character_stats>();
@@ -30,7 +30,8 @@ public class Spell_script : MonoBehaviour
             {new Spell(3, "Heal me", spell_types.heal, "warrior", "Heal <b>yourself</b>.", spell_attribute_types.health, spell_attribute_value_types.percentage, 20, 20, 10, "Spell_icons/3", "heal_1", 2, 5, 0)},
             {new Spell(4, "Shield", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", spell_attribute_types.resource, spell_attribute_value_types.number, 9999, 9999, 10, "Item_icons/Icon2", null, 5, 5, 0)},
             {new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", "attack_1", 1, 5, 0)},
-           
+            {new Spell(6, "Third row explosion", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", "attack_1", 1, 5, 0)},
+
         });
     }
 
@@ -132,7 +133,6 @@ public class Spell_script : MonoBehaviour
                         spell.lastAttribute = spell.attribute;
                         spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
                         spell.description = "Grants you +" + spell.attribute + " health passively.";
-
                     }
                 }
             }
@@ -147,12 +147,19 @@ public class Spell_script : MonoBehaviour
     public void checkRowAvailability()
     {
         firstRowPoints = 0;
+        secondRowPoints = 0;
+
         foreach (var slot in firstRow)
         {
             firstRowPoints += spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points;
         }
 
-        if (firstRowPoints >= 5)
+        foreach (var slot in secondRow)
+        {
+            secondRowPoints += spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points;
+        }
+
+        if (firstRowPoints >= secondRowNeededPoints)
         {
             secondRowEnabled = true;
             foreach (var slot in secondRow)
@@ -160,6 +167,45 @@ public class Spell_script : MonoBehaviour
                 slot.GetComponent<Talent_slot_script>().setEnabled();
             }
         }
+
+        if ((firstRowPoints + secondRowPoints) >= thirdRowNeededPoints)
+        {
+            thirdRowEnabled = true;
+            foreach (var slot in thirdRow)
+            {
+                slot.GetComponent<Talent_slot_script>().setEnabled();
+            }
+        }
+
+        var _row_2_text = GameObject.Find("row_2_unlock_text").GetComponent<Text_animation>();
+        var _row_3_text = GameObject.Find("row_3_unlock_text").GetComponent<Text_animation>();
+
+        if (neededForSecond() > 0)
+        {
+            _row_2_text.startAnim("Spend " + neededForSecond() + "more to unlock §", 0.05f);
+        }
+        else
+        {
+            _row_2_text.startAnim("Unlocked ±", 0.05f);
+        }
+
+        if (neededForThird() > 0)
+        {
+            _row_3_text.startAnim("Spend " + neededForThird() + "more to unlock §", 0.05f);
+        }
+        else
+        {
+            _row_3_text.startAnim("Unlocked ±", 0.05f);
+        }
+    }
+    public int neededForSecond()
+    {
+        return secondRowNeededPoints - firstRowPoints;
+    }
+
+    public int neededForThird()
+    {
+        return thirdRowNeededPoints - (firstRowPoints + secondRowPoints);
     }
 }
 
@@ -301,8 +347,9 @@ public class Spell
                 target.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(_hitAnimation);
                 Handheld.Vibrate();
             }
-            else {
-            _notification.message("You need a <b>target</b> first!", 3, "red"); 
+            else
+            {
+                _notification.message("You need a <b>target</b> first!", 3, "red");
             }
         }
 
