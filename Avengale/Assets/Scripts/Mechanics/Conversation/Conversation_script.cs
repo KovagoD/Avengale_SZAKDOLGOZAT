@@ -204,7 +204,7 @@ public class Conversation_script : MonoBehaviour
         if (option.Contains("start_battle"))
         {
             string[] split = option.Split(':');
-            GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(battle_screen);
+            GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(battle_screen, false);
             GameObject.Find("Game manager").GetComponent<Combat_manager_script>().initializeBattle(int.Parse(split[1]));
             conversation.continueConversation();
         }
@@ -216,6 +216,8 @@ public class Conversation_script : MonoBehaviour
         StopCoroutine("Wait");
         gameObject.GetComponent<Animator>().Play("Conversation_slide_in", -1, 0f);
         gameObject.GetComponent<Animator>().Play("Conversation_slide_in");
+
+        GameObject.Find("Overlay").GetComponent<Overlay_script>().showOverlay();
 
 
         _charNameWithTitle = _characterStats.Local_name + " " + _characterStats.Local_title;
@@ -276,6 +278,8 @@ public class Conversation_script : MonoBehaviour
     public void closeConversation()
     {
         gameObject.GetComponent<Animator>().Play("Conversation_slide_out");
+        GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
+
         StopCoroutine("Wait");
         StartCoroutine("Wait", 3);
 

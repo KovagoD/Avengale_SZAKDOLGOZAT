@@ -9,7 +9,7 @@ public GameObject target;
     {
         if (Input.GetMouseButtonUp(0) && !GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
         {
-            GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(target);
+            GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(target, false);
         }
 
     }

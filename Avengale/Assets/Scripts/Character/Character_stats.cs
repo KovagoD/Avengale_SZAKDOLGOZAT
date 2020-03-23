@@ -29,7 +29,6 @@ public class Character_stats : MonoBehaviour
 
     private Item_script _itemScript;
     private Ingame_notification_script _notification;
-    public TMP_InputField iField;
 
 
     void Start()
@@ -169,8 +168,7 @@ public class Character_stats : MonoBehaviour
 
     public void changePlayerName()
     {
-        Local_name = iField.text;
-        GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen);
+        GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen, false);
     }
     public void equipItem(int slot_id, int item_id, int sender_slot_id)
     {

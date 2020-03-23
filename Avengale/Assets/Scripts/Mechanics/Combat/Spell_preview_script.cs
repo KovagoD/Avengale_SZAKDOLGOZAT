@@ -6,8 +6,10 @@ using UnityEngine;
 public class Spell_preview_script : MonoBehaviour
 {
     [Header("Spell properties")]
+
+    public bool preview_mode;
     public int spell_id;
-    public GameObject spell_name, spell_type, spell_rank,spell_description,spell_cost,spell_effect,spell_icon,spell_level_requirement,assign_button;
+    public GameObject spell_name, spell_type, spell_rank, spell_description, spell_cost, spell_effect, spell_icon, spell_level_requirement, assign_button;
     private Character_stats _characterStats;
     private Spell_script _spellScript;
 
@@ -29,8 +31,11 @@ public class Spell_preview_script : MonoBehaviour
         spell_description.GetComponent<Text_animation>().startAnim(spell.description, 0.01f);
 
 
-        string effect_text="";
-         if (spell.attribute_type == spell_attribute_value_types.percentage)
+        gameObject.GetComponent<Animator>().Play("Spell_preview_talent_slide_in_anim");
+
+
+        string effect_text = "";
+        if (spell.attribute_type == spell_attribute_value_types.percentage)
         {
             effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % " + spell.attribute_name;
         }
@@ -76,7 +81,7 @@ public class Spell_preview_script : MonoBehaviour
 
 
         string effect_text = "";
-        
+
         if (spell.attribute_type == spell_attribute_value_types.percentage)
         {
             effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % " + spell.attribute_name;
@@ -119,6 +124,18 @@ public class Spell_preview_script : MonoBehaviour
 
     }
 
+    public void closeSpellPreview()
+    {
+        if (preview_mode)
+        {
+            gameObject.GetComponent<Animator>().Play("Spell_preview_talent_slide_out_anim");
+        }
+        else
+        {
+            gameObject.GetComponent<Animator>().Play("Spell_preview_talent_slide_out_anim");
+        }
+    }
+
     public void showSpellSlotSelect()
     {
         GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>().showSlotSelect(spell_id);
@@ -127,8 +144,8 @@ public class Spell_preview_script : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(5);
-
-        gameObject.GetComponent<Close_button_script>().Close();
+        closeSpellPreview();
+        //gameObject.GetComponent<Close_button_script>().Close();
 
     }
 }

@@ -106,6 +106,7 @@ public class Character_manager : MonoBehaviour
                 _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_2");
                 break;
             default:
+                _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_1");
                 break;
         }
 
@@ -118,6 +119,7 @@ public class Character_manager : MonoBehaviour
                 _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_2");
                 break;
             default:
+                _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_1");
                 break;
         }
 
@@ -130,6 +132,7 @@ public class Character_manager : MonoBehaviour
                 _mouth.sprite = Resources.Load<Sprite>("Character_appearances/Human_mouth_2");
                 break;
             default:
+                _mouth.sprite = Resources.Load<Sprite>("Character_appearances/Human_mouth_1");
                 break;
         }
 
@@ -148,6 +151,7 @@ public class Character_manager : MonoBehaviour
                 _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_4");
                 break;
             default:
+                _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_1");
                 break;
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum quest_types{combat, conversation, item}
+public enum quest_types { combat, conversation, item }
 public class Quest_manager_script : MonoBehaviour
 {
     [Header("References")]
@@ -44,7 +44,6 @@ public class Quest_manager_script : MonoBehaviour
 
     public void acceptQuest(int id)
     {
-        Debug.Log(_characterStats.accepted_quests[0]);
         if (!_characterStats.completed_quests.Contains(quests[id]) && _characterStats.accepted_quests[0] != id && _characterStats.accepted_quests[1] != id && _characterStats.accepted_quests[2] != id)
         {
             if (_characterStats.accepted_quests[0] != 0 &&
@@ -106,6 +105,7 @@ public class Quest_manager_script : MonoBehaviour
                 _characterStats.completed_quests.Add(quests[quest_id]);
                 _characterStats.accepted_quests[slot_id] = 0;
                 _notification.message(quests[quest_id].name + " is completed!", 3);
+                GameObject.Find("Quest_preview").GetComponent<Animator>().Play("Quest_preview_slide_out_anim");
             }
             else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
         }
@@ -117,6 +117,8 @@ public class Quest_manager_script : MonoBehaviour
                 _characterStats.completed_quests.Add(quests[quest_id]);
                 _characterStats.accepted_quests[slot_id] = 0;
                 _notification.message(quests[quest_id].name + " is completed!", 3);
+                GameObject.Find("Quest_preview").GetComponent<Animator>().Play("Quest_preview_slide_out_anim");
+
             }
             else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
         }
@@ -140,6 +142,8 @@ public class Quest_manager_script : MonoBehaviour
                 _characterStats.completed_quests.Add(quests[quest_id]);
                 _characterStats.accepted_quests[slot_id] = 0;
                 _notification.message(quests[quest_id].name + " is completed!", 3);
+                GameObject.Find("Quest_preview").GetComponent<Animator>().Play("Quest_preview_slide_out_anim");
+
             }
             else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
         }

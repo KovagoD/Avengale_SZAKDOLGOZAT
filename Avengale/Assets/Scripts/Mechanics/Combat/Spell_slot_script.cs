@@ -69,9 +69,10 @@ public class Spell_slot_script : MonoBehaviour
     {
 
         slot.GetComponent<Image>().sprite = slot_sprite;
+
         if (!_combatManager.isPaused && _gameManager.current_screen.name == "Combat_screen_UI" && spell_id != 0)
         {
-            GameObject.Find("Spell_preview").GetComponent<Close_button_script>().Close();
+            GameObject.Find("Spell_preview").GetComponent<Spell_preview_script>().closeSpellPreview();
 
             if (_combatManager.getRound() == battleRound.Player)
             {

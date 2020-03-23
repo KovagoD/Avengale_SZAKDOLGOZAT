@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 2394950082430847382}
   - component: {fileID: 2394950082430847369}
   - component: {fileID: 2394950082430847381}
+  - component: {fileID: 9208506009945431616}
   m_Layer: 0
   m_Name: Spell_preview
   m_TagString: Untagged
@@ -368,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fbaa596b48ab564a95d407a3d41cf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preview_mode: 0
   spell_id: 0
   spell_name: {fileID: 2394950083462452450}
   spell_type: {fileID: 7465200510063594783}
@@ -419,6 +421,25 @@ MonoBehaviour:
   - {fileID: 1903993082996597061}
   - {fileID: 8337927677718551508}
   - {fileID: 7514524361895608079}
+--- !u!95 &9208506009945431616
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2394950082430847371}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8bce53e39bf255047b1a12d163905386, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2394950082723343555
 GameObject:
   m_ObjectHideFlags: 0

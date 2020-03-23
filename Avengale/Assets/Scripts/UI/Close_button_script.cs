@@ -89,6 +89,10 @@ public class Close_button_script : MonoBehaviour
         {
             GameObject.Find("Conversation").GetComponent<Conversation_script>().closeConversation();
         }
+        else if (gameObject.name == "Exit button quest preview")
+        {
+            GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().closeQuestPreview();
+        }
         else
         {
             Close();

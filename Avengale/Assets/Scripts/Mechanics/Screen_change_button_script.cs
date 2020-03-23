@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Screen_change_button_script : MonoBehaviour
 {
+    public bool isMenu;
     public GameObject target, icon, notification;
     public Sprite normal_icon, selected_icon;
     public void SetEnabled()
@@ -23,6 +24,7 @@ public class Screen_change_button_script : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 
+    
     private void Update()
     {
 
@@ -50,7 +52,7 @@ public class Screen_change_button_script : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0) && GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen != target)
         {
-            GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(target);
+            GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(target, isMenu);
         }
     }
 }

@@ -33,6 +33,11 @@ public class Visibility_script : MonoBehaviour
             {
                 item.GetComponent<TextMeshPro>().enabled = true;
                 item.GetComponent<Text_animation>().restartAnim();
+                
+                if (item.GetComponent<BoxCollider2D>())
+                {
+                    item.GetComponent<BoxCollider2D>().enabled = true;
+                }
             }
         }
         if (children_text_gui.Length > 0)

@@ -182,7 +182,7 @@ public class Spell_script : MonoBehaviour
 
         if (neededForSecond() > 0)
         {
-            _row_2_text.startAnim("Spend " + neededForSecond() + "more to unlock §", 0.05f);
+            _row_2_text.startAnim("Spend " + neededForSecond() + " more points to unlock §", 0.05f);
         }
         else
         {
@@ -191,7 +191,7 @@ public class Spell_script : MonoBehaviour
 
         if (neededForThird() > 0)
         {
-            _row_3_text.startAnim("Spend " + neededForThird() + "more to unlock §", 0.05f);
+            _row_3_text.startAnim("Spend " + neededForThird() + " more points to unlock §", 0.05f);
         }
         else
         {

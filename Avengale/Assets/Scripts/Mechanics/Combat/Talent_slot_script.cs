@@ -28,7 +28,7 @@ public class Talent_slot_script : MonoBehaviour
     public Sprite passive_spell_normal;
     public Sprite passive_spell_activated;
 
-    /*
+    
         void OnMouseOver()
         {
             if (sprite_normal != null)
@@ -55,7 +55,7 @@ public class Talent_slot_script : MonoBehaviour
                 }
             }
         }
-        */
+        
     void OnMouseExit()
     {
         if (sprite_normal != null)
@@ -127,7 +127,7 @@ public class Talent_slot_script : MonoBehaviour
     }
     void OnMouseDown()
     {
-        if (!_spellSlotSelect.isOpened)
+        if (!_spellSlotSelect.isOpened && spell_id!=0)
         {
             GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
             spell_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[spell_id].icon);
@@ -189,10 +189,12 @@ public class Talent_slot_script : MonoBehaviour
                 _spellScript.spells[spell_id].passiveActivate();
             }
 
+            /*
             if ((!_characterStats.Spells.Contains(spell_id) && _spellScript.spells[spell_id].type != spell_types.passive) || GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened)
             {
                 GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
             }
+            */
         }
         _spellScript.checkRowAvailability();
 

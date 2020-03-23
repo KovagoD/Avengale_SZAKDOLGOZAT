@@ -21,26 +21,31 @@ public class Spell_slot_select_script : MonoBehaviour
 
     public void showSlotSelect(int input_spell_id)
     {
-        isOpened=true;
-        spell_id=input_spell_id;
+        isOpened = true;
+        spell_id = input_spell_id;
         gameObject.GetComponent<Visibility_script>().setVisible();
         gameObject.GetComponent<Animator>().Play("Slot_select_slide_in_anim");
+
+        GameObject.Find("Overlay").GetComponent<Overlay_script>().showOverlay();
 
         GameObject.Find("Title").GetComponent<Text_animation>().restartAnim();
 
         foreach (var slot in selectable_slots)
         {
             slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[_characterStats.Spells[slot.GetComponent<Slot_select_script>().ID]].icon);
-            
+
         }
 
     }
 
     public void closeSlotSelect()
     {
-        isOpened=false;
+        isOpened = false;
         gameObject.GetComponent<Animator>().Play("Slot_select_slide_out_anim");
         _spellPreview.GetComponent<Animator>().Play("Spell_preview_talent_slide_out_anim");
+
+        GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
+
     }
 
     public void chooseSlot(int ID)

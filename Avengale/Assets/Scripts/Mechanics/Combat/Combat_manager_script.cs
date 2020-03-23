@@ -45,12 +45,7 @@ public class Combat_manager_script : MonoBehaviour
 
     void Start()
     {
-        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
-        _characterManager = GameObject.Find("Character").GetComponent<Character_manager>();
-        _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
-        _enemyManagerScript = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
-        _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
-        _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
+
     }
 
     private void Update()
@@ -71,6 +66,12 @@ public class Combat_manager_script : MonoBehaviour
     }
     public void initializeBattle(int id)
     {
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        _characterManager = GameObject.Find("Character").GetComponent<Character_manager>();
+        _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
+        _enemyManagerScript = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
+        _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
+        _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
         isPaused = false;
 
         _spellScript.setupAttributes();
@@ -82,6 +83,8 @@ public class Combat_manager_script : MonoBehaviour
         GameObject.Find("Item_preview").GetComponent<Animator>().Play("Item_preview_slide_out_anim");
         GameObject.Find("Inventory slots").GetComponent<Animator>().Play("Inventory_slide_out_anim");
         GameObject.Find("Conversation").GetComponent<Conversation_script>().closeConversation();
+
+        _spellScript.target = null;
 
 
         StopAllCoroutines();
@@ -278,6 +281,9 @@ public class Combat_manager_script : MonoBehaviour
     {
         var enemy = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
         var result_window = GameObject.Find("Battle_results");
+
+        GameObject.Find("Overlay").GetComponent<Overlay_script>().showOverlay();
+
 
         GameObject.Find("Battle_name").GetComponent<Text_animation>().startAnim(battles[battle_id].battle_name, 0.05f);
         GameObject.Find("Battle_description").GetComponent<Text_animation>().startAnim(battles[battle_id].description, 0.05f);

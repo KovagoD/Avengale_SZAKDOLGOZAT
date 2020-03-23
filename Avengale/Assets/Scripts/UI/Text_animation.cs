@@ -18,6 +18,8 @@ public class Text_animation : MonoBehaviour
         {
             startAnim(Text, speed);
         }
+
+        
     }
 
     public void restartAnim()
