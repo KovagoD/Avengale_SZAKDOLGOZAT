@@ -95,6 +95,15 @@ public class Bar_script : MonoBehaviour
     }
     public void updateXP()
     {
+        if (_characterStats.Local_xp > 0)
+        {
+            gameObject.GetComponent<Animator>().Play("Bar_init");
+
+        }
+        else
+        {
+            gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
+        }
         updateBar("Level " + _characterStats.Local_level.ToString()
         , _characterStats.Local_xp + "/" + _characterStats.Local_needed_xp.ToString(),
         _characterStats.getPercentOfXP().ToString() + " %");

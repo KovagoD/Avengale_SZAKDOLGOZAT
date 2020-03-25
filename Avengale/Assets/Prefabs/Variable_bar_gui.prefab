@@ -593,6 +593,7 @@ MonoBehaviour:
   center: {fileID: 9170959111660539214}
   mode: 
   size: 0
+  _percentage: 0
 --- !u!95 &1697034894564205093
 Animator:
   serializedVersion: 3

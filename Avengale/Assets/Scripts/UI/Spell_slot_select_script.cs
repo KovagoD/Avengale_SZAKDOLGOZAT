@@ -33,7 +33,6 @@ public class Spell_slot_select_script : MonoBehaviour
         foreach (var slot in selectable_slots)
         {
             slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[_characterStats.Spells[slot.GetComponent<Slot_select_script>().ID]].icon);
-
         }
 
     }
@@ -50,6 +49,13 @@ public class Spell_slot_select_script : MonoBehaviour
 
     public void chooseSlot(int ID)
     {
+        for (int i = 0; i < _characterStats.Spells.Length; i++)
+        {
+            if (_characterStats.Spells[i] == spell_id)
+            {
+                _characterStats.Spells[i]=0;
+            }
+        }
         _characterStats.Spells[ID] = spell_id;
     }
 }

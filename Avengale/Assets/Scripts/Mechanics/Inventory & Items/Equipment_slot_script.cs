@@ -97,6 +97,7 @@ public class Equipment_slot_script : MonoBehaviour
 
     void OnMouseDown()
     {
+        Debug.Log("clicked +"+ID);
         slot.GetComponent<SpriteRenderer>().sprite = slot_sprite_activated;
 
         if (Input.GetMouseButtonDown(0) && item_id != 0 && !GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened && !GameObject.Find("Conversation").GetComponent<Visibility_script>().isOpened)

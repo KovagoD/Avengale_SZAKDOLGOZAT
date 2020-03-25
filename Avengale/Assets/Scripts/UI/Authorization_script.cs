@@ -22,7 +22,15 @@ public class Authorization_script : MonoBehaviour
 
         GameObject.Find("Overlay").GetComponent<Overlay_script>().showOverlay();
 
-        if (input == "deleteItem" || input == "abandonQuest")
+        if (input == "surrenderBattle")
+        {
+            title.GetComponent<Text_animation>().startAnim("Are you sure?", 0.05f);
+            description.GetComponent<Text_animation>().startAnim("You can't redo this action!", 0.05f);
+            yes.GetComponent<Text_animation>().startAnim("Surrender", 0.05f);
+            no.GetComponent<Text_animation>().startAnim("No.", 0.05f);
+        }
+
+        if (input == "deleteItem" || input == "abandonQuest" || input == "confirmReCustomization")
         {
             title.GetComponent<Text_animation>().startAnim("Are you sure?", 0.05f);
             description.GetComponent<Text_animation>().startAnim("You can't redo this action!", 0.05f);
@@ -47,6 +55,13 @@ public class Authorization_script : MonoBehaviour
     }
     public void AuthorizationYes()
     {
+        if (input_mode == "surrenderBattle")
+        {
+            
+            GameObject.Find("Game manager").GetComponent<Combat_manager_script>().surrenderBattle();
+            gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");
+            GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
+        }
 
         if (input_mode == "deleteItem")
         {
@@ -64,7 +79,7 @@ public class Authorization_script : MonoBehaviour
             GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
         }
 
-        if (input_mode == "confirmCustomization")
+        if (input_mode == "confirmCustomization" || input_mode == "confirmReCustomization")
         {
             GameObject.Find("Customization_controller").GetComponent<Character_customization_script>().confirmCustomization();
             gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");

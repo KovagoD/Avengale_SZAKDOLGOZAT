@@ -79,8 +79,12 @@ public class Enemy_script : MonoBehaviour
         var _playerManager = GameObject.Find("Character").GetComponent<Character_manager>();
         var _playerHealthPercent = _characterStats.getPercentOfHealth(enemies[id].damage);
 
+        if (GameObject.Find("Game manager").GetComponent<Game_manager>().vibrationEnabled)
+        {
+            Handheld.Vibrate();
+        }
+        
         _playerManager.spell_animation.Play(enemies[id].attackAnimation);
-        Handheld.Vibrate();
 
 
         string _hitAnimation = "";

@@ -53,6 +53,12 @@ public class Combat_manager_script : MonoBehaviour
 
     }
 
+    public void surrenderBattle()
+    {
+        pauseBattle();
+        gameObject.GetComponent<Game_manager>().Change_screen(gameObject.GetComponent<Game_manager>().Character_screen_UI, false);
+    }
+
     public void pauseBattle()
     {
         isPaused = true;
@@ -248,8 +254,8 @@ public class Combat_manager_script : MonoBehaviour
             current_round = battleRound.Player;
 
             setTurnSign(2);
-            round_text.GetComponent<Text_animation>().startAnim(_characterStats.Local_name + " " + _characterStats.Local_title, 0.05f);
-            _notification.message(_characterStats.Local_name + " " + _characterStats.Local_title + "'s round!", 3);
+            round_text.GetComponent<Text_animation>().startAnim(_characterStats.Local_name, 0.05f);
+            _notification.message(_characterStats.Local_name  + "'s round!", 3);
         }
 
         if (!opponents[0].GetComponent<Enemy_script>().isAlive() && !opponents[1].GetComponent<Enemy_script>().isAlive())

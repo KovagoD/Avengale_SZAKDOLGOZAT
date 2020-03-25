@@ -2,12 +2,14 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
+
 public static class Save_script
 {
     public static void savePlayer(Character_stats player)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/save.padoru";
+        string path = Application.persistentDataPath + "/save.save";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         CharacterData data = new CharacterData(player);
@@ -19,7 +21,7 @@ public static class Save_script
     public static void saveItems(Item_script itemScript)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/items.padoru";
+        string path = Application.persistentDataPath + "/items.save";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         ItemData data = new ItemData(itemScript);
@@ -31,7 +33,7 @@ public static class Save_script
     public static void saveSpells(Spell_script spellScript)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/spells.padoru";
+        string path = Application.persistentDataPath + "/spells.save";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         SpellData data = new SpellData(spellScript);
@@ -42,7 +44,7 @@ public static class Save_script
 
     public static CharacterData loadPlayer()
     {
-        string path = Application.persistentDataPath + "/save.padoru";
+        string path = Application.persistentDataPath + "/save.save";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -56,6 +58,7 @@ public static class Save_script
         }
         else
         {
+
             Debug.LogError("No save file in: " + path);
             return null;
         }
@@ -63,7 +66,7 @@ public static class Save_script
 
     public static ItemData loadItems()
     {
-        string path = Application.persistentDataPath + "/items.padoru";
+        string path = Application.persistentDataPath + "/items.save";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -84,7 +87,7 @@ public static class Save_script
 
     public static SpellData loadSpells()
     {
-        string path = Application.persistentDataPath + "/spells.padoru";
+        string path = Application.persistentDataPath + "/spells.save";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();

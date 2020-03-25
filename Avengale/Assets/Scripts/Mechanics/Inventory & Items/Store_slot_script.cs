@@ -14,7 +14,7 @@ public class Store_slot_script : MonoBehaviour
     public int item_id = 0;
     [Header("Slot")]
     public bool isOpened = true;
-    public GameObject item_slot,slot, slot_border;
+    public GameObject item_slot, slot, slot_border;
     public Sprite slot_sprite, slot_sprite_activated;
     public Colors colors;
 
@@ -44,6 +44,10 @@ public class Store_slot_script : MonoBehaviour
 
             var items = gameManager.GetComponent<Item_script>().items;
 
+            if (items[item_id].rarity == rarity.quest)
+            {
+                slot_border.GetComponent<SpriteRenderer>().color = colors.quest;
+            }
             if (items[item_id].rarity == rarity.poor)
             {
                 slot_border.GetComponent<SpriteRenderer>().color = colors.gray;

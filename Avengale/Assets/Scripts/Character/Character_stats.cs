@@ -27,6 +27,7 @@ public class Character_stats : MonoBehaviour
     public GameObject XP_bar;
 
 
+    private Game_manager _gameManager;
     private Item_script _itemScript;
     private Ingame_notification_script _notification;
 
@@ -34,6 +35,7 @@ public class Character_stats : MonoBehaviour
     void Start()
     {
         _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
+        _gameManager = GameObject.Find("Game manager").GetComponent<Game_manager>();
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
     }
 
@@ -42,45 +44,76 @@ public class Character_stats : MonoBehaviour
         Save_script.savePlayer(this);
         Debug.Log("Player data saved!");
         _notification.message("Player data saved!", 3, "white");
+        Debug.Log(Application.persistentDataPath);
+    }
+
+    public void initializePlayer()
+    {
+        Local_max_health = 50; Local_health = 0; Local_max_resource = 50; Local_resource = 0; Local_damage = 10; Local_money = 100; Local_spell_points = 0;
+        defeated_enemies = new List<Enemy>();
+        completed_conversations = new List<Conversation>();
+        accepted_quests = new int[3];
+        completed_quests = new List<Quest>();
+        Local_name = "Unknown"; Local_title = "the Unknown";
+        Local_class = 1; Local_talent = 1;
+        hair_id = 0; eyes_id = 0; nose_id = 0; mouth_id = 0; body_id = 0;
+        Local_xp = 0; Local_needed_xp = 150; Local_level = 1;
+        Inventory = new int[10]; Equipments = new int[8];
+        Spells = new int[5]{1,0,0,0,0};
+        //Talents = new int[10];
+        Passive_spells = new List<Spell>();
+
+        gameObject.GetComponent<Spell_script>().initializeSpells();
+        
     }
 
     public void loadPlayer()
     {
         CharacterData data = Save_script.loadPlayer();
 
-        //customization
-        Local_name = data.Local_name;
-        Local_title = data.Local_title;
-        Local_class = data.Local_class;
-        Local_talent = data.Local_talent;
-        hair_id = data.hair_id;
-        eyes_id = data.eyes_id;
-        nose_id = data.nose_id;
-        mouth_id = data.mouth_id;
-        body_id = data.body_id;
-        //stats
-        Local_xp = data.Local_xp;
-        Local_needed_xp = data.Local_needed_xp;
-        Local_level = data.Local_level;
-        Local_money = data.Local_money;
-        Inventory = data.Inventory;
-        Equipments = data.Equipments;
-        Spells = data.Spells;
-        Talents = data.Talents;
-        Local_spell_points = data.Local_spell_points;
-        Local_max_health = data.Local_max_health;
-        Local_max_resource = data.Local_max_resource;
-        Local_damage = data.Local_damage;
-        //defeated_enemies = data.defeated_enemies;
-        completed_conversations = data.completed_conversations;
-        accepted_quests = data.accepted_quests;
-        completed_quests = data.completed_quests;
+        if (data == null)
+        {
+            _notification.message("Save cannot be loaded!", 3, "red");
+
+        }
+        else
+        {
+            //customization
+            Local_name = data.Local_name;
+            Local_title = data.Local_title;
+            Local_class = data.Local_class;
+            Local_talent = data.Local_talent;
+            hair_id = data.hair_id;
+            eyes_id = data.eyes_id;
+            nose_id = data.nose_id;
+            mouth_id = data.mouth_id;
+            body_id = data.body_id;
+            //stats
+            Local_xp = data.Local_xp;
+            Local_needed_xp = data.Local_needed_xp;
+            Local_level = data.Local_level;
+            Local_money = data.Local_money;
+            Inventory = data.Inventory;
+            Equipments = data.Equipments;
+            Spells = data.Spells;
+            Talents = data.Talents;
+            Local_spell_points = data.Local_spell_points;
+            Local_max_health = data.Local_max_health;
+            Local_max_resource = data.Local_max_resource;
+            Local_damage = data.Local_damage;
+            //defeated_enemies = data.defeated_enemies;
+            completed_conversations = data.completed_conversations;
+            accepted_quests = data.accepted_quests;
+            completed_quests = data.completed_quests;
+
+            _gameManager.Change_screen(_gameManager.Character_screen_UI, true);
+            _gameManager.isNewCharacter = true;
+            gameObject.GetComponent<Spell_script>().initializeSpells();
+            
 
 
-        //updateStats();
-
-
-        _notification.message("Save loaded!", 3, "white");
+            _notification.message("Save loaded!", 3, "white");
+        }
     }
     public void getXP(int xp)
     {
@@ -103,7 +136,7 @@ public class Character_stats : MonoBehaviour
     public void updateStats()
     {
         var _nameandtitle = NameAndTitle.GetComponent<TextMeshProUGUI>();
-        NameAndTitle.GetComponent<Text_animation>().startAnim(_nameandtitle.text = Local_name + " " + Local_title, 0.01f);
+        NameAndTitle.GetComponent<Text_animation>().startAnim(_nameandtitle.text = Local_name, 0.01f);
 
         var _statistics = Statistics.GetComponent<TextMeshProUGUI>();
         Statistics.GetComponent<Text_animation>().startAnim("Health: " + Local_max_health + "\n" +
@@ -113,6 +146,7 @@ public class Character_stats : MonoBehaviour
 
         //GameObject.Find("XP_bar").GetComponent<Bar_script>().updateXP();
         updateMoneyStat();
+        gameObject.GetComponent<Spell_script>().initializeSpells();
 
     }
 
@@ -477,6 +511,8 @@ public class Character_stats : MonoBehaviour
         else { Local_resource += amount; }
 
         _notification.message("+" + amount + " resource", 3, "uncommon");
+        GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
+
     }
 
 }

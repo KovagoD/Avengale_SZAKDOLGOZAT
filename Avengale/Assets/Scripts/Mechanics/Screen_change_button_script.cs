@@ -24,7 +24,7 @@ public class Screen_change_button_script : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 
-    
+
     private void Update()
     {
 

@@ -30,6 +30,14 @@ public class Conversation_script : MonoBehaviour
 
     void Start()
     {
+        initializeConversations();
+    }
+
+    public void initializeConversations()
+    {
+
+        conversations.Clear();
+
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
 

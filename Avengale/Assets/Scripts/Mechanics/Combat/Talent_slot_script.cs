@@ -28,34 +28,34 @@ public class Talent_slot_script : MonoBehaviour
     public Sprite passive_spell_normal;
     public Sprite passive_spell_activated;
 
-    
-        void OnMouseOver()
-        {
-            if (sprite_normal != null)
-            {
-                if (_spellScript.spells[spell_id].type == spell_types.passive)
-                {
-                    slot.GetComponent<SpriteRenderer>().sprite = passive_spell_activated;
-                }
-                else
-                {
-                    slot.GetComponent<SpriteRenderer>().sprite = sprite_activated;
-                }
-            }
 
-            if (Input.GetMouseButtonUp(0))
+    void OnMouseOver()
+    {
+        if (sprite_normal != null)
+        {
+            if (_spellScript.spells[spell_id].type == spell_types.passive)
             {
-                if (_spellScript.spells[spell_id].type == spell_types.passive)
-                {
-                    slot.GetComponent<SpriteRenderer>().sprite = passive_spell_normal;
-                }
-                else
-                {
-                    slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
-                }
+                slot.GetComponent<SpriteRenderer>().sprite = passive_spell_activated;
+            }
+            else
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = sprite_activated;
             }
         }
-        
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (_spellScript.spells[spell_id].type == spell_types.passive)
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = passive_spell_normal;
+            }
+            else
+            {
+                slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+            }
+        }
+    }
+
     void OnMouseExit()
     {
         if (sprite_normal != null)
@@ -112,6 +112,8 @@ public class Talent_slot_script : MonoBehaviour
             addpoint.GetComponent<SpriteRenderer>().enabled = false;
             addpoint.GetComponent<BoxCollider2D>().enabled = false;
         }
+        spell_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[spell_id].icon);
+
     }
     public bool isAvailable()
     {
@@ -127,7 +129,7 @@ public class Talent_slot_script : MonoBehaviour
     }
     void OnMouseDown()
     {
-        if (!_spellSlotSelect.isOpened && spell_id!=0)
+        if (!_spellSlotSelect.isOpened && spell_id != 0)
         {
             GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
             spell_icon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(_spellScript.spells[spell_id].icon);
@@ -187,6 +189,12 @@ public class Talent_slot_script : MonoBehaviour
             if (_spellScript.spells[spell_id].type == spell_types.passive)
             {
                 _spellScript.spells[spell_id].passiveActivate();
+            }
+
+
+            if (GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened)
+            {
+                GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().showSpell(spell_id, gameObject);
             }
 
             /*
