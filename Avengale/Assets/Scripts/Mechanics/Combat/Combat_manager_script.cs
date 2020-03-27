@@ -80,6 +80,7 @@ public class Combat_manager_script : MonoBehaviour
         _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
         isPaused = false;
 
+        _spellScript.initializeSpells();
         _spellScript.setupAttributes();
 
         _healthBar = GameObject.Find("Health_bar").GetComponent<Bar_script>();

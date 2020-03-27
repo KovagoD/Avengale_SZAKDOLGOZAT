@@ -119,12 +119,26 @@ public class Character_manager : MonoBehaviour
             case 1:
                 _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_1");
                 break;
+            case 2:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_2");
+                break;
+            case 3:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_3");
+                break;
             default:
                 _hair.sprite = Resources.Load<Sprite>("");
                 break;
         }
 
+        if (isPlayer && _characterStats.Equipments[0]!=0)
+        {
+            _hair.sprite = Resources.Load<Sprite>("");
+        }
+
+
+
         _hair.color = new Color32(hair_color_r, hair_color_g, hair_color_b, 255);
+
 
 
 
@@ -136,6 +150,15 @@ public class Character_manager : MonoBehaviour
                 break;
             case 1:
                 _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_2");
+                break;
+            case 2:
+                _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_3");
+                break;
+            case 3:
+                _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_4");
+                break;
+            case 4:
+                _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_5");
                 break;
             default:
                 _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_1");
@@ -150,6 +173,9 @@ public class Character_manager : MonoBehaviour
             case 1:
                 _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_2");
                 break;
+            case 2:
+                _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_3");
+                break;
             default:
                 _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_1");
                 break;
@@ -162,6 +188,12 @@ public class Character_manager : MonoBehaviour
                 break;
             case 1:
                 _mouth.sprite = Resources.Load<Sprite>("Character_appearances/Human_mouth_2");
+                break;
+            case 2:
+                _mouth.sprite = Resources.Load<Sprite>("Character_appearances/Human_mouth_3");
+                break;
+            case 3:
+                _mouth.sprite = Resources.Load<Sprite>("Character_appearances/Human_mouth_4");
                 break;
             default:
                 _mouth.sprite = Resources.Load<Sprite>("Character_appearances/Human_mouth_1");

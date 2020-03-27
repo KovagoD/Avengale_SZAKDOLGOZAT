@@ -25,7 +25,6 @@ public class Conversation_script : MonoBehaviour
     private Ingame_notification_script _notification;
     private Character_stats _characterStats;
 
-    private string _charNameWithTitle;
     private string _charName;
 
     void Start()
@@ -42,9 +41,7 @@ public class Conversation_script : MonoBehaviour
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
 
 
-        _charNameWithTitle = _characterStats.Local_name + " " + _characterStats.Local_title;
         _charName = _characterStats.Local_name;
-
 
         /*----------------------------------
         COMMANDS:
@@ -75,7 +72,7 @@ public class Conversation_script : MonoBehaviour
          )));
 
 
-        conversations.Add((new Conversation(1, "Walking home", "normal", new List<string>() { "Unknown man", _charNameWithTitle, "Unknown man", _charName },
+        conversations.Add((new Conversation(1, "Walking home", "normal", new List<string>() { "Unknown man", _charName, "Unknown man", _charName },
          new List<string>() {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ¤ Nulla non malesuada felis, eget euismod velit. Phasellus id sapien est. Curabitur in maximus velit. Sed lobortis sem vel ex cursus,",
         "Mauris semper ipsum sed turpis faucibus auctor. Vestibulum mattis lacus hendrerit commodo venenatis. Integer faucibus semper dui ultricies lobortis.",
@@ -128,6 +125,7 @@ public class Conversation_script : MonoBehaviour
         new List<string>() { "No." },
         new List<string>() { "exit" }
         )));
+
     }
 
 
@@ -228,7 +226,6 @@ public class Conversation_script : MonoBehaviour
         GameObject.Find("Overlay").GetComponent<Overlay_script>().showOverlay();
 
 
-        _charNameWithTitle = _characterStats.Local_name + " " + _characterStats.Local_title;
         _charName = _characterStats.Local_name;
 
         //if (!_characterStats.completed_conversations.Contains(conversations[id]))

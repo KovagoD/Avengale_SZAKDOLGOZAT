@@ -15,7 +15,7 @@ public class Character_customization_script : MonoBehaviour
 
     public int equipment_head_id, equipment_body_id, equipment_legs_id, equipment_left_id, equipment_shoulder_id, equipment_gadget_id, equipment_feet_id, equipment_right_id;
 
-    private int hair_length = 0, eyes_length = 1, nose_length = 1, mouth_length = 1, body_length = 3;
+    private int hair_length = 2, eyes_length = 2, nose_length = 2, mouth_length = 3, body_length = 3;
     private Ingame_notification_script _notification;
 
     [Range(0, 255)]
@@ -122,6 +122,11 @@ public class Character_customization_script : MonoBehaviour
             equipment_right_id = _localCharacter.Equipments[7];
 
 
+            hair_color_r = _localCharacter.hair_color_r;
+            hair_color_g = _localCharacter.hair_color_g;
+            hair_color_b = _localCharacter.hair_color_b;
+
+
 
             character_name.text = _localCharacter.Local_name;
 
@@ -145,6 +150,13 @@ public class Character_customization_script : MonoBehaviour
         mouth_id = Random.Range(0, mouth_length + 1);
         body_id = Random.Range(0, body_length + 1);
 
+        randomizeHairColor();
+
+        updateLook();
+    }
+
+    public void randomizeHairColor()
+    {
         hair_color_r = (byte)Random.Range(0, 256);
         slider_red.GetComponent<Slider>().value = hair_color_r;
 
@@ -153,9 +165,6 @@ public class Character_customization_script : MonoBehaviour
 
         hair_color_b = (byte)Random.Range(0, 256);
         slider_blue.GetComponent<Slider>().value = hair_color_b;
-
-
-        updateLook();
     }
     public void next(body_parts part)
     {

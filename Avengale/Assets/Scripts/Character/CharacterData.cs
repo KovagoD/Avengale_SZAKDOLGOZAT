@@ -12,6 +12,8 @@ public class CharacterData
     public string Local_name, Local_title;
     public int Local_class, Local_talent;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
+
+    public byte hair_color_r, hair_color_b, hair_color_g;
     public int Local_xp, Local_needed_xp, Local_level;
     public int[] Inventory, Equipments;
     public int[] Spells, Talents;
@@ -28,6 +30,10 @@ public class CharacterData
         nose_id = player.nose_id;
         mouth_id = player.mouth_id;
         body_id = player.body_id;
+
+        hair_color_r = player.hair_color_r;
+        hair_color_b = player.hair_color_b;
+        hair_color_g = player.hair_color_g;
 
         //stats
         Local_xp = player.Local_xp;

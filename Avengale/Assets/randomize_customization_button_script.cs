@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class randomize_customization_button_script : MonoBehaviour
 {
+    public bool isHair;
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            GameObject.Find("Customization_controller").GetComponent<Character_customization_script>().randomizeLook();
+            if (!isHair)
+            {
+                GameObject.Find("Customization_controller").GetComponent<Character_customization_script>().randomizeLook();
+            }
+            else{
+                GameObject.Find("Customization_controller").GetComponent<Character_customization_script>().randomizeHairColor();
+            }
         }
     }
 }

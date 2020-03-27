@@ -102,6 +102,13 @@ public class Character_stats : MonoBehaviour
             nose_id = data.nose_id;
             mouth_id = data.mouth_id;
             body_id = data.body_id;
+
+            hair_color_r = data.hair_color_r;
+            hair_color_b = data.hair_color_b;
+            hair_color_g = data.hair_color_g;
+
+
+
             //stats
             Local_xp = data.Local_xp;
             Local_needed_xp = data.Local_needed_xp;
@@ -271,6 +278,8 @@ public class Character_stats : MonoBehaviour
         Local_max_health += _itemScript.items[item_id].attributes[0];
         Local_max_resource += _itemScript.items[item_id].attributes[1];
         Local_damage += _itemScript.items[item_id].attributes[2];
+
+        gameObject.GetComponent<Spell_script>().initializeSpells();
     }
     public void equipItem(int slot_id, int item_id, int sender_slot_id)
     {

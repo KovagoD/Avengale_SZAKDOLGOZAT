@@ -20,7 +20,7 @@ public class Game_manager : MonoBehaviour
     private Spell_script _spellScript;
     private Character_stats _characterStats;
 
-    public GameObject Inventory;
+    public GameObject Inventory, conversationWindow;
 
     public bool vibrationEnabled;
 
@@ -120,7 +120,7 @@ public class Game_manager : MonoBehaviour
         gameObject.GetComponent<Character_stats>().loadPlayer();
         gameObject.GetComponent<Item_script>().loadItems();
         gameObject.GetComponent<Spell_script>().loadSpells();
-        gameObject.GetComponent<Conversation_script>().initializeConversations();
+        conversationWindow.GetComponent<Conversation_script>().initializeConversations();
     }
 
     public void closeOpenedWindows()
