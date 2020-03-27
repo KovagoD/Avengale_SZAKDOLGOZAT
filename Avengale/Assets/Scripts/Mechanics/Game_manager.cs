@@ -20,10 +20,14 @@ public class Game_manager : MonoBehaviour
     private Spell_script _spellScript;
     private Character_stats _characterStats;
 
+    public GameObject Inventory;
+
     public bool vibrationEnabled;
 
     void Start()
     {
+        Application.targetFrameRate = 300;
+
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _spellScript = gameObject.GetComponent<Spell_script>();
 
@@ -46,34 +50,55 @@ public class Game_manager : MonoBehaviour
     void Update()
     {
 
-
-        if (Input.GetKey(KeyCode.Escape) && current_screen != Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpen)
+        if ((Input.GetKey(KeyCode.Escape) && (GameObject.Find("Inventory_back").GetComponent<Visibility_script>().isOpened ||
+        GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpen ||
+        GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened ||
+        GameObject.Find("Spell_preview_talent") && GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened ||
+        GameObject.Find("Conversation") && GameObject.Find("Conversation").GetComponent<Visibility_script>().isOpened ||
+        GameObject.Find("Spell_slot_select") && GameObject.Find("Spell_slot_select").GetComponent<Visibility_script>().isOpened
+        )))
         {
+            closeOpenedWindows();
+            //Debug.Log("0");
+        }
+        else if (Input.GetKey(KeyCode.Escape) && current_screen != Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpen)
+        {
+            //Debug.Log("1");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpen)
         {
+            //Debug.Log("2");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
             gameObject.GetComponent<Combat_manager_script>().resumeBattle();
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Combat_screen)
         {
+            //Debug.Log("3");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().showPauseMenu();
             gameObject.GetComponent<Combat_manager_script>().pauseBattle();
         }
-
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_screen_UI)
         {
+            //Debug.Log("4");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().showPauseMenu();
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen != Main_screen && current_screen != Character_customization_screen)
         {
+            //Debug.Log("5");
             Change_screen(Character_screen_UI, false);
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_customization_screen)
+        else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_customization_screen && !isNewCharacter)
         {
+            //Debug.Log("6");
+            Change_screen(Character_screen_UI, false);
+        }
+        else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_customization_screen && isNewCharacter)
+        {
+            //Debug.Log("7");
             Change_screen(Main_screen, false);
         }
+
 
         if (_characterStats.Local_spell_points > 0
         && current_screen != GameObject.Find("Combat_screen_UI")
@@ -82,28 +107,56 @@ public class Game_manager : MonoBehaviour
         )
         {
             spell_button.GetComponent<Screen_change_button_script>().setNotification();
-            _characterStats.updateMoneyStat();
+            //_characterStats.updateMoneyStat();
         }
         else
         {
             spell_button.GetComponent<Screen_change_button_script>().clearNotification();
         }
-
-
-
-
     }
 
     public void loadSave()
     {
-
         gameObject.GetComponent<Character_stats>().loadPlayer();
         gameObject.GetComponent<Item_script>().loadItems();
         gameObject.GetComponent<Spell_script>().loadSpells();
-
         gameObject.GetComponent<Conversation_script>().initializeConversations();
+    }
 
+    public void closeOpenedWindows()
+    {
+        if (GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpen)
+        {
+            GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
+        }
 
+        if (GameObject.Find("Overlay").GetComponent<Overlay_script>().isOpen)
+        {
+            GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
+        }
+
+        if (Inventory.GetComponent<Inventory_ui_script>().isOpened)
+        {
+            Inventory.GetComponent<Inventory_ui_script>().closeInventory();
+        }
+
+        if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Item_preview").GetComponent<Animator>().Play("Item_preview_slide_out_anim");
+        }
+        if (GameObject.Find("Spell_preview_talent") && GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().closeSpellPreview();
+
+        }
+        if (GameObject.Find("Spell_slot_select") && GameObject.Find("Spell_slot_select").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>().closeSlotSelect();
+        }
+        if (GameObject.Find("Conversation") && GameObject.Find("Conversation").GetComponent<Visibility_script>().isOpened)
+        {
+            GameObject.Find("Conversation").GetComponent<Conversation_script>().closeConversation();
+        }
     }
 
     public void Change_screen(GameObject target, bool isMenu)
@@ -124,51 +177,7 @@ public class Game_manager : MonoBehaviour
 
         }
 
-        if (GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpen)
-        {
-            GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
-        }
-
-        if (GameObject.Find("Overlay").GetComponent<Overlay_script>().isOpen)
-        {
-            GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
-        }
-
-        if (GameObject.Find("Inventory_back").GetComponent<Visibility_script>().isOpened)
-        {
-            GameObject.Find("Inventory slots").GetComponent<Animator>().Play("Inventory_slide_out_anim");
-        }
-
-        if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
-        {
-            GameObject.Find("Item_preview").GetComponent<Animator>().Play("Item_preview_slide_out_anim");
-        }
-
-
-        if (GameObject.Find("Spell_preview_talent") && GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened)
-        {
-            GameObject.Find("Spell_preview_talent").GetComponent<Spell_preview_script>().closeSpellPreview();
-
-        }
-
-
-        if (GameObject.Find("Spell_slot_select") && GameObject.Find("Spell_slot_select").GetComponent<Visibility_script>().isOpened)
-        {
-            GameObject.Find("Spell_slot_select").GetComponent<Spell_slot_select_script>().closeSlotSelect();
-        }
-
-        if (GameObject.Find("Conversation") && GameObject.Find("Conversation").GetComponent<Visibility_script>().isOpened)
-        {
-            GameObject.Find("Conversation").GetComponent<Conversation_script>().closeConversation();
-        }
-
-        //GameObject.Find("Overlay").GetComponent<Animator>().Play("Close_overlay");
-
-
-
-
-
-
+        closeOpenedWindows();
 
 
         target.SetActive(true);
@@ -196,22 +205,21 @@ public class Game_manager : MonoBehaviour
 
         if (current_screen == GameObject.Find("Main_screen"))
         {
-            isNewCharacter = true;
-
+            //isNewCharacter = true;
         }
-
-        if (current_screen == GameObject.Find("Character_customization_screen"))
+        else if (current_screen == GameObject.Find("Character_customization_screen"))
         {
             //GameObject.Find("Customization_controller").GetComponent<Character_customization_script>().initializeCustomization(isNewCharacter);
         }
-
-        if (current_screen == GameObject.Find("Character_screen_UI"))
+        else if (current_screen == GameObject.Find("Character_screen_UI"))
         {
-            GameObject.Find("XP_bar").GetComponent<Bar_script>().updateXP();
             _characterStats.updateStats();
-        }
 
-        if (current_screen == GameObject.Find("Quest_screen_UI"))
+            GameObject.Find("experience_bar").GetComponent<Bar_script>().updateXP();
+            GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
+            gameObject.GetComponent<Spell_script>().initializeSpells();
+        }
+        else if (current_screen == GameObject.Find("Quest_screen_UI"))
         {
             for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
             {
@@ -219,10 +227,15 @@ public class Game_manager : MonoBehaviour
             }
             _characterStats.updateMoneyStat();
         }
-
-
-
-        if (current_screen == GameObject.Find("Combat_screen_UI"))
+        else if (current_screen == GameObject.Find("Store_screen_UI"))
+        {
+            _characterStats.updateMoneyStat();
+        }
+        else if (current_screen == GameObject.Find("Map_screen_UI"))
+        {
+            _characterStats.updateMoneyStat();
+        }
+        else if (current_screen == GameObject.Find("Combat_screen_UI"))
         {
             GameObject.Find("Game manager").GetComponent<Combat_manager_script>().initializeBattle(UnityEngine.Random.Range(0, 3));
 
@@ -231,8 +244,7 @@ public class Game_manager : MonoBehaviour
             GameObject.Find("Spell_preview").GetComponent<Visibility_script>().setInvisible();
 
         }
-
-        if (current_screen == GameObject.Find("Spell_screen_UI"))
+        else if (current_screen == GameObject.Find("Spell_screen_UI"))
         {
 
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
@@ -247,12 +259,10 @@ public class Game_manager : MonoBehaviour
             slots.AddRange(_spellScript.secondRow);
             slots.AddRange(_spellScript.thirdRow);
 
-
             foreach (GameObject slot in slots)
             {
                 slot.GetComponent<Talent_slot_script>().spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].current_spell_points + "/" + _spellScript.spells[slot.GetComponent<Talent_slot_script>().spell_id].max_spell_points, 0.05f);
             }
-
             _characterStats.updateMoneyStat();
         }
 
@@ -284,10 +294,11 @@ public class Game_manager : MonoBehaviour
                 GameObject.Find("nav_button_background").GetComponent<Visibility_script>().setVisible();
             }
             GameObject.Find("credit text").GetComponent<TextMeshPro>().enabled = true;
+            _characterStats.updateMoneyStat();
             gameObject.GetComponent<Combat_manager_script>().stopBattle();
         }
     }
-     public void Restart()
+    public void Restart()
     {
         SceneManager.LoadScene("SampleScene");
     }

@@ -9,7 +9,7 @@ public class Spell_preview_script : MonoBehaviour
 
     public bool preview_mode;
     public int spell_id;
-    public GameObject spell_name, spell_type, spell_rank, spell_description, spell_cost, spell_effect, spell_icon, spell_level_requirement, assign_button;
+    public GameObject spell_name, spell_type, spell_rank, spell_description, spell_cost, spell_effect, spell_icon, spell_level_requirement, assign_button, button;
     private Character_stats _characterStats;
     private Spell_script _spellScript;
 
@@ -110,12 +110,12 @@ public class Spell_preview_script : MonoBehaviour
         if (spell.current_spell_points > 0 && spell.type != spell_types.passive)
         {
             assign_button.GetComponent<Visibility_script>().setVisible();
-            assign_button.GetComponentInChildren<BoxCollider2D>().enabled = true;
+            button.GetComponentInChildren<BoxCollider2D>().enabled = true;
         }
         else
         {
             assign_button.GetComponent<Visibility_script>().setInvisible();
-            assign_button.GetComponentInChildren<BoxCollider2D>().enabled = false;
+            button.GetComponentInChildren<BoxCollider2D>().enabled = false;
 
         }
 

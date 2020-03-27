@@ -26,7 +26,7 @@ public class Pause_menu_script : MonoBehaviour
         }
         else
         {
-            back_button_text.GetComponent<Text_animation>().startAnim("Back to the main menu", 0.01f);
+            back_button_text.GetComponent<Text_animation>().startAnim("Main menu", 0.01f);
         }
 
 

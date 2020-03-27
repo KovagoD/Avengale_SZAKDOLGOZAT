@@ -93,6 +93,7 @@ public class Equipment_slot_script : MonoBehaviour
             item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Empty");
             _slotBorder.color = colors.transparent;
         }
+
     }
 
     void OnMouseDown()

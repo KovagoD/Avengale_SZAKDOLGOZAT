@@ -163,7 +163,7 @@ public class Conversation_script : MonoBehaviour
 
         if (option.Contains("item_add"))
         {
-            if (_characterStats.checkInventorySpace())
+            if (!_characterStats.isInventoryFull())
             {
                 string[] split = option.Split(':');
                 _characterStats.itemPickup(int.Parse(split[1]), true);

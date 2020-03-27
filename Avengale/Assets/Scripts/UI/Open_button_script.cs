@@ -25,8 +25,10 @@ public class Open_button_script : MonoBehaviour
             if (mode=="Inventory")
             {
                 Open();
+                /*
                 GameObject.Find("Inventory slots").GetComponent<Animator>().Play("Inventory_slide_in_anim", -1, 0f);
                 GameObject.Find("Inventory slots").GetComponent<Animator>().Play("Inventory_slide_in_anim");
+                */
 
                 return;
             }

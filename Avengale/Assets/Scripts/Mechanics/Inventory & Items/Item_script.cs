@@ -25,7 +25,7 @@ public class Item_script : MonoBehaviour
 
         declared_items.AddRange(new List<Item>()
         {
-            {new Item(0, "", item_type.body, rarity.empty, 0, 0, 1, "", null, null, 0, 0, 0, 0)},
+            {new Item(0, "", item_type.body, rarity.empty, -1, -1, 1, "", null, null, 0, 0, 0, 0)},
             {new Item(1, "Test head", item_type.head, rarity.common, 0, 2, 1, "\tDuis facilisis sodales urna, et ultricies nisl. Nullam mattis erat sed quam blandit vehicula. Mauris et iaculis massa.", "Item_icons/001", "Item_appearances/001", 10, 0, 200, 100)},
             {new Item(2, "test_body", item_type.body, rarity.uncommon, 0, 2, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec est eget est mollis venenatis. Praesent consectetur ut tortor vitae rutrum. ", "Item_icons/002", "Item_appearances/002", 50, 9, 1, 210)},
             {new Item(3, "test_legs", item_type.legs, rarity.poor, 0, 2, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin aliquam tortor a augue pulvinar ornare. Nulla pellentesque porttitor erat, semper ultrices ligula pretium quis.", "Item_icons/003", "Item_appearances/003", 0, 0, 0, 10)},
@@ -34,8 +34,8 @@ public class Item_script : MonoBehaviour
             {new Item(6, "test_gadget", item_type.gadget, rarity.uncommon, 1, 2, 1, "Nullam enim dolor, posuere quis lacus ut, sodales aliquet est. Quisque sed dolor non ex porta pulvinar.", "Item_icons/Icon2", "Item_appearances/legs", 0, 0, 0, 15)},
             {new Item(7, "test_feet", item_type.feet, rarity.legendary, 4, 5, 1, "Etiam dapibus leo vehicula ipsum hendrerit sodales. Phasellus nec neque nibh.", "Item_icons/007", "Item_appearances/007", 0, 0, 0, 5)},
             {new Item(8, "test_right", item_type.right_arm, rarity.epic, 0, 2, 1, "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "Item_icons/008", "Item_appearances/008", 0, 0, 0, 100)},
-            {new Item(9, "Worn jacket", item_type.body, rarity.legendary, 5, 5, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/Icon", "Item_appearances/002", 32, 100, 15, 200)},
-            {new Item(10, "Padoru's hat", item_type.head, rarity.legendary, 5, 5, 2, "Hasire sori yo kaze no you ni tsukimihara wo\nPADORU PADORU", "Item_icons/001", "Item_appearances/001", 100, 100, 100, 125)},
+            {new Item(9, "Recruit jacket", item_type.body, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/Icon", "Item_appearances/009", 32, 100, 15, 200)},
+            {new Item(10, "Recruit pants", item_type.legs, rarity.poor, 0, 1, 2, "Hasire sori yo kaze no you ni tsukimihara wo\nPADORU PADORU", "Item_icons/001", "Item_appearances/010", 100, 100, 100, 125)},
             {new Item(11, "Test quest item", item_type.quest, rarity.quest, 0, 0, 1, "Test quest item description.", "Item_icons/001", null, 0, 0, 0, 0)},
             {new Item(12, "Test quest 2", item_type.quest, rarity.quest, 0, 0, 1, " venenatis dui. In in aliquam justo. Curabitur lorem.", "Item_icons/002", null, 0, 0, 0, 0)}
         });
@@ -130,6 +130,7 @@ public class Item
                     rarity = rarity.legendary;
                     break;
                 default:
+                    rarity = rarity.empty;
                     break;
             }
         }

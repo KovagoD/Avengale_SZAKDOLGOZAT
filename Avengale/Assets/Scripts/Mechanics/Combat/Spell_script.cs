@@ -17,12 +17,18 @@ public class Spell_script : MonoBehaviour
     public int thirdRowPoints; public int thirdRowNeededPoints = 10; public GameObject[] thirdRow; public bool thirdRowEnabled = false;
     void Awake()
     {
-
+        initializeSpells();
     }
 
     public void initializeSpells()
     {
         var stats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        List<int> _spentSpellpoints = new List<int>();
+        foreach (var spell in spells)
+        {
+            _spentSpellpoints.Add(spell.current_spell_points);
+        }
+
         spells.Clear();
         /*
             ID, NAME, TYPE, CHARACTER CLASS, DESCRIPTION, ATTRIBUTE, ATTRIBUTE VALUE, RESOURCE COST, ICON, ANIMATION
@@ -46,6 +52,12 @@ public class Spell_script : MonoBehaviour
             {new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", "attack_1", 1, 5, 0)},
             {new Spell(6, "Third row explosion", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", "attack_1", 1, 5, 0)},
         });
+
+        for (int i = 0; i < _spentSpellpoints.Count; i++)
+        {
+            spells[i].current_spell_points = _spentSpellpoints[i];
+        }
+        
     }
     public void saveSpells()
     {

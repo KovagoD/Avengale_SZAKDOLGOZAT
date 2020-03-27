@@ -35,10 +35,12 @@ public class Close_button_script : MonoBehaviour
     private void Update()
     {
 
+        /*
         if (Input.GetKey(KeyCode.Escape))
         {
             Close();
         }
+        */
     }
 
     public void otherFunctions()

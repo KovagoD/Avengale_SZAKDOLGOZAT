@@ -20,8 +20,8 @@ public class Character_customization_script : MonoBehaviour
 
     public void initializeCustomization(bool isNewCharacter)
     {
-        this.isNewCharacter = isNewCharacter;
-        if (isNewCharacter)
+        this.isNewCharacter = GameObject.Find("Game manager").GetComponent<Game_manager>().isNewCharacter;
+        if (GameObject.Find("Game manager").GetComponent<Game_manager>().isNewCharacter)
         {
             randomizeLook();
             character_name.text = null;
@@ -57,20 +57,22 @@ public class Character_customization_script : MonoBehaviour
         GameObject _gameManager = GameObject.Find("Game manager");
         Character_stats _character = _gameManager.GetComponent<Character_stats>();
 
+
         if (isNewCharacter)
         {
             _character.initializePlayer();
         }
 
         _character.Local_name = character_name.text;
-
         _character.hair_id = hair_id;
         _character.eyes_id = eyes_id;
         _character.nose_id = nose_id;
         _character.mouth_id = mouth_id;
         _character.body_id = body_id;
 
-        GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
+
+        _character.equipStarterItems();
+        _gameManager.GetComponent<Game_manager>().isNewCharacter = false;
         _gameManager.GetComponent<Game_manager>().Change_screen(_gameManager.GetComponent<Game_manager>().Character_screen_UI, true);
     }
 
@@ -105,6 +107,15 @@ public class Character_customization_script : MonoBehaviour
     }
     public void randomizeLook()
     {
+        equipment_head_id = 0;
+        equipment_body_id = 9;
+        equipment_legs_id = 10;
+        equipment_left_id = 0;
+        equipment_shoulder_id = 0;
+        equipment_gadget_id = 0;
+        equipment_feet_id = 0;
+        equipment_right_id = 0;
+
         hair_id = Random.Range(0, hair_length + 1);
         eyes_id = Random.Range(0, eyes_length + 1);
         nose_id = Random.Range(0, nose_length + 1);
@@ -154,6 +165,7 @@ public class Character_customization_script : MonoBehaviour
         }
 
         updateLook();
+
 
 
     }

@@ -10,11 +10,14 @@ public class Overlay_script : MonoBehaviour
     {
         isOpen = true;
         gameObject.GetComponent<Animator>().Play("Show_overlay");
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     public void closeOverlay()
     {
         isOpen = false;
         gameObject.GetComponent<Animator>().Play("Close_overlay");
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
     }
 }

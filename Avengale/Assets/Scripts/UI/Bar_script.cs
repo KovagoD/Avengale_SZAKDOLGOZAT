@@ -15,6 +15,7 @@ public class Bar_script : MonoBehaviour
     void Start()
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+
         Camera cam = Camera.main;
         size = (cam.aspect * 2f) * 10f;
         if (mode == "health")
@@ -95,10 +96,10 @@ public class Bar_script : MonoBehaviour
     }
     public void updateXP()
     {
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         if (_characterStats.Local_xp > 0)
         {
             gameObject.GetComponent<Animator>().Play("Bar_init");
-
         }
         else
         {
@@ -107,6 +108,7 @@ public class Bar_script : MonoBehaviour
         updateBar("Level " + _characterStats.Local_level.ToString()
         , _characterStats.Local_xp + "/" + _characterStats.Local_needed_xp.ToString(),
         _characterStats.getPercentOfXP().ToString() + " %");
+        
     }
     void OnMouseUp()
     {
