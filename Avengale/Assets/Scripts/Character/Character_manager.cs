@@ -20,6 +20,13 @@ public class Character_manager : MonoBehaviour
 
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
+    [Range(0, 255)]
+    public byte hair_color_r = 255;
+    [Range(0, 255)]
+    public byte hair_color_g = 0;
+    [Range(0, 255)]
+    public byte hair_color_b = 0;
+
 
 
     public GameObject hair, eyes, nose, mouth, body;
@@ -58,6 +65,7 @@ public class Character_manager : MonoBehaviour
     void Update()
     {
         updateAppearance();
+
         if (_gameManager.current_screen != GameObject.Find("Combat_screen_UI"))
         {
             turn_sign.GetComponent<SpriteRenderer>().enabled = false;
@@ -84,6 +92,12 @@ public class Character_manager : MonoBehaviour
             nose_id = _characterStats.nose_id;
             mouth_id = _characterStats.mouth_id;
             body_id = _characterStats.body_id;
+
+            hair_color_r = _characterStats.hair_color_r;
+            hair_color_g = _characterStats.hair_color_g;
+            hair_color_b = _characterStats.hair_color_b;
+
+
         }
         else
         {
@@ -96,6 +110,24 @@ public class Character_manager : MonoBehaviour
             _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_feet_id].sprite);
             _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite);
         }
+
+        switch (hair_id)
+        {
+            case 0:
+                _hair.sprite = Resources.Load<Sprite>("");
+                break;
+            case 1:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_1");
+                break;
+            default:
+                _hair.sprite = Resources.Load<Sprite>("");
+                break;
+        }
+
+        _hair.color = new Color32(hair_color_r, hair_color_g, hair_color_b, 255);
+
+
+
 
         switch (eyes_id)
         {

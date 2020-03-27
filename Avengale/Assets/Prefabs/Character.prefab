@@ -1401,6 +1401,9 @@ MonoBehaviour:
   nose_id: 1
   mouth_id: 1
   body_id: 1
+  hair_color_r: 0
+  hair_color_g: 0
+  hair_color_b: 0
   hair: {fileID: 3442400871359148420}
   eyes: {fileID: 1514247560555106620}
   nose: {fileID: 5612225493071392770}

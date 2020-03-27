@@ -34,8 +34,8 @@ public class Item_script : MonoBehaviour
             {new Item(6, "test_gadget", item_type.gadget, rarity.uncommon, 1, 2, 1, "Nullam enim dolor, posuere quis lacus ut, sodales aliquet est. Quisque sed dolor non ex porta pulvinar.", "Item_icons/Icon2", "Item_appearances/legs", 0, 0, 0, 15)},
             {new Item(7, "test_feet", item_type.feet, rarity.legendary, 4, 5, 1, "Etiam dapibus leo vehicula ipsum hendrerit sodales. Phasellus nec neque nibh.", "Item_icons/007", "Item_appearances/007", 0, 0, 0, 5)},
             {new Item(8, "test_right", item_type.right_arm, rarity.epic, 0, 2, 1, "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "Item_icons/008", "Item_appearances/008", 0, 0, 0, 100)},
-            {new Item(9, "Recruit jacket", item_type.body, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/Icon", "Item_appearances/009", 32, 100, 15, 200)},
-            {new Item(10, "Recruit pants", item_type.legs, rarity.poor, 0, 1, 2, "Hasire sori yo kaze no you ni tsukimihara wo\nPADORU PADORU", "Item_icons/001", "Item_appearances/010", 100, 100, 100, 125)},
+            {new Item(9, "Recruit jacket", item_type.body, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/009", "Item_appearances/009", 32, 100, 15, 200)},
+            {new Item(10, "Recruit pants", item_type.legs, rarity.poor, 0, 1, 2, "Hasire sori yo kaze no you ni tsukimihara wo\nPADORU PADORU", "Item_icons/010", "Item_appearances/010", 100, 100, 100, 125)},
             {new Item(11, "Test quest item", item_type.quest, rarity.quest, 0, 0, 1, "Test quest item description.", "Item_icons/001", null, 0, 0, 0, 0)},
             {new Item(12, "Test quest 2", item_type.quest, rarity.quest, 0, 0, 1, " venenatis dui. In in aliquam justo. Curabitur lorem.", "Item_icons/002", null, 0, 0, 0, 0)}
         });

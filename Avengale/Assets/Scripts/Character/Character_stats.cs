@@ -16,6 +16,7 @@ public class Character_stats : MonoBehaviour
     public string Local_name = "Unknown", Local_title = "the Anone";
     public int Local_class = 1, Local_talent = 1;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
+    public byte hair_color_r, hair_color_g, hair_color_b;
     public int Local_xp = 0, Local_needed_xp = 150, Local_level = 1;
     public int[] Inventory = new int[10], Equipments = new int[8], starterEquipments = new int[8] { 0, 9, 10, 0, 0, 0, 0, 0 };
     public int[] Spells = new int[5], Talents = new int[10];

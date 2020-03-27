@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 
 public enum body_parts { hair, eyes, nose, mouth, body }
@@ -17,11 +18,19 @@ public class Character_customization_script : MonoBehaviour
     private int hair_length = 0, eyes_length = 1, nose_length = 1, mouth_length = 1, body_length = 3;
     private Ingame_notification_script _notification;
 
+    [Range(0, 255)]
+    public byte hair_color_r;
+    [Range(0, 255)]
+    public byte hair_color_g;
+    [Range(0, 255)]
+    public byte hair_color_b;
 
-    public void initializeCustomization(bool isNewCharacter)
+    public GameObject slider_red, slider_green, slider_blue;
+
+    public void initializeCustomization(bool isNew)
     {
-        this.isNewCharacter = GameObject.Find("Game manager").GetComponent<Game_manager>().isNewCharacter;
-        if (GameObject.Find("Game manager").GetComponent<Game_manager>().isNewCharacter)
+        isNewCharacter = isNew;
+        if (isNewCharacter)
         {
             randomizeLook();
             character_name.text = null;
@@ -30,6 +39,16 @@ public class Character_customization_script : MonoBehaviour
         {
             loadCurrentAppearance();
         }
+    }
+
+    private void Update()
+    {
+
+        hair_color_r = (byte)slider_red.GetComponent<Slider>().value;
+        hair_color_g = (byte)slider_green.GetComponent<Slider>().value;
+        hair_color_b = (byte)slider_blue.GetComponent<Slider>().value;
+
+        updateLook();
     }
     public void checkConfirm()
     {
@@ -69,6 +88,10 @@ public class Character_customization_script : MonoBehaviour
         _character.nose_id = nose_id;
         _character.mouth_id = mouth_id;
         _character.body_id = body_id;
+
+        _character.hair_color_r = hair_color_r;
+        _character.hair_color_g = hair_color_g;
+        _character.hair_color_b = hair_color_b;
 
 
         _character.equipStarterItems();
@@ -121,6 +144,16 @@ public class Character_customization_script : MonoBehaviour
         nose_id = Random.Range(0, nose_length + 1);
         mouth_id = Random.Range(0, mouth_length + 1);
         body_id = Random.Range(0, body_length + 1);
+
+        hair_color_r = (byte)Random.Range(0, 256);
+        slider_red.GetComponent<Slider>().value = hair_color_r;
+
+        hair_color_g = (byte)Random.Range(0, 256);
+        slider_green.GetComponent<Slider>().value = hair_color_g;
+
+        hair_color_b = (byte)Random.Range(0, 256);
+        slider_blue.GetComponent<Slider>().value = hair_color_b;
+
 
         updateLook();
     }
@@ -216,6 +249,8 @@ public class Character_customization_script : MonoBehaviour
     {
         var _character = character.GetComponent<Character_manager>();
 
+
+
         _character.hair_id = hair_id;
         _character.eyes_id = eyes_id;
         _character.nose_id = nose_id;
@@ -230,5 +265,9 @@ public class Character_customization_script : MonoBehaviour
         _character.equipment_gadget_id = equipment_gadget_id;
         _character.equipment_feet_id = equipment_feet_id;
         _character.equipment_right_id = equipment_right_id;
+
+        _character.hair_color_r = hair_color_r;
+        _character.hair_color_g = hair_color_g;
+        _character.hair_color_b = hair_color_b;
     }
 }

@@ -10,7 +10,7 @@ public class Character_customization_button_script : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            GameObject.Find("Game manager").GetComponent<Game_manager>().isNewCharacter = true;
+            GameObject.Find("Game manager").GetComponent<Game_manager>().isNewCharacter = isNewCharacter;
             GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(target, true);
             GameObject.Find("Customization_controller").GetComponent<Character_customization_script>().initializeCustomization(isNewCharacter);
 
