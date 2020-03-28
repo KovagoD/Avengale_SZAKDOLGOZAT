@@ -10,7 +10,7 @@ public class Game_manager : MonoBehaviour
     [Header("References")]
     public GameObject[] screens;
     public GameObject[] buttons;
-    public GameObject spell_button;
+    public GameObject character_button, hub_button, shop_button, spell_button, quest_button;
     public GameObject current_screen;
 
     public bool isNewCharacter;
@@ -19,6 +19,7 @@ public class Game_manager : MonoBehaviour
     public GameObject Main_screen, Character_customization_screen, Character_screen_UI, Combat_screen;
     private Spell_script _spellScript;
     private Character_stats _characterStats;
+    private Quest_manager_script _questManager;
 
     public GameObject Inventory, conversationWindow;
 
@@ -29,6 +30,7 @@ public class Game_manager : MonoBehaviour
         Application.targetFrameRate = 300;
 
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        _questManager = gameObject.GetComponent<Quest_manager_script>();
         _spellScript = gameObject.GetComponent<Spell_script>();
 
         current_screen = GameObject.Find("Main_screen");
@@ -55,7 +57,8 @@ public class Game_manager : MonoBehaviour
         GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened ||
         GameObject.Find("Spell_preview_talent") && GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened ||
         GameObject.Find("Conversation") && GameObject.Find("Conversation").GetComponent<Visibility_script>().isOpened ||
-        GameObject.Find("Spell_slot_select") && GameObject.Find("Spell_slot_select").GetComponent<Visibility_script>().isOpened
+        GameObject.Find("Spell_slot_select") && GameObject.Find("Spell_slot_select").GetComponent<Visibility_script>().isOpened ||
+        GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().isOpened
         )))
         {
             closeOpenedWindows();
@@ -113,6 +116,18 @@ public class Game_manager : MonoBehaviour
         {
             spell_button.GetComponent<Screen_change_button_script>().clearNotification();
         }
+
+        if (_questManager.haveCompletedQuest()
+        && current_screen != GameObject.Find("Combat_screen_UI")
+        && current_screen != GameObject.Find("Main_screen")
+        && current_screen != GameObject.Find("Character_customization_screen"))
+        {
+            quest_button.GetComponent<Screen_change_button_script>().setNotification();
+        }
+        else
+        {
+            quest_button.GetComponent<Screen_change_button_script>().clearNotification();
+        }
     }
 
     public void loadSave()
@@ -138,6 +153,11 @@ public class Game_manager : MonoBehaviour
         if (Inventory.GetComponent<Inventory_ui_script>().isOpened)
         {
             Inventory.GetComponent<Inventory_ui_script>().closeInventory();
+        }
+
+        if (GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().isOpened)
+        {
+            GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().closeQuestPreview();
         }
 
         if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
@@ -221,10 +241,10 @@ public class Game_manager : MonoBehaviour
         }
         else if (current_screen == GameObject.Find("Quest_screen_UI"))
         {
-            for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
-            {
-                GameObject.Find("Game manager").GetComponent<Quest_manager_script>().updateQuestSlot(i);
-            }
+
+            GameObject.Find("Game manager").GetComponent<Quest_manager_script>().updateQuestSlots();
+
+
             _characterStats.updateMoneyStat();
         }
         else if (current_screen == GameObject.Find("Store_screen_UI"))
@@ -237,7 +257,7 @@ public class Game_manager : MonoBehaviour
         }
         else if (current_screen == GameObject.Find("Combat_screen_UI"))
         {
-            GameObject.Find("Game manager").GetComponent<Combat_manager_script>().initializeBattle(UnityEngine.Random.Range(0, 3));
+            GameObject.Find("Game manager").GetComponent<Combat_manager_script>().initializeBattle(UnityEngine.Random.Range(0, 4));
 
             _characterStats.Local_health = _characterStats.Local_max_health;
             _characterStats.Local_resource = _characterStats.Local_max_resource;

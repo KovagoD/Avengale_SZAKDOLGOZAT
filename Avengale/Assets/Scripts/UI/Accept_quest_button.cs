@@ -8,6 +8,7 @@ public class Accept_quest_button : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
+            //UnityEngine.Random.Range(1, 5)
             GameObject.Find("Game manager").GetComponent<Quest_manager_script>().acceptQuest(UnityEngine.Random.Range(1, 5));
 
         }

@@ -256,7 +256,7 @@ public class Combat_manager_script : MonoBehaviour
 
             setTurnSign(2);
             round_text.GetComponent<Text_animation>().startAnim(_characterStats.Local_name, 0.05f);
-            _notification.message(_characterStats.Local_name  + "'s round!", 3);
+            _notification.message(_characterStats.Local_name + "'s round!", 3);
         }
 
         if (!opponents[0].GetComponent<Enemy_script>().isAlive() && !opponents[1].GetComponent<Enemy_script>().isAlive())
@@ -436,7 +436,9 @@ public class Combat_manager_script : MonoBehaviour
         {
             {new Battle(0, "Test battle", new int[] { 2, 1 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
             {new Battle(1, "JOGIJOGIJOGI", new int[] { 2, 2 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0, 2 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(1, "10 4 dinosaur", new int[] { 1, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000, 3 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
+            {new Battle(2, "10 4 dinosaur", new int[] { 1, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000, 3 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
+            {new Battle(3, "Ambush", new int[] { 4, 4 }, "Two rebel rectruits appeared", new int[] { 0, 0, 10, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
+
         });
     }
 

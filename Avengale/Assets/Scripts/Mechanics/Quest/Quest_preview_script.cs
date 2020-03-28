@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Quest_preview_script : MonoBehaviour
 {
+
+    public bool isOpened;
     public GameObject quest_name, quest_description, quest_long_description, quest_icon, complete_button, abandon_button;
     public void showQuest(int slot_id)
     {
@@ -14,6 +16,8 @@ public class Quest_preview_script : MonoBehaviour
         {
             gameObject.GetComponent<Animator>().Play("Quest_preview_slide_in_anim");
             GameObject.Find("Quest_preview").GetComponent<Open_button_script>().Open();
+            isOpened = true;
+
             quest_name.GetComponent<Text_animation>().startAnim(quests[accepted[slot_id]].name, 0.01f);
             quest_description.GetComponent<Text_animation>().startAnim(quests[accepted[slot_id]].description, 0.01f);
             quest_long_description.GetComponent<Text_animation>().startAnim(quests[accepted[slot_id]].long_description, 0.01f);
@@ -25,18 +29,7 @@ public class Quest_preview_script : MonoBehaviour
     public void closeQuestPreview()
     {
         gameObject.GetComponent<Animator>().Play("Quest_preview_slide_out_anim");
-
-        StopCoroutine("Wait");
-        StartCoroutine("Wait", 1);
-
+        isOpened = false;
     }
 
-    IEnumerator Wait(int duration)
-    {
-        yield return new WaitForSeconds(duration);
-
-        gameObject.GetComponent<Visibility_script>().setInvisible();
-
-
-    }
 }

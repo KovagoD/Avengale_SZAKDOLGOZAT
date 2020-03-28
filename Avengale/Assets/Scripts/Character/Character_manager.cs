@@ -36,8 +36,6 @@ public class Character_manager : MonoBehaviour
     private Character_stats _characterStats;
     private Game_manager _gameManager;
 
-
-
     // Update is called once per frame
     void Start()
     {
@@ -93,9 +91,17 @@ public class Character_manager : MonoBehaviour
             mouth_id = _characterStats.mouth_id;
             body_id = _characterStats.body_id;
 
+
+            /*
             hair_color_r = _characterStats.hair_color_r;
             hair_color_g = _characterStats.hair_color_g;
             hair_color_b = _characterStats.hair_color_b;
+
+            */
+
+            hair_color_r = _characterStats.hair_color[0];
+            hair_color_g = _characterStats.hair_color[1];
+            hair_color_b = _characterStats.hair_color[2];
 
 
         }
@@ -130,18 +136,12 @@ public class Character_manager : MonoBehaviour
                 break;
         }
 
-        if (isPlayer && _characterStats.Equipments[0]!=0)
+        if (isPlayer && _characterStats.Equipments[0] != 0)
         {
             _hair.sprite = Resources.Load<Sprite>("");
         }
 
-
-
         _hair.color = new Color32(hair_color_r, hair_color_g, hair_color_b, 255);
-
-
-
-
 
         switch (eyes_id)
         {

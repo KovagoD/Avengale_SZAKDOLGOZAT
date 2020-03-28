@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum quest_types { combat, conversation, item }
@@ -11,6 +12,7 @@ public class Quest_manager_script : MonoBehaviour
     private Ingame_notification_script _notification;
     private Character_stats _characterStats;
 
+    public Sprite ConversationIcon, CombatIcon, ItemIcon;
 
     void Awake()
     {
@@ -22,8 +24,8 @@ public class Quest_manager_script : MonoBehaviour
         quests.Add(new Quest(0, "", quest_types.combat, "", "", 0, 0, 0));
         quests.Add(new Quest(1, "Combat test quest", quest_types.combat, "defeat Szisz", "Ayaya? Aya! AYAYA!...AYAYA\n AYAYA AYAYA AYAYA (yamete)", 1, 100, 5));
         quests.Add(new Quest(2, "Conversation test quest", quest_types.conversation, "Speak with David", "gfngfner434534", 3, 100, 6));
-        quests.Add(new Quest(3, "Item test quest", quest_types.item, "Get the quest item", "sadsd21dasdasdasdsad", 11, 100, 6));
-        quests.Add(new Quest(4, "Item reeeee", quest_types.item, "Get the quest item", "sadsd21dasdasdasdsad", 12, 100, 6));
+        quests.Add(new Quest(3, "Item test quest", quest_types.item, "Get the quest item 11 ", "sadsd21dasdasdasdsad", 11, 100, 6));
+        quests.Add(new Quest(4, "Item reeeee", quest_types.item, "Get the quest item 12", "sadsd21dasdasdasdsad", 12, 100, 6));
 
     }
 
@@ -34,31 +36,98 @@ public class Quest_manager_script : MonoBehaviour
 
     }
 
-    public void updateQuestSlot(int id)
+    public void updateQuestSlots()
     {
-        quest_slots[id].GetComponent<Quest_slot_script>().Quest_name.GetComponent<Text_animation>().startAnim(quests[_characterStats.accepted_quests[id]].name, 0.01f);
-        quest_slots[id].GetComponent<Quest_slot_script>().Quest_description.GetComponent<Text_animation>().startAnim("-" + quests[_characterStats.accepted_quests[id]].description, 0.01f);
+        for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
+        {
+            quest_slots[i].GetComponent<Quest_slot_script>().quest_id = _characterStats.accepted_quests[i];
+        }
 
-        GameObject.Find("Exit button quest preview").GetComponent<Close_button_script>().Close();
+        for (int i = 0; i < quest_slots.Length; i++)
+        {
+            var _slot = quest_slots[i].GetComponent<Quest_slot_script>();
+            var _quest = quests[_characterStats.accepted_quests[_slot.ID]];
+
+            if (_characterStats.accepted_quests[_slot.ID] != 0)
+            {
+                _slot.Quest_name.GetComponent<Text_animation>().startAnim(_quest.name, 0.01f);
+                _slot.Quest_description.GetComponent<Text_animation>().startAnim("-" + _quest.description, 0.01f);
+                _slot.Quest_icon.GetComponent<SpriteRenderer>().enabled = true;
+                _slot.GetComponent<SpriteRenderer>().sprite = _slot.full;
+                _slot.GetComponent<Button_script>().sprite_normal = _slot.full;
+
+                switch (_quest.type)
+                {
+                    case quest_types.conversation:
+                        _slot.Quest_icon.GetComponent<SpriteRenderer>().sprite = ConversationIcon;
+                        break;
+                    case quest_types.combat:
+                        _slot.Quest_icon.GetComponent<SpriteRenderer>().sprite = CombatIcon;
+                        break;
+                    case quest_types.item:
+                        _slot.Quest_icon.GetComponent<SpriteRenderer>().sprite = ItemIcon;
+                        break;
+                }
+
+                if (isQuestCompleted(i))
+                {
+                    _slot.Quest_complete_sign.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                else { _slot.Quest_complete_sign.GetComponent<SpriteRenderer>().enabled = false; }
+            }
+            else
+            {
+                _slot.Quest_name.GetComponent<Text_animation>().startAnim("", 0.01f);
+                _slot.Quest_description.GetComponent<Text_animation>().startAnim("", 0.01f);
+                _slot.Quest_complete_sign.GetComponent<SpriteRenderer>().enabled = false;
+                _slot.Quest_icon.GetComponent<SpriteRenderer>().enabled = false;
+                _slot.GetComponent<SpriteRenderer>().sprite = _slot.empty;
+                _slot.GetComponent<Button_script>().sprite_normal = _slot.empty;
+            }
+        }
+
+        GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().closeQuestPreview();
     }
+
+    public bool isQuestSlotsFull()
+    {
+        for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
+        {
+            if (_characterStats.accepted_quests[i] == 0)
+            {
+                return false;
+            }
+        }
+        _notification.message("You cannot pick up another quest!", 3, "red");
+        return true;
+    }
+
+    public bool isQuestAlreadyAccepted(int id)
+    {
+        for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
+        {
+            if (_characterStats.accepted_quests[i] == id)
+            {
+                _notification.message("You are already on this quest!", 3, "red");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public void acceptQuest(int id)
     {
-        if (!_characterStats.completed_quests.Contains(quests[id]) && _characterStats.accepted_quests[0] != id && _characterStats.accepted_quests[1] != id && _characterStats.accepted_quests[2] != id)
+        if (!isQuestSlotsFull() && !isQuestAlreadyAccepted(id))
         {
-            if (_characterStats.accepted_quests[0] != 0 &&
-            _characterStats.accepted_quests[1] != 0 &&
-            _characterStats.accepted_quests[2] != 0)
-            {
-                _notification.message("You cannot pick up another quest!", 3, "red");
-            }
             for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
             {
                 if (_characterStats.accepted_quests[i] == 0)
                 {
-                    _characterStats.accepted_quests[i] = quests[id].id;
-                    updateQuestSlot(i);
+                    _characterStats.accepted_quests[i] = id;
                     _notification.message(quests[id].name + " is accepted!", 3);
+                    updateQuestSlots();
                     break;
                 }
             }
@@ -68,7 +137,6 @@ public class Quest_manager_script : MonoBehaviour
     public void abandonQuest(int slot_id)
     {
         _characterStats.accepted_quests[slot_id] = 0;
-        //updateQuestSlot(slot_id);
         sortQuests();
     }
 
@@ -87,69 +155,132 @@ public class Quest_manager_script : MonoBehaviour
                 }
             }
         }
-        updateQuestSlot(0);
-        updateQuestSlot(1);
-        updateQuestSlot(2);
-
-
+        updateQuestSlots();
     }
 
-    public void isQuestCompleted(int slot_id, int quest_id)
+    public bool isQuestCompleted(int slot_id)
     {
+        var _quest = quests[_characterStats.accepted_quests[slot_id]];
 
-        if (quests[quest_id].type == quest_types.combat)
+        if (_quest.type == quest_types.combat)
         {
-            if (_characterStats.defeated_enemies.Contains(GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[quests[quest_id].objective]))
+            if (_characterStats.defeated_enemies.Contains(GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[_quest.objective]))
             {
-                quests[quest_id].Complete();
-                _characterStats.completed_quests.Add(quests[quest_id]);
-                _characterStats.accepted_quests[slot_id] = 0;
-                _notification.message(quests[quest_id].name + " is completed!", 3);
-                GameObject.Find("Quest_preview").GetComponent<Animator>().Play("Quest_preview_slide_out_anim");
+                return true;
             }
-            else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
-        }
-        else if (quests[quest_id].type == quest_types.conversation)
-        {
-            if (_characterStats.completed_conversations.Contains(GameObject.Find("Conversation").GetComponent<Conversation_script>().conversations[quests[quest_id].objective]))
-            {
-                quests[quest_id].Complete();
-                _characterStats.completed_quests.Add(quests[quest_id]);
-                _characterStats.accepted_quests[slot_id] = 0;
-                _notification.message(quests[quest_id].name + " is completed!", 3);
-                GameObject.Find("Quest_preview").GetComponent<Animator>().Play("Quest_preview_slide_out_anim");
 
-            }
-            else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
         }
-        else if (quests[quest_id].type == quest_types.item)
+        else if (_quest.type == quest_types.conversation)
         {
-            bool haveItem = false;
-            var inventory = _characterStats.Inventory;
-            for (int i = 0; i < inventory.Length; i++)
+            if (_characterStats.completed_conversations.Contains(GameObject.Find("Conversation").GetComponent<Conversation_script>().conversations[_quest.objective]))
             {
-                if (inventory[i] == quests[quest_id].objective)
+                return true;
+            }
+
+        }
+        else if (_quest.type == quest_types.item)
+        {
+            if (_characterStats.Inventory.Any(a => a == _quest.objective))
+            {
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool haveCompletedQuest()
+    {
+        for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
+        {
+            var _quest = quests[_characterStats.accepted_quests[i]];
+
+            if (_quest.type == quest_types.combat)
+            {
+                if (_characterStats.defeated_enemies.Contains(GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[_quest.objective]))
                 {
-                    haveItem = true;
-                    inventory[i] = 0;
-                    break;
+                    return true;
                 }
             }
-
-            if (haveItem)
+            else if (_quest.type == quest_types.conversation)
             {
-                quests[quest_id].Complete();
-                _characterStats.completed_quests.Add(quests[quest_id]);
-                _characterStats.accepted_quests[slot_id] = 0;
-                _notification.message(quests[quest_id].name + " is completed!", 3);
-                GameObject.Find("Quest_preview").GetComponent<Animator>().Play("Quest_preview_slide_out_anim");
-
+                if (_characterStats.completed_conversations.Contains(GameObject.Find("Conversation").GetComponent<Conversation_script>().conversations[_quest.objective]))
+                {
+                    return true;
+                }
             }
-            else { _notification.message(quests[quest_id].name + " is <b>not</b> completed!", 3, "red"); }
+            else if (_quest.type == quest_types.item)
+            {
+                if (_characterStats.Inventory.Any(a => a == _quest.objective))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void questComplete(int slot_id)
+    {
+        var _quest = quests[_characterStats.accepted_quests[slot_id]];
+
+        if (_quest.type == quest_types.combat)
+        {
+            if (isQuestCompleted(slot_id))
+            {
+                _quest.Complete();
+                _characterStats.completed_quests.Add(_quest);
+                _notification.message(_quest.name + " is completed!", 3);
+
+                _characterStats.accepted_quests[slot_id] = 0;
+            }
+            else
+            {
+                _notification.message(_quest.name + " is <b>not</b> completed!", 3);
+            }
+        }
+        else if (_quest.type == quest_types.conversation)
+        {
+            if (isQuestCompleted(slot_id))
+            {
+                _quest.Complete();
+                _characterStats.completed_quests.Add(_quest);
+                _notification.message(_quest.name + " is completed!", 3);
+
+                _characterStats.accepted_quests[slot_id] = 0;
+            }
+            else
+            {
+                _notification.message(_quest.name + " is <b>not</b> completed!", 3);
+            }
+        }
+        else if (_quest.type == quest_types.item)
+        {
+            if (isQuestCompleted(slot_id))
+            {
+
+                _quest.Complete();
+                _characterStats.completed_quests.Add(_quest);
+                _notification.message(_quest.name + " is completed!", 3);
+                _characterStats.accepted_quests[slot_id] = 0;
+
+                for (int i = 0; i < _characterStats.Inventory.Length; i++)
+                {
+                    if (_characterStats.Inventory[i] == _quest.objective)
+                    {
+                        _characterStats.Inventory[i] = 0;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                _notification.message(_quest.name + " is <b>not</b> completed!", 3);
+            }
         }
 
-        updateQuestSlot(slot_id);
-
+        GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().closeQuestPreview();
+        sortQuests();
     }
 
 

@@ -15,7 +15,7 @@ public class Character_customization_script : MonoBehaviour
 
     public int equipment_head_id, equipment_body_id, equipment_legs_id, equipment_left_id, equipment_shoulder_id, equipment_gadget_id, equipment_feet_id, equipment_right_id;
 
-    private int hair_length = 2, eyes_length = 2, nose_length = 2, mouth_length = 3, body_length = 3;
+    private int hair_length = 3, eyes_length = 4, nose_length = 2, mouth_length = 3, body_length = 3;
     private Ingame_notification_script _notification;
 
     [Range(0, 255)]
@@ -89,10 +89,8 @@ public class Character_customization_script : MonoBehaviour
         _character.mouth_id = mouth_id;
         _character.body_id = body_id;
 
-        _character.hair_color_r = hair_color_r;
-        _character.hair_color_g = hair_color_g;
-        _character.hair_color_b = hair_color_b;
 
+        _character.hair_color = new byte[3] { hair_color_r, hair_color_g, hair_color_b };
 
         _character.equipStarterItems();
         _gameManager.GetComponent<Game_manager>().isNewCharacter = false;
@@ -121,11 +119,12 @@ public class Character_customization_script : MonoBehaviour
             equipment_feet_id = _localCharacter.Equipments[6];
             equipment_right_id = _localCharacter.Equipments[7];
 
-
-            hair_color_r = _localCharacter.hair_color_r;
-            hair_color_g = _localCharacter.hair_color_g;
-            hair_color_b = _localCharacter.hair_color_b;
-
+            hair_color_r = _localCharacter.hair_color[0];
+            slider_red.GetComponent<Slider>().value = hair_color_r;
+            hair_color_g = _localCharacter.hair_color[1];
+            slider_green.GetComponent<Slider>().value = hair_color_g;
+            hair_color_b = _localCharacter.hair_color[2];
+            slider_blue.GetComponent<Slider>().value = hair_color_b;
 
 
             character_name.text = _localCharacter.Local_name;
@@ -157,6 +156,7 @@ public class Character_customization_script : MonoBehaviour
 
     public void randomizeHairColor()
     {
+
         hair_color_r = (byte)Random.Range(0, 256);
         slider_red.GetComponent<Slider>().value = hair_color_r;
 
@@ -165,41 +165,45 @@ public class Character_customization_script : MonoBehaviour
 
         hair_color_b = (byte)Random.Range(0, 256);
         slider_blue.GetComponent<Slider>().value = hair_color_b;
+
+
+
+
     }
     public void next(body_parts part)
     {
         switch (part)
         {
             case body_parts.hair:
-                if (hair_id <= hair_length)
+                if (hair_id < hair_length)
                 {
                     hair_id++;
                 }
                 break;
 
             case body_parts.eyes:
-                if (eyes_id <= eyes_length)
+                if (eyes_id < eyes_length)
                 {
                     eyes_id++;
                 }
                 break;
 
             case body_parts.nose:
-                if (nose_id <= nose_length)
+                if (nose_id < nose_length)
                 {
                     nose_id++;
                 }
                 break;
 
             case body_parts.mouth:
-                if (mouth_id <= mouth_length)
+                if (mouth_id < mouth_length)
                 {
                     mouth_id++;
                 }
                 break;
 
             case body_parts.body:
-                if (body_id <= body_length)
+                if (body_id < body_length)
                 {
                     body_id++;
                 }
@@ -258,8 +262,6 @@ public class Character_customization_script : MonoBehaviour
     {
         var _character = character.GetComponent<Character_manager>();
 
-
-
         _character.hair_id = hair_id;
         _character.eyes_id = eyes_id;
         _character.nose_id = nose_id;
@@ -274,6 +276,7 @@ public class Character_customization_script : MonoBehaviour
         _character.equipment_gadget_id = equipment_gadget_id;
         _character.equipment_feet_id = equipment_feet_id;
         _character.equipment_right_id = equipment_right_id;
+
 
         _character.hair_color_r = hair_color_r;
         _character.hair_color_g = hair_color_g;

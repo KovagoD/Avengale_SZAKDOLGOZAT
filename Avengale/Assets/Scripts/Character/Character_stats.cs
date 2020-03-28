@@ -16,7 +16,8 @@ public class Character_stats : MonoBehaviour
     public string Local_name = "Unknown", Local_title = "the Anone";
     public int Local_class = 1, Local_talent = 1;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
-    public byte hair_color_r, hair_color_g, hair_color_b;
+    public byte[] hair_color = new byte[3] { 0, 0, 0 };
+
     public int Local_xp = 0, Local_needed_xp = 150, Local_level = 1;
     public int[] Inventory = new int[10], Equipments = new int[8], starterEquipments = new int[8] { 0, 9, 10, 0, 0, 0, 0, 0 };
     public int[] Spells = new int[5], Talents = new int[10];
@@ -103,9 +104,8 @@ public class Character_stats : MonoBehaviour
             mouth_id = data.mouth_id;
             body_id = data.body_id;
 
-            hair_color_r = data.hair_color_r;
-            hair_color_b = data.hair_color_b;
-            hair_color_g = data.hair_color_g;
+            hair_color = data.hair_color;
+
 
 
 
@@ -156,10 +156,8 @@ public class Character_stats : MonoBehaviour
 
     public void updateStats()
     {
-        var _nameandtitle = NameAndTitle.GetComponent<TextMeshProUGUI>();
-        NameAndTitle.GetComponent<Text_animation>().startAnim(_nameandtitle.text = Local_name, 0.01f);
-
-        var _statistics = Statistics.GetComponent<TextMeshProUGUI>();
+        NameAndTitle.GetComponent<Text_animation>().startAnim(Local_name, 0.01f);
+        
         Statistics.GetComponent<Text_animation>().startAnim("Health: " + Local_max_health + "\n" +
             "Resource: " + Local_max_resource + "\n" +
             "Damage: " + Local_damage, 5f);

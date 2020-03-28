@@ -99,7 +99,7 @@ public class Equipment_slot_script : MonoBehaviour
     void OnMouseDown()
     {
         slot.GetComponent<SpriteRenderer>().sprite = slot_sprite_activated;
-        slot_text.GetComponent<Text_animation>().restartAnim();
+
 
         if (Input.GetMouseButtonDown(0) && item_id != 0 && !GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened && !GameObject.Find("Conversation").GetComponent<Visibility_script>().isOpened)
         {
@@ -116,6 +116,8 @@ public class Equipment_slot_script : MonoBehaviour
             var exit_btn = GameObject.Find("Exit button item_preview");
             exit_btn.GetComponent<Close_button_script>().Close();
         }
+        
+        slot_text.GetComponent<Text_animation>().restartAnim();
     }
 
     void OnMouseExit()
