@@ -17,7 +17,7 @@ public class Character_manager : MonoBehaviour
 
 
 
-
+    public bool sex;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
     [Range(0, 255)]
@@ -75,48 +75,72 @@ public class Character_manager : MonoBehaviour
     {
         if (isPlayer)
         {
-            _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[0]].sprite);
-            _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[1]].sprite);
-            _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[2]].sprite);
-            _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[3]].sprite);
-            _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[4]].sprite);
-            _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[5]].sprite);
-            _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[6]].sprite);
-            _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[7]].sprite);
 
-
+            sex = _characterStats.sex;
             hair_id = _characterStats.hair_id;
             eyes_id = _characterStats.eyes_id;
             nose_id = _characterStats.nose_id;
             mouth_id = _characterStats.mouth_id;
             body_id = _characterStats.body_id;
 
-
-            /*
-            hair_color_r = _characterStats.hair_color_r;
-            hair_color_g = _characterStats.hair_color_g;
-            hair_color_b = _characterStats.hair_color_b;
-
-            */
-
             hair_color_r = _characterStats.hair_color[0];
             hair_color_g = _characterStats.hair_color[1];
             hair_color_b = _characterStats.hair_color[2];
 
-
+            if (sex)
+            {
+                _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[0]].sprite_male);
+                _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[1]].sprite_male);
+                _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[2]].sprite_male);
+                _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[3]].sprite_male);
+                _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[4]].sprite_male);
+                _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[5]].sprite_male);
+                _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[6]].sprite_male);
+                _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[7]].sprite_male);
+            }
+            else
+            {
+                _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[0]].sprite_female);
+                _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[1]].sprite_female);
+                _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[2]].sprite_female);
+                _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[3]].sprite_female);
+                _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[4]].sprite_female);
+                _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[5]].sprite_female);
+                _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[6]].sprite_female);
+                _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[7]].sprite_female);
+            }
         }
         else
         {
-            _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_head_id].sprite);
-            _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_body_id].sprite);
-            _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_legs_id].sprite);
-            _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_left_id].sprite);
-            _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_shoulder_id].sprite);
-            _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_gadget_id].sprite);
-            _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_feet_id].sprite);
-            _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite);
+            if (sex)
+            {
+                _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_head_id].sprite_male);
+                _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_body_id].sprite_male);
+                _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_legs_id].sprite_male);
+                _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_left_id].sprite_male);
+                _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_shoulder_id].sprite_male);
+                _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_gadget_id].sprite_male);
+                _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_feet_id].sprite_male);
+                _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite_male);
+            }
+            else
+            {
+                _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_head_id].sprite_female);
+                _equipment_body.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_body_id].sprite_female);
+                _equipment_legs.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_legs_id].sprite_female);
+                _equipment_left.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_left_id].sprite_female);
+                _equipment_shoulder.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_shoulder_id].sprite_female);
+                _equipment_gadget.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_gadget_id].sprite_female);
+                _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_feet_id].sprite_female);
+                _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite_female);
+            }
         }
 
+
+
+        _hair.color = new Color32(hair_color_r, hair_color_g, hair_color_b, 255);
+
+        #region hair
         switch (hair_id)
         {
             case 0:
@@ -131,18 +155,28 @@ public class Character_manager : MonoBehaviour
             case 3:
                 _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_3");
                 break;
+            case 4:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_4");
+                break;
+            case 5:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_5");
+                break;
+            case 6:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_6");
+                break;
             default:
                 _hair.sprite = Resources.Load<Sprite>("");
                 break;
         }
+        #endregion
 
-        if (isPlayer && _characterStats.Equipments[0] != 0)
+        if ((isPlayer && _characterStats.Equipments[0] != 0) || (equipment_head_id != 0))
         {
             _hair.sprite = Resources.Load<Sprite>("");
         }
 
-        _hair.color = new Color32(hair_color_r, hair_color_g, hair_color_b, 255);
 
+        #region eyes
         switch (eyes_id)
         {
             case 0:
@@ -164,7 +198,9 @@ public class Character_manager : MonoBehaviour
                 _eyes.sprite = Resources.Load<Sprite>("Character_appearances/Human_eyes_1");
                 break;
         }
+        #endregion
 
+        #region nose
         switch (nose_id)
         {
             case 0:
@@ -176,11 +212,16 @@ public class Character_manager : MonoBehaviour
             case 2:
                 _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_3");
                 break;
+            case 3:
+                _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_4");
+                break;
             default:
                 _nose.sprite = Resources.Load<Sprite>("Character_appearances/Human_nose_1");
                 break;
         }
+        #endregion
 
+        #region mouth
         switch (mouth_id)
         {
             case 0:
@@ -199,24 +240,52 @@ public class Character_manager : MonoBehaviour
                 _mouth.sprite = Resources.Load<Sprite>("Character_appearances/Human_mouth_1");
                 break;
         }
+        #endregion
 
-        switch (body_id)
+        if (sex)
         {
-            case 0:
-                _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_1");
-                break;
-            case 1:
-                _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_2");
-                break;
-            case 2:
-                _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_3");
-                break;
-            case 3:
-                _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_4");
-                break;
-            default:
-                _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_1");
-                break;
+            switch (body_id)
+            {
+                case 0:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_1");
+                    break;
+                case 1:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_2");
+                    break;
+                case 2:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_3");
+                    break;
+                case 3:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_4");
+                    break;
+                default:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_1");
+                    break;
+            }
+        }
+        else
+        {
+            switch (body_id)
+            {
+                case 0:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_1_female");
+                    break;
+                case 1:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_2_female");
+                    break;
+                case 2:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_3_female");
+                    break;
+                case 3:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_4_female");
+                    break;
+                default:
+                    _body.sprite = Resources.Load<Sprite>("Character_appearances/Human_body_1_female");
+                    break;
+            }
         }
     }
+
 }
+
+

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pause_menu_script : MonoBehaviour
 {
-    public bool isOpen;
+    public bool isOpened;
     public GameObject title;
     public GameObject save_button;
     public GameObject back_button, back_button_text;
@@ -14,7 +14,7 @@ public class Pause_menu_script : MonoBehaviour
     public void showPauseMenu()
     {
         var _gameManager = GameObject.Find("Game manager").GetComponent<Game_manager>();
-        isOpen = true;
+        isOpened = true;
         GameObject.Find("Overlay").GetComponent<Overlay_script>().showOverlay();
         gameObject.GetComponent<Animator>().Play("Pause_slide_in_anim");
 
@@ -34,7 +34,7 @@ public class Pause_menu_script : MonoBehaviour
 
     public void closePauseMenu()
     {
-        isOpen = false;
+        isOpened = false;
         GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
         gameObject.GetComponent<Animator>().Play("Pause_slide_out_anim");
 

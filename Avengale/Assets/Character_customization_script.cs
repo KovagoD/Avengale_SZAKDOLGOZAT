@@ -11,11 +11,12 @@ public class Character_customization_script : MonoBehaviour
     public bool isNewCharacter;
     public TMP_InputField character_name;
     public GameObject character;
+    public bool sex;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
     public int equipment_head_id, equipment_body_id, equipment_legs_id, equipment_left_id, equipment_shoulder_id, equipment_gadget_id, equipment_feet_id, equipment_right_id;
 
-    private int hair_length = 3, eyes_length = 4, nose_length = 2, mouth_length = 3, body_length = 3;
+    private int hair_length = 6, eyes_length = 4, nose_length = 3, mouth_length = 3, body_length = 3;
     private Ingame_notification_script _notification;
 
     [Range(0, 255)]
@@ -25,14 +26,17 @@ public class Character_customization_script : MonoBehaviour
     [Range(0, 255)]
     public byte hair_color_b;
 
-    public GameObject slider_red, slider_green, slider_blue;
+    public GameObject slider_red, slider_green, slider_blue, scrollbar;
 
     public void initializeCustomization(bool isNew)
     {
+        scrollbar.GetComponent<Scrollbar>().value = 1;
         isNewCharacter = isNew;
         if (isNewCharacter)
         {
             randomizeLook();
+            randomizeHairColor();
+            randomizeGender();
             character_name.text = null;
         }
         else
@@ -50,13 +54,18 @@ public class Character_customization_script : MonoBehaviour
 
         updateLook();
     }
+
+    public void changeSex(bool isMale)
+    {
+        sex = isMale;
+        updateLook();
+    }
     public void checkConfirm()
     {
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
 
         if (character_name.text.Length >= 1)
         {
-
             if (isNewCharacter)
             {
                 GameObject.Find("Authorization").GetComponent<Authorization_script>().ShowAuthorization("confirmCustomization", 0);
@@ -74,6 +83,7 @@ public class Character_customization_script : MonoBehaviour
     public void confirmCustomization()
     {
         GameObject _gameManager = GameObject.Find("Game manager");
+
         Character_stats _character = _gameManager.GetComponent<Character_stats>();
 
 
@@ -82,14 +92,14 @@ public class Character_customization_script : MonoBehaviour
             _character.initializePlayer();
         }
 
+        _character.sex = sex;
+
         _character.Local_name = character_name.text;
         _character.hair_id = hair_id;
         _character.eyes_id = eyes_id;
         _character.nose_id = nose_id;
         _character.mouth_id = mouth_id;
         _character.body_id = body_id;
-
-
         _character.hair_color = new byte[3] { hair_color_r, hair_color_g, hair_color_b };
 
         _character.equipStarterItems();
@@ -109,6 +119,8 @@ public class Character_customization_script : MonoBehaviour
             nose_id = _localCharacter.nose_id;
             mouth_id = _localCharacter.nose_id;
             body_id = _localCharacter.body_id;
+
+            sex = _localCharacter.sex;
 
             equipment_head_id = _localCharacter.Equipments[0];
             equipment_body_id = _localCharacter.Equipments[1];
@@ -132,6 +144,12 @@ public class Character_customization_script : MonoBehaviour
             updateLook();
         }
     }
+
+    public void randomizeGender()
+    {
+        var _sexRandom = Random.Range(0, 2);
+        sex = (_sexRandom == 1) ? true : false;
+    }
     public void randomizeLook()
     {
         equipment_head_id = 0;
@@ -149,8 +167,6 @@ public class Character_customization_script : MonoBehaviour
         mouth_id = Random.Range(0, mouth_length + 1);
         body_id = Random.Range(0, body_length + 1);
 
-        randomizeHairColor();
-
         updateLook();
     }
 
@@ -167,8 +183,6 @@ public class Character_customization_script : MonoBehaviour
         slider_blue.GetComponent<Slider>().value = hair_color_b;
 
 
-
-
     }
     public void next(body_parts part)
     {
@@ -179,6 +193,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     hair_id++;
                 }
+                else { hair_id = 0; }
                 break;
 
             case body_parts.eyes:
@@ -186,6 +201,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     eyes_id++;
                 }
+                else { eyes_id = 0; }
                 break;
 
             case body_parts.nose:
@@ -193,6 +209,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     nose_id++;
                 }
+                else { nose_id = 0; }
                 break;
 
             case body_parts.mouth:
@@ -200,6 +217,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     mouth_id++;
                 }
+                else { mouth_id = 0; }
                 break;
 
             case body_parts.body:
@@ -207,6 +225,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     body_id++;
                 }
+                else { body_id = 0; }
                 break;
         }
 
@@ -225,6 +244,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     hair_id--;
                 }
+                else { hair_id = hair_length; }
                 break;
 
             case body_parts.eyes:
@@ -232,6 +252,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     eyes_id--;
                 }
+                else { eyes_id = eyes_length; }
                 break;
 
             case body_parts.nose:
@@ -239,6 +260,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     nose_id--;
                 }
+                else { nose_id = nose_length; }
                 break;
 
             case body_parts.mouth:
@@ -246,6 +268,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     mouth_id--;
                 }
+                else { mouth_id = mouth_length; }
                 break;
 
             case body_parts.body:
@@ -253,6 +276,7 @@ public class Character_customization_script : MonoBehaviour
                 {
                     body_id--;
                 }
+                else { body_id = body_length; }
                 break;
         }
         updateLook();
@@ -262,11 +286,15 @@ public class Character_customization_script : MonoBehaviour
     {
         var _character = character.GetComponent<Character_manager>();
 
+
+        _character.sex = sex;
+
         _character.hair_id = hair_id;
         _character.eyes_id = eyes_id;
         _character.nose_id = nose_id;
         _character.mouth_id = mouth_id;
         _character.body_id = body_id;
+
 
         _character.equipment_head_id = equipment_head_id;
         _character.equipment_body_id = equipment_body_id;

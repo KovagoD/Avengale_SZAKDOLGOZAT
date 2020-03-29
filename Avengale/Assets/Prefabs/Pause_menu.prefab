@@ -925,6 +925,7 @@ GameObject:
   - component: {fileID: 6895740339946348772}
   - component: {fileID: 6895740339946348773}
   - component: {fileID: 6895740339946348778}
+  - component: {fileID: 802195408593561688}
   m_Layer: 0
   m_Name: Save button
   m_TagString: Untagged
@@ -1035,6 +1036,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d716e9c3928eb44c95222abeb6ae550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &802195408593561688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6895740339946348776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19975fb0493b104ebc36bdd2a409920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite_normal: {fileID: 21300000, guid: 4dc916d792afaa14f8fd316f9c0622c5, type: 3}
+  sprite_activated: {fileID: 21300000, guid: 865566dcd0856d0498b7ff18eedb2d05, type: 3}
 --- !u!1 &6895740339957216294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2ed703bdd43e640b485a90f5e14469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
+  isOpened: 0
   title: {fileID: 6895740339435936595}
   save_button: {fileID: 6895740339946348776}
   back_button: {fileID: 6895740339894959785}

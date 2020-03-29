@@ -15,6 +15,8 @@ public class Character_stats : MonoBehaviour
     public List<Quest> completed_quests = new List<Quest>();
     public string Local_name = "Unknown", Local_title = "the Anone";
     public int Local_class = 1, Local_talent = 1;
+
+    public bool sex;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
     public byte[] hair_color = new byte[3] { 0, 0, 0 };
 
@@ -65,7 +67,7 @@ public class Character_stats : MonoBehaviour
         Local_class = 1; Local_talent = 1;
         hair_id = 0; eyes_id = 0; nose_id = 0; mouth_id = 0; body_id = 0;
         Local_xp = 0; Local_needed_xp = 150; Local_level = 1;
-        Inventory = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; Equipments = new int[8] { 0, 9, 0, 0, 0, 0, 0, 0 };
+        Inventory = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; Equipments = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
         Spells = new int[5] { 1, 0, 0, 0, 0 };
         //Talents = new int[10];
         Passive_spells = new List<Spell>();
@@ -98,6 +100,8 @@ public class Character_stats : MonoBehaviour
             Local_title = data.Local_title;
             Local_class = data.Local_class;
             Local_talent = data.Local_talent;
+
+            sex = data.sex;
             hair_id = data.hair_id;
             eyes_id = data.eyes_id;
             nose_id = data.nose_id;
@@ -434,7 +438,7 @@ public class Character_stats : MonoBehaviour
                     var dec_items = _itemScript.declared_items[item_id];
 
                     var tmp_item = new Item(_itemScript.items.Count, dec_items.name, dec_items.type, dec_items.rarity, dec_items.min_rarity,
-                    dec_items.max_rarity, dec_items.level, dec_items.description, dec_items.icon, dec_items.sprite,
+                    dec_items.max_rarity, dec_items.level, dec_items.description, dec_items.icon, dec_items.sprite_male, dec_items.sprite_female,
                     dec_items.attributes[0], dec_items.attributes[1], dec_items.attributes[2], dec_items.attributes[3]);
                     tmp_item.randomizeStats(10, 10, 10, 0, 5);
 

@@ -11,6 +11,7 @@ public class CharacterData
     public List<Quest> completed_quests;
     public string Local_name, Local_title;
     public int Local_class, Local_talent;
+    public bool sex;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
     public byte[] hair_color;
 
@@ -25,6 +26,8 @@ public class CharacterData
         Local_title = player.Local_title;
         Local_class = player.Local_class;
         Local_talent = player.Local_talent;
+
+        sex = player.sex;
         hair_id = player.hair_id;
         eyes_id = player.eyes_id;
         nose_id = player.nose_id;

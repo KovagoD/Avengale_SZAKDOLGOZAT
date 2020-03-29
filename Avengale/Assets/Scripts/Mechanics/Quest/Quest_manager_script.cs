@@ -85,8 +85,10 @@ public class Quest_manager_script : MonoBehaviour
                 _slot.GetComponent<Button_script>().sprite_normal = _slot.empty;
             }
         }
-
-        GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().closeQuestPreview();
+        if (GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().isOpened)
+        {
+            GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().closeQuestPreview();
+        }
     }
 
     public bool isQuestSlotsFull()
