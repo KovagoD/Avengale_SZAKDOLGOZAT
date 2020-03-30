@@ -59,7 +59,7 @@ public class Character_stats : MonoBehaviour
 
     public void initializePlayer()
     {
-        Local_max_health = 50; Local_health = 0; Local_max_resource = 50; Local_resource = 0; Local_damage = 10; Local_money = 100; Local_spell_points = 0;
+        Local_max_health = 50; Local_health = 0; Local_max_resource = 50; Local_resource = 0; Local_damage = 10; Local_money = 1000; Local_spell_points = 0;
         defeated_enemies = new List<Enemy>();
         completed_conversations = new List<Conversation>();
         accepted_quests = new int[3];

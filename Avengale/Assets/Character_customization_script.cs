@@ -101,6 +101,8 @@ public class Character_customization_script : MonoBehaviour
         if (isNewCharacter)
         {
             _character.initializePlayer();
+            _character.equipStarterItems();
+            _gameManager.GetComponent<Game_manager>().isNewCharacter = false;
         }
 
         _character.showHelmet = showHelmet;
@@ -114,8 +116,6 @@ public class Character_customization_script : MonoBehaviour
         _character.body_id = body_id;
         _character.hair_color = new byte[3] { hair_color_r, hair_color_g, hair_color_b };
 
-        _character.equipStarterItems();
-        _gameManager.GetComponent<Game_manager>().isNewCharacter = false;
         _gameManager.GetComponent<Game_manager>().Change_screen(_gameManager.GetComponent<Game_manager>().Character_screen_UI, true);
     }
 
