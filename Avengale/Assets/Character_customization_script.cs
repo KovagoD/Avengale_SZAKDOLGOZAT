@@ -11,7 +11,7 @@ public class Character_customization_script : MonoBehaviour
     public bool isNewCharacter;
     public TMP_InputField character_name;
     public GameObject character;
-    public bool sex;
+    public bool sex, showHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
     public int equipment_head_id, equipment_body_id, equipment_legs_id, equipment_left_id, equipment_shoulder_id, equipment_gadget_id, equipment_feet_id, equipment_right_id;
@@ -55,6 +55,17 @@ public class Character_customization_script : MonoBehaviour
         updateLook();
     }
 
+    public void ShowHelmet()
+    {
+        showHelmet = true;
+        updateLook();
+    }
+
+    public void HideHelmet()
+    {
+        showHelmet = false;
+        updateLook();
+    }
     public void changeSex(bool isMale)
     {
         sex = isMale;
@@ -92,6 +103,7 @@ public class Character_customization_script : MonoBehaviour
             _character.initializePlayer();
         }
 
+        _character.showHelmet = showHelmet;
         _character.sex = sex;
 
         _character.Local_name = character_name.text;
@@ -286,7 +298,7 @@ public class Character_customization_script : MonoBehaviour
     {
         var _character = character.GetComponent<Character_manager>();
 
-
+        _character.showHelmet = showHelmet;
         _character.sex = sex;
 
         _character.hair_id = hair_id;

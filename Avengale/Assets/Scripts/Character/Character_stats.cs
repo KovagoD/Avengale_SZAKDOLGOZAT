@@ -16,8 +16,9 @@ public class Character_stats : MonoBehaviour
     public string Local_name = "Unknown", Local_title = "the Anone";
     public int Local_class = 1, Local_talent = 1;
 
-    public bool sex;
+    public bool sex, showHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
+    
     public byte[] hair_color = new byte[3] { 0, 0, 0 };
 
     public int Local_xp = 0, Local_needed_xp = 150, Local_level = 1;
@@ -102,6 +103,8 @@ public class Character_stats : MonoBehaviour
             Local_talent = data.Local_talent;
 
             sex = data.sex;
+            showHelmet = data.showHelmet;
+            
             hair_id = data.hair_id;
             eyes_id = data.eyes_id;
             nose_id = data.nose_id;

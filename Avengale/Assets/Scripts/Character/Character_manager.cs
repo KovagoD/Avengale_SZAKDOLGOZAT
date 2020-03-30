@@ -17,7 +17,7 @@ public class Character_manager : MonoBehaviour
 
 
 
-    public bool sex;
+    public bool sex, showHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
     [Range(0, 255)]
@@ -109,6 +109,11 @@ public class Character_manager : MonoBehaviour
                 _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[6]].sprite_female);
                 _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[7]].sprite_female);
             }
+
+            if (!showHelmet)
+            {
+                _equipment_head.sprite = Resources.Load<Sprite>("");
+            }
         }
         else
         {
@@ -134,6 +139,12 @@ public class Character_manager : MonoBehaviour
                 _equipment_feet.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_feet_id].sprite_female);
                 _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite_female);
             }
+
+            if (!showHelmet)
+            {
+                _equipment_head.sprite = Resources.Load<Sprite>("");
+            }
+
         }
 
 
@@ -170,7 +181,7 @@ public class Character_manager : MonoBehaviour
         }
         #endregion
 
-        if ((isPlayer && _characterStats.Equipments[0] != 0) || (equipment_head_id != 0))
+        if (showHelmet && ((isPlayer && _characterStats.Equipments[0] != 0) || (equipment_head_id != 0)))
         {
             _hair.sprite = Resources.Load<Sprite>("");
         }

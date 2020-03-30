@@ -16935,6 +16935,7 @@ MonoBehaviour:
   Local_class: 1
   Local_talent: 1
   sex: 0
+  showHelmet: 0
   hair_id: 0
   eyes_id: 0
   nose_id: 0
@@ -25936,6 +25937,7 @@ MonoBehaviour:
   character_name: {fileID: 862409318}
   character: {fileID: 1687511162}
   sex: 0
+  showHelmet: 0
   hair_id: 0
   eyes_id: 0
   nose_id: 0
@@ -28295,6 +28297,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -10
       objectReference: {fileID: 0}
+    - target: {fileID: 2813328969380466330, guid: 7dfc42efb8a85404fb83167765200374,
+        type: 3}
+      propertyPath: offSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b7b30df9739a1e34e8d8931946af978e,
+        type: 3}
     - target: {fileID: 6239670686104637389, guid: 7dfc42efb8a85404fb83167765200374,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -29037,6 +29045,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705399149995375259, guid: 8041232667bcff645989f493297e885c,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705399149995375259, guid: 8041232667bcff645989f493297e885c,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705399149995375259, guid: 8041232667bcff645989f493297e885c,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705399149995375259, guid: 8041232667bcff645989f493297e885c,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7746978143985054147, guid: 8041232667bcff645989f493297e885c,
         type: 3}
