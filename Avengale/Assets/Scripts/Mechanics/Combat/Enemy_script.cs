@@ -209,7 +209,14 @@ public class Enemy_script : MonoBehaviour
 
             if (enemy.isRandomAppearance)
             {
-                int hair_length = 3, eyes_length = 4, nose_length = 2, mouth_length = 3, body_length = 3;
+                int hair_length = 8, eyes_length = 4, nose_length = 2, mouth_length = 3, body_length = 3;
+
+                int random_sex = UnityEngine.Random.Range(0, 2);
+                if (random_sex == 0)
+                {
+                    _characterManager.sex = false;
+                }
+                else { _characterManager.sex = true; }
                 _characterManager.hair_id = UnityEngine.Random.Range(0, hair_length + 1);
                 _characterManager.eyes_id = UnityEngine.Random.Range(0, eyes_length + 1);
                 _characterManager.nose_id = UnityEngine.Random.Range(0, nose_length + 1);
@@ -219,9 +226,11 @@ public class Enemy_script : MonoBehaviour
                 _characterManager.hair_color_r = (byte)UnityEngine.Random.Range(0, 256);
                 _characterManager.hair_color_g = (byte)UnityEngine.Random.Range(0, 256);
                 _characterManager.hair_color_b = (byte)UnityEngine.Random.Range(0, 256);
+
             }
             else
             {
+                _characterManager.sex = enemy.sex;
                 _characterManager.hair_id = enemy.appearance[0];
                 _characterManager.eyes_id = enemy.appearance[1];
                 _characterManager.nose_id = enemy.appearance[2];

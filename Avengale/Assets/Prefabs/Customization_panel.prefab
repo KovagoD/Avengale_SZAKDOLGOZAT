@@ -2794,6 +2794,7 @@ GameObject:
   - component: {fileID: 6768350338247236996}
   - component: {fileID: 2040370568}
   - component: {fileID: 2040370567}
+  - component: {fileID: 6328791514307146496}
   m_Layer: 0
   m_Name: Confirm button
   m_TagString: Untagged
@@ -2895,6 +2896,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5af293b811054c90abdcccf42cad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6328791514307146496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253939417278640120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19975fb0493b104ebc36bdd2a409920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite_normal: {fileID: 21300000, guid: 4dc916d792afaa14f8fd316f9c0622c5, type: 3}
+  sprite_activated: {fileID: 21300000, guid: 865566dcd0856d0498b7ff18eedb2d05, type: 3}
 --- !u!1 &5814173148522834165
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,7 +3006,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 50
+  m_ScrollSensitivity: 200
   m_Viewport: {fileID: 0}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 5692264460013030484}

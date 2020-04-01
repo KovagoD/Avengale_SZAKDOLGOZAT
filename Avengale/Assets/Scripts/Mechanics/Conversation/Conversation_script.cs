@@ -60,7 +60,7 @@ public class Conversation_script : MonoBehaviour
         ----------------------------------*/
 
         conversations.Add((new Conversation(0, "", "", new List<string>() { "", "", "" },
-         new List<string>() {
+        new List<string>() {
         "",
         "",
         ""},
@@ -71,60 +71,31 @@ public class Conversation_script : MonoBehaviour
         new List<string>() { "exit", "next", "next" }
          )));
 
-
-        conversations.Add((new Conversation(1, "Walking home", "normal", new List<string>() { "Unknown man", _charName, "Unknown man", _charName },
-         new List<string>() {
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ¤ Nulla non malesuada felis, eget euismod velit. Phasellus id sapien est. Curabitur in maximus velit. Sed lobortis sem vel ex cursus,",
-        "Mauris semper ipsum sed turpis faucibus auctor. Vestibulum mattis lacus hendrerit commodo venenatis. Integer faucibus semper dui ultricies lobortis.",
-        "Nulla efficitur erat et mi aliquet pharetra quis sit amet urna. Integer et urna ac turpis tempor posuere.",
-        ("Wanna talk to ?")},
-
-        new List<string>() { " Nulla non malesuada felis. (next)", "Nulla efficitur. (item)", "Integer faucibus semper (next)", "Curabitur (change)" },
-        new List<string>() { "next", "item_add: 2", "next", "change_dialog: 2" },
-
-        new List<string>() { "Nevermind. (exit)", "Faucibus. (item)", "Integer (next)", "Goodbye! (exit & quest)" },
-        new List<string>() { "exit", "next item_add: 2", "next", "exit quest_add: 1" }
-         )));
-
-
-        conversations.Add((new Conversation(2, "TikTok meme", "quest", new List<string>() { "Gamer girl", "Gamer girl", "Gamer girl", "Gamer girl" },
+        conversations.Add((new Conversation(1, "Exploring the hub", "quest", new List<string>() { "NPC", "NPC", "NPC", "NPC" },
         new List<string>() {
-        "Hey " + _charName +"!\n\nHit or miss",
-        "I guess they never miss,...?",
-        "You got a boyfriend, I bet he doesnt kiss ya <b>He gon find another girl</b> and <color=#00ff00>he wont miss ya</color> He gon skrrt and hit the dab like Wiz Khalifa",
-        "Take this!\nIt's dangerous to go alone."},
+            "Hi "+_charName+"! I've been waiting for you!\n\nMy name is NPC and I'm your first questgiver. "
+        },
 
-        new List<string>() { "? (next)", "Huh? (next)", "Okay. (next)", "Thank you! (item)" },
-        new List<string>() { "next", "next", "next", "exit item_add:8" },
-
-        new List<string>() { "Then what happened? (next)", "Huh? (none)", "Goodbye! (exit)", "Yos and 100c (exit & getMoney)" },
-        new List<string>() { "next", "none", "exit", "exit money_add:100" }
-        )));
-
-        conversations.Add((new Conversation(3, "Demonstration", "tutorial", new List<string>() { "David", "David", "David", "David" },
-        new List<string>() {
-        "Hi! Can I give you an item?",
-        "If you need some credits you can sell it. Your choice. ",
-        "Oh, I almost forgot...Take this! Not much, but still something.",
-        "Now, go on your journey! \n\n<color=#808080>Padoru's hat\n100 credit\n1000 xp </color>"},
-
-        new List<string>() { "Yes please!", "Okay.", "Thank you!", "Good bye!" },
-        new List<string>() { "item_add:10 ", "next", "money_add:100", "exit xp_add:1000" },
-
-        new List<string>() { "No.", "(none)", "Goodbye! (exit)", "(none)" },
-        new List<string>() { "next", "none", "exit", "none" }
-        )));
-
-        conversations.Add((new Conversation(4, "Battle test", "battle", new List<string>() { "Szisz" },
-        new List<string>() {
-        "Fight me!"},
-
-        new List<string>() { "Ok!" },
-        new List<string>() { "start_battle:1 " },
+        new List<string>() { "Yes please!" },
+        new List<string>() { "quest_add:4" },
 
         new List<string>() { "No." },
         new List<string>() { "exit" }
         )));
+
+        conversations.Add((new Conversation(2, "Quest convo", "quest", new List<string>() { "NPC#2", "NPC#2", "NPC#2", "NPC#2" },
+        new List<string>() {
+            "Hi "+_charName+"!\n\nDid NPC told you to speak with me? \n He lied as usual. Do not trust him with anything important! \n\n Bye!"
+        },
+
+        new List<string>() { "Ok. Bye!" },
+        new List<string>() { "exit" },
+
+        new List<string>() { "No." },
+        new List<string>() { "exit" }
+        )));
+
+
 
     }
 

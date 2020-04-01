@@ -11,14 +11,14 @@ public class Character_stats : MonoBehaviour
     public int Local_max_health = 0, Local_health = 0, Local_max_resource = 0, Local_resource = 0, Local_damage = 0, Local_money = 0, Local_spell_points = 0;
     public List<Enemy> defeated_enemies = new List<Enemy>();
     public List<Conversation> completed_conversations = new List<Conversation>();
-    public int[] accepted_quests = new int[3];
     public List<Quest> completed_quests = new List<Quest>();
+    public int[] accepted_quests = new int[3];
     public string Local_name = "Unknown", Local_title = "the Anone";
     public int Local_class = 1, Local_talent = 1;
 
-    public bool sex, showHelmet;
+    public bool sex, hideHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
-    
+
     public byte[] hair_color = new byte[3] { 0, 0, 0 };
 
     public int Local_xp = 0, Local_needed_xp = 150, Local_level = 1;
@@ -72,6 +72,21 @@ public class Character_stats : MonoBehaviour
         Spells = new int[5] { 1, 0, 0, 0, 0 };
         //Talents = new int[10];
         Passive_spells = new List<Spell>();
+
+        gameObject.GetComponent<Spell_script>().initializeSpells();
+
+    }
+
+    public bool isOnQuest(int id)
+    {
+        for (int i = 0; i < accepted_quests.Length; i++)
+        {
+            if (accepted_quests[i] == id)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void equipStarterItems()
@@ -103,8 +118,8 @@ public class Character_stats : MonoBehaviour
             Local_talent = data.Local_talent;
 
             sex = data.sex;
-            showHelmet = data.showHelmet;
-            
+            hideHelmet = data.hideHelmet;
+
             hair_id = data.hair_id;
             eyes_id = data.eyes_id;
             nose_id = data.nose_id;
@@ -112,9 +127,6 @@ public class Character_stats : MonoBehaviour
             body_id = data.body_id;
 
             hair_color = data.hair_color;
-
-
-
 
             //stats
             Local_xp = data.Local_xp;
@@ -136,7 +148,9 @@ public class Character_stats : MonoBehaviour
 
             _gameManager.Change_screen(_gameManager.Character_screen_UI, true);
             _gameManager.isNewCharacter = true;
+            
             gameObject.GetComponent<Spell_script>().initializeSpells();
+            GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
 
 
 
@@ -164,7 +178,7 @@ public class Character_stats : MonoBehaviour
     public void updateStats()
     {
         NameAndTitle.GetComponent<Text_animation>().startAnim(Local_name, 0.01f);
-        
+
         Statistics.GetComponent<Text_animation>().startAnim("Health: " + Local_max_health + "\n" +
             "Resource: " + Local_max_resource + "\n" +
             "Damage: " + Local_damage, 5f);

@@ -23,9 +23,11 @@ public class Quest_manager_script : MonoBehaviour
 
         quests.Add(new Quest(0, "", quest_types.combat, "", "", 0, 0, 0));
         quests.Add(new Quest(1, "Combat test quest", quest_types.combat, "defeat Szisz", "Ayaya? Aya! AYAYA!...AYAYA\n AYAYA AYAYA AYAYA (yamete)", 1, 100, 5));
-        quests.Add(new Quest(2, "Conversation test quest", quest_types.conversation, "Speak with David", "gfngfner434534", 3, 100, 6));
-        quests.Add(new Quest(3, "Item test quest", quest_types.item, "Get the quest item 11 ", "sadsd21dasdasdasdsad", 11, 100, 6));
-        quests.Add(new Quest(4, "Item reeeee", quest_types.item, "Get the quest item 12", "sadsd21dasdasdasdsad", 12, 100, 6));
+        quests.Add(new Quest(2, "Item test quest", quest_types.item, "Get the quest item 11 ", "sadsd21dasdasdasdsad", 11, 100, 6));
+        quests.Add(new Quest(3, "Item reeeee", quest_types.item, "Get the quest item 12", "sadsd21dasdasdasdsad", 12, 100, 6));
+        quests.Add(new Quest(4, "Welcome to the HUB", quest_types.conversation, "Speak with NPC#2 at the HUB", "NPC asked you to speak with NPC#2 about your recruitment.", 2, 100, 8));
+
+
 
     }
 

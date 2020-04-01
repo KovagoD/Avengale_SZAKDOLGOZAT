@@ -16,7 +16,7 @@ public class Game_manager : MonoBehaviour
     public bool isNewCharacter;
 
 
-    public GameObject Main_screen, Character_customization_screen, Character_screen_UI, Combat_screen;
+    public GameObject Main_screen, Character_customization_screen, Character_screen_UI, Combat_screen, Shop_screen;
     private Spell_script _spellScript;
     private Character_stats _characterStats;
     private Quest_manager_script _questManager;
@@ -237,7 +237,6 @@ public class Game_manager : MonoBehaviour
             _characterStats.updateStats();
 
             GameObject.Find("experience_bar").GetComponent<Bar_script>().updateXP();
-            GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
             gameObject.GetComponent<Spell_script>().initializeSpells();
         }
         else if (current_screen == GameObject.Find("Quest_screen_UI"))

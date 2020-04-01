@@ -37,8 +37,6 @@ public class Pause_menu_script : MonoBehaviour
         isOpened = false;
         GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
         gameObject.GetComponent<Animator>().Play("Pause_slide_out_anim");
-
-
     }
 
 }

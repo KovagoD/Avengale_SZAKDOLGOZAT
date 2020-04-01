@@ -17,7 +17,7 @@ public class Character_manager : MonoBehaviour
 
 
 
-    public bool sex, showHelmet;
+    public bool sex, hideHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
     [Range(0, 255)]
@@ -87,6 +87,8 @@ public class Character_manager : MonoBehaviour
             hair_color_g = _characterStats.hair_color[1];
             hair_color_b = _characterStats.hair_color[2];
 
+            hideHelmet = _characterStats.hideHelmet;
+
             if (sex)
             {
                 _equipment_head.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[0]].sprite_male);
@@ -110,7 +112,7 @@ public class Character_manager : MonoBehaviour
                 _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[_characterStats.Equipments[7]].sprite_female);
             }
 
-            if (!showHelmet)
+            if (hideHelmet)
             {
                 _equipment_head.sprite = Resources.Load<Sprite>("");
             }
@@ -140,7 +142,7 @@ public class Character_manager : MonoBehaviour
                 _equipment_right.sprite = Resources.Load<Sprite>(_itemScript.items[equipment_right_id].sprite_female);
             }
 
-            if (!showHelmet)
+            if (hideHelmet)
             {
                 _equipment_head.sprite = Resources.Load<Sprite>("");
             }
@@ -175,13 +177,19 @@ public class Character_manager : MonoBehaviour
             case 6:
                 _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_6");
                 break;
+            case 7:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_7");
+                break;
+            case 8:
+                _hair.sprite = Resources.Load<Sprite>("Character_appearances/Human_hair_8");
+                break;
             default:
                 _hair.sprite = Resources.Load<Sprite>("");
                 break;
         }
         #endregion
 
-        if (showHelmet && ((isPlayer && _characterStats.Equipments[0] != 0) || (equipment_head_id != 0)))
+        if (!hideHelmet && ((isPlayer && _characterStats.Equipments[0] != 0) || (equipment_head_id != 0)))
         {
             _hair.sprite = Resources.Load<Sprite>("");
         }

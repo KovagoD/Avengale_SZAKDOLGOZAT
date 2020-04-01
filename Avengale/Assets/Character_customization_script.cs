@@ -11,12 +11,12 @@ public class Character_customization_script : MonoBehaviour
     public bool isNewCharacter;
     public TMP_InputField character_name;
     public GameObject character;
-    public bool sex, showHelmet;
+    public bool sex, hideHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
 
     public int equipment_head_id, equipment_body_id, equipment_legs_id, equipment_left_id, equipment_shoulder_id, equipment_gadget_id, equipment_feet_id, equipment_right_id;
 
-    private int hair_length = 6, eyes_length = 4, nose_length = 3, mouth_length = 3, body_length = 3;
+    private int hair_length = 8, eyes_length = 4, nose_length = 3, mouth_length = 3, body_length = 3;
     private Ingame_notification_script _notification;
 
     [Range(0, 255)]
@@ -34,6 +34,15 @@ public class Character_customization_script : MonoBehaviour
         isNewCharacter = isNew;
         if (isNewCharacter)
         {
+            equipment_head_id = 0;
+            equipment_body_id = 9;
+            equipment_legs_id = 10;
+            equipment_left_id = 0;
+            equipment_shoulder_id = 0;
+            equipment_gadget_id = 0;
+            equipment_feet_id = 0;
+            equipment_right_id = 0;
+
             randomizeLook();
             randomizeHairColor();
             randomizeGender();
@@ -57,13 +66,13 @@ public class Character_customization_script : MonoBehaviour
 
     public void ShowHelmet()
     {
-        showHelmet = true;
+        hideHelmet = false;
         updateLook();
     }
 
     public void HideHelmet()
     {
-        showHelmet = false;
+        hideHelmet = true;
         updateLook();
     }
     public void changeSex(bool isMale)
@@ -105,7 +114,8 @@ public class Character_customization_script : MonoBehaviour
             _gameManager.GetComponent<Game_manager>().isNewCharacter = false;
         }
 
-        _character.showHelmet = showHelmet;
+        _character.hideHelmet = hideHelmet;
+
         _character.sex = sex;
 
         _character.Local_name = character_name.text;
@@ -115,6 +125,8 @@ public class Character_customization_script : MonoBehaviour
         _character.mouth_id = mouth_id;
         _character.body_id = body_id;
         _character.hair_color = new byte[3] { hair_color_r, hair_color_g, hair_color_b };
+
+        GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
 
         _gameManager.GetComponent<Game_manager>().Change_screen(_gameManager.GetComponent<Game_manager>().Character_screen_UI, true);
     }
@@ -164,15 +176,6 @@ public class Character_customization_script : MonoBehaviour
     }
     public void randomizeLook()
     {
-        equipment_head_id = 0;
-        equipment_body_id = 9;
-        equipment_legs_id = 10;
-        equipment_left_id = 0;
-        equipment_shoulder_id = 0;
-        equipment_gadget_id = 0;
-        equipment_feet_id = 0;
-        equipment_right_id = 0;
-
         hair_id = Random.Range(0, hair_length + 1);
         eyes_id = Random.Range(0, eyes_length + 1);
         nose_id = Random.Range(0, nose_length + 1);
@@ -298,7 +301,7 @@ public class Character_customization_script : MonoBehaviour
     {
         var _character = character.GetComponent<Character_manager>();
 
-        _character.showHelmet = showHelmet;
+        _character.hideHelmet = hideHelmet;
         _character.sex = sex;
 
         _character.hair_id = hair_id;

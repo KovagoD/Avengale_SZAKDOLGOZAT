@@ -18,11 +18,11 @@ public class Enemy_manager_script : MonoBehaviour
         */
         enemies.AddRange(new List<Enemy>()
         {
-            {new Enemy(0, "", true, "", 0, 0, new int[] { 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0 }, new byte[]{0,0,0}, new int[] { 0, 0, 0, 0, 0, 0, 0, 0 }, "")},
+            {new Enemy(0, "", true, "", 0, 0, new int[] { 0, 0, 0, 0 },false,  new int[] { 0, 0, 0, 0, 0 }, new byte[]{0,0,0}, new int[] { 0, 0, 0, 0, 0, 0, 0, 0 }, "")},
             {new Enemy(1, "Angry thug", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, true, new int[] { 0, 2, 3, 4, 5, 6, 7, 8 }, "attack_1")},
             {new Enemy(2, "Senko-san", false, "long-range", 100, 10, new int[] { 0, 11, 50, 50 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_1"), "attack_2")},
             {new Enemy(3, "Unlawful citizen", false, "melee", 200, 50, new int[] { 0, 0, 1000, 1000 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_2"), "attack_2")},
-            {new Enemy(4, "Rebel recruit", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 },true, new int[] { 0, 9, 10, 4, 5, 6, 7, 11 }, "attack_1")},
+            {new Enemy(4, "Rebel recruit", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, true, new int[] { 0, 9, 10, 4, 5, 6, 7, 11 }, "attack_1")},
         });
     }
 }
@@ -39,8 +39,9 @@ public class Enemy
 
     public int[] rewards;
 
+    public bool sex;
     public int[] appearance = new int[5] { 0, 0, 0, 0, 0 };
-    public byte[] hair_color = new byte[3] {0,0,0};
+    public byte[] hair_color = new byte[3] { 0, 0, 0 };
 
     public bool isRandomAppearance = false;
 
@@ -79,16 +80,17 @@ public class Enemy
         this.attackAnimation = attackAnimation;
     }
 
-    public Enemy(int id, string enemy_name, bool isHuman, string type, int health, int damage, int[] rewards, int[] appearance, byte[] hair_color, int[] equipment, string attackAnimation)
+    public Enemy(int id, string enemy_name, bool isHuman, string type, int health, int damage, int[] rewards, bool sex, int[] appearance, byte[] hair_color, int[] equipment, string attackAnimation)
     {
         this.id = id;
         this.enemy_name = enemy_name;
         this.isHuman = isHuman;
-        this.type = type;       
+        this.type = type;
         this.health = health;
         this.damage = damage;
         this.rewards = rewards;
 
+        this.sex = sex;
         this.appearance = appearance;
         this.hair_color = hair_color;
         this.equipment = equipment;

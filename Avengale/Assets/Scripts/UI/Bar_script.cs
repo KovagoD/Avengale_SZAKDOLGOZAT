@@ -70,28 +70,28 @@ public class Bar_script : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().Play("Bar_init");
         updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
-        , "",
+        , "health",
         (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
     }
     public void updateHealth()
     {
         gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
         updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
-        , "",
+        , "health",
         (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
     }
     public void updateResourceAddition()
     {
         gameObject.GetComponent<Animator>().Play("Bar_init");
         updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
-        , "",
+        , "resource",
         (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");
     }
     public void updateResource()
     {
         gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
         updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
-        , "",
+        , "resource",
         (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");
     }
     public void updateXP()
