@@ -37,7 +37,8 @@ public class Spell_script : MonoBehaviour
         if (gameObject.GetComponent<Character_stats>().Equipments[7] != 0)
         {
             _currentRightHand = gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Character_stats>().Equipments[7]].icon;
-        } else
+        }
+        else
         {
             _currentRightHand = "Spell_icons/5";
         }
@@ -48,16 +49,18 @@ public class Spell_script : MonoBehaviour
             {new Spell(1, "Simple attack", spell_types.damage, "warrior", "Deals ", spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 10, _currentRightHand, "attack_1", 1, 5, 2)},
             {new Spell(2, "Enraged blow", spell_types.damage, "warrior", "attacks the <b>target</b> furiously.", spell_attribute_types.damage, spell_attribute_value_types.number, 15, 15, 10, "Spell_icons/2", "attack_1", 2, 3, 0)},
             {new Spell(3, "Fast regeneration", spell_types.heal, "warrior", "Heal <b>yourself</b>.", spell_attribute_types.health, spell_attribute_value_types.percentage, 20, 20, 10, "Spell_icons/3", "heal_1", 2, 5, 0)},
-            {new Spell(4, "Energy surge", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", spell_attribute_types.resource, spell_attribute_value_types.number, 25, 25, 10, "Spell_icons/4", null, 5, 5, 0)},
+            {new Spell(4, "Energy surge", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", spell_attribute_types.resource, spell_attribute_value_types.number, 25, 25, 10, "Spell_icons/4", "resource_1", 5, 5, 0)},
             {new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", "attack_1", 1, 5, 0)},
-            {new Spell(6, "Third row explosion", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", "attack_1", 1, 5, 0)},
+            {new Spell(6, "Multi planetary energy boost", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.resource, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/6", "attack_1", 1, 5, 0)},
+            {new Spell(7, "Multi planetary damage boost", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.damage, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/7", "attack_1", 1, 5, 0)},
+
         });
 
         for (int i = 0; i < _spentSpellpoints.Count; i++)
         {
             spells[i].current_spell_points = _spentSpellpoints[i];
         }
-        
+
     }
     public void saveSpells()
     {
@@ -153,6 +156,18 @@ public class Spell_script : MonoBehaviour
                         spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
                         spell.description = "Grants you +" + spell.attribute + "% health passively.";
                     }
+                    else if (spell.attribute_name == spell_attribute_types.resource)
+                    {
+                        spell.lastAttribute = spell.attribute;
+                        spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
+                        spell.description = "Grants you +" + spell.attribute + "% resource passively.";
+                    }
+                    else if (spell.attribute_name == spell_attribute_types.damage)
+                    {
+                        spell.lastAttribute = spell.attribute;
+                        spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
+                        spell.description = "Grants you +" + spell.attribute + "% damage passively.";
+                    }
                 }
                 else if (spell.attribute_type == spell_attribute_value_types.number)
                 {
@@ -161,6 +176,18 @@ public class Spell_script : MonoBehaviour
                         spell.lastAttribute = spell.attribute;
                         spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
                         spell.description = "Grants you +" + spell.attribute + " health passively.";
+                    }
+                    else if (spell.attribute_name == spell_attribute_types.resource)
+                    {
+                        spell.lastAttribute = spell.attribute;
+                        spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
+                        spell.description = "Grants you +" + spell.attribute + " resource passively.";
+                    }
+                    else if (spell.attribute_name == spell_attribute_types.damage)
+                    {
+                        spell.lastAttribute = spell.attribute;
+                        spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
+                        spell.description = "Grants you +" + spell.attribute + " damage passively.";
                     }
                 }
             }
@@ -302,6 +329,22 @@ public class Spell
                 }
                 _characterStats.Local_max_health += attribute;
             }
+            else if (attribute_name == spell_attribute_types.resource)
+            {
+                if (current_spell_points >= 2)
+                {
+                    _characterStats.Local_max_resource -= lastAttribute;
+                }
+                _characterStats.Local_max_resource += attribute;
+            }
+            else if (attribute_name == spell_attribute_types.damage)
+            {
+                if (current_spell_points >= 2)
+                {
+                    _characterStats.Local_damage -= lastAttribute;
+                }
+                _characterStats.Local_damage += attribute;
+            }
         }
     }
 
@@ -408,10 +451,22 @@ public class Spell
             target = GameObject.Find("Game manager");
             GameObject local_character = GameObject.Find("Character");
 
-            target.GetComponent<Character_stats>().getResource(attribute);
-            GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
-            Debug.Log("Done");
+            if (attribute_type == spell_attribute_value_types.percentage)
+            {
+                target.GetComponent<Character_stats>().getResource(target.GetComponent<Character_stats>().getPercentOfResource(attribute));
+                local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + target.GetComponent<Character_stats>().getPercentOfResource(attribute) + " resource", 0.05f);
+                GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
+            }
+            else
+            {
+                target.GetComponent<Character_stats>().getResource(attribute);
+                local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + attribute + " resource", 0.05f);
+                GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
+            }
+            local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
+
         }
+
     }
 
 

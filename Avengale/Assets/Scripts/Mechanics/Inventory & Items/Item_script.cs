@@ -36,8 +36,9 @@ public class Item_script : MonoBehaviour
             {new Item(8, "Simple baton", item_type.right_arm, rarity.epic, 0, 2, 1, "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "Item_icons/008", "Item_appearances/008","Item_appearances/008", 0, 0, 0, 100)},
             {new Item(9, "Recruit jacket", item_type.body, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/009", "Item_appearances/009","Item_appearances/009_f", 32, 100, 15, 200)},
             {new Item(10, "Recruit pants", item_type.legs, rarity.poor, 0, 1, 2, "Hasire sori yo kaze no you ni tsukimihara wo\nPADORU PADORU", "Item_icons/010", "Item_appearances/010","Item_appearances/010", 100, 100, 100, 125)},
-            {new Item(11, "Test quest item 11", item_type.quest, rarity.quest, 0, 0, 1, "Test quest item description.", "Item_icons/001", null,null,  0, 0, 0, 0)},
-            {new Item(12, "Test quest 12", item_type.quest, rarity.quest, 0, 0, 1, " venenatis dui. In in aliquam justo. Curabitur lorem.", "Item_icons/002", null,null, 0, 0, 0, 0)}
+            {new Item(11, "Recruit jacket 2", item_type.body, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/011", "Item_appearances/011","Item_appearances/011_f", 32, 100, 15, 200)},
+            {new Item(12, "Test quest item 11", item_type.quest, rarity.quest, 0, 0, 1, "Test quest item description.", "Item_icons/001", null,null,  0, 0, 0, 0)},
+            {new Item(13, "Test quest 12", item_type.quest, rarity.quest, 0, 0, 1, " venenatis dui. In in aliquam justo. Curabitur lorem.", "Item_icons/002", null,null, 0, 0, 0, 0)}
         });
         counter = declared_items.Count - 1;
 

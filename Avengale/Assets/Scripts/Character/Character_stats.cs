@@ -148,7 +148,7 @@ public class Character_stats : MonoBehaviour
 
             _gameManager.Change_screen(_gameManager.Character_screen_UI, true);
             _gameManager.isNewCharacter = true;
-            
+
             gameObject.GetComponent<Spell_script>().initializeSpells();
             GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
 
@@ -212,7 +212,7 @@ public class Character_stats : MonoBehaviour
             if (!isInventoryFull())
             {
                 itemPickup(gameObject.GetComponent<Store_manager>().Store[slot_id], false);
-                giveMoney(gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[3]);
+                looseMoney(gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[3]);
                 gameObject.GetComponent<Store_manager>().Store[slot_id] = 0;
             }
         }
@@ -510,7 +510,6 @@ public class Character_stats : MonoBehaviour
     {
         return Convert.ToInt32(Math.Round(((double)Local_xp / (double)Local_needed_xp) * 100));
     }
-
     public int getPercentOfHealth()
     {
         return Convert.ToInt32(Math.Round(((double)Local_health / (double)Local_max_health) * 100));
@@ -520,6 +519,12 @@ public class Character_stats : MonoBehaviour
     {
         double onePercent = percentage * 0.01;
         return Convert.ToInt32(Math.Round(((double)Local_max_health * onePercent)));
+    }
+
+    public int getPercentOfMoney(double percentage)
+    {
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)Local_money * onePercent)));
     }
 
 
@@ -544,7 +549,7 @@ public class Character_stats : MonoBehaviour
         updateStats();
     }
 
-    public void giveMoney(int amount)
+    public void looseMoney(int amount)
     {
         Local_money -= amount;
         _notification.message("-" + amount + " credit", 3);

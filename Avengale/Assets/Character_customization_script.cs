@@ -43,9 +43,7 @@ public class Character_customization_script : MonoBehaviour
             equipment_feet_id = 0;
             equipment_right_id = 0;
 
-            randomizeLook();
-            randomizeHairColor();
-            randomizeGender();
+            randomizeAll();
             character_name.text = null;
         }
         else
@@ -141,7 +139,7 @@ public class Character_customization_script : MonoBehaviour
             hair_id = _localCharacter.hair_id;
             eyes_id = _localCharacter.eyes_id;
             nose_id = _localCharacter.nose_id;
-            mouth_id = _localCharacter.nose_id;
+            mouth_id = _localCharacter.mouth_id;
             body_id = _localCharacter.body_id;
 
             sex = _localCharacter.sex;
@@ -183,6 +181,13 @@ public class Character_customization_script : MonoBehaviour
         body_id = Random.Range(0, body_length + 1);
 
         updateLook();
+    }
+
+    public void randomizeAll()
+    {
+        randomizeGender();
+        randomizeLook();
+        randomizeHairColor();
     }
 
     public void randomizeHairColor()

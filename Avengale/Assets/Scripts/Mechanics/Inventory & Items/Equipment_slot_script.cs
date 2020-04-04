@@ -90,7 +90,43 @@ public class Equipment_slot_script : MonoBehaviour
 
         if (_characterStats.Equipments[ID] == 0)
         {
-            item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Empty");
+            //item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Empty");
+            //item_slot.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Item_icons/def_body");
+
+            Sprite _sprite = Resources.Load<Sprite>(""); ;
+            switch (ID)
+            {
+                case 0:
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_head");
+                    break;
+                case 1:
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_body");
+                    break;
+                case 2:
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_legs");
+                    break;
+                case 3:
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_left");
+                    break;
+                case 4:
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_shoulder");
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_feet");
+
+                    break;
+                case 7:
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_right");
+                    break;
+                default:
+                    break;
+            }
+            item_slot.GetComponent<SpriteRenderer>().sprite = _sprite;
+
+
             _slotBorder.color = colors.transparent;
         }
 
@@ -116,7 +152,7 @@ public class Equipment_slot_script : MonoBehaviour
             var exit_btn = GameObject.Find("Exit button item_preview");
             exit_btn.GetComponent<Close_button_script>().Close();
         }
-        
+
         slot_text.GetComponent<Text_animation>().restartAnim();
     }
 

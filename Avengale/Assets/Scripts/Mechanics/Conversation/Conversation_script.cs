@@ -162,7 +162,7 @@ public class Conversation_script : MonoBehaviour
         if (option.Contains("money_remove"))
         {
             string[] split = option.Split(':');
-            _characterStats.giveMoney(int.Parse(split[1]));
+            _characterStats.looseMoney(int.Parse(split[1]));
             conversation.continueConversation();
         }
         if (option.Contains("xp_add"))

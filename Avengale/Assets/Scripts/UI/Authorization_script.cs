@@ -25,7 +25,7 @@ public class Authorization_script : MonoBehaviour
         if (input == "surrenderBattle")
         {
             title.GetComponent<Text_animation>().startAnim("Are you sure?", 0.05f);
-            description.GetComponent<Text_animation>().startAnim("You can't redo this action!", 0.05f);
+            description.GetComponent<Text_animation>().startAnim("You will face the penalty of loosing <b>20%</b> of your credits!", 0.05f);
             yes.GetComponent<Text_animation>().startAnim("Surrender", 0.05f);
             no.GetComponent<Text_animation>().startAnim("No.", 0.05f);
         }
@@ -59,6 +59,7 @@ public class Authorization_script : MonoBehaviour
         {
             
             GameObject.Find("Game manager").GetComponent<Combat_manager_script>().surrenderBattle();
+            GameObject.Find("Game manager").GetComponent<Character_stats>().looseMoney(GameObject.Find("Game manager").GetComponent<Character_stats>().getPercentOfMoney(20));
             gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");
             GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
         }

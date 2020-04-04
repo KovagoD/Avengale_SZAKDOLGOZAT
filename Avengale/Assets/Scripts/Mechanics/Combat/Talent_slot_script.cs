@@ -186,6 +186,7 @@ public class Talent_slot_script : MonoBehaviour
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
 
             _spellScript.setupAttributes();
+            
             if (_spellScript.spells[spell_id].type == spell_types.passive)
             {
                 _spellScript.spells[spell_id].passiveActivate();
