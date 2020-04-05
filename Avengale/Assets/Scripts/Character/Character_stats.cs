@@ -35,6 +35,7 @@ public class Character_stats : MonoBehaviour
     private Game_manager _gameManager;
     private Item_script _itemScript;
     private Ingame_notification_script _notification;
+    private Quest_manager_script _questManager;
 
     public GameObject InventorySlots;
 
@@ -47,6 +48,7 @@ public class Character_stats : MonoBehaviour
         _itemScript = GameObject.Find("Game manager").GetComponent<Item_script>();
         _gameManager = GameObject.Find("Game manager").GetComponent<Game_manager>();
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
+        _questManager = GameObject.Find("Game manager").GetComponent<Quest_manager_script>();
     }
 
     public void savePlayer()
@@ -168,6 +170,9 @@ public class Character_stats : MonoBehaviour
             Local_needed_xp += 50;
 
             getSpellPoint(1);
+            
+            _questManager.checkAvailableQuests();
+
 
             _notification.message("You gained a level!", 3, "yellow");
         }

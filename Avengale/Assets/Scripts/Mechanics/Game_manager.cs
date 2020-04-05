@@ -62,43 +62,43 @@ public class Game_manager : MonoBehaviour
         )))
         {
             closeOpenedWindows();
-            Debug.Log("0");
+            //Debug.Log("0");
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen != Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpened)
         {
-            Debug.Log("1");
+            //Debug.Log("1");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpened)
         {
-            Debug.Log("2");
+            //Debug.Log("2");
             gameObject.GetComponent<Combat_manager_script>().resumeBattle();
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Combat_screen)
         {
-            Debug.Log("3");
+            //Debug.Log("3");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().showPauseMenu();
             gameObject.GetComponent<Combat_manager_script>().pauseBattle();
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_screen_UI)
         {
-            Debug.Log("4");
+            //Debug.Log("4");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().showPauseMenu();
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen != Main_screen && current_screen != Character_customization_screen)
         {
-            Debug.Log("5");
+            //Debug.Log("5");
             Change_screen(Character_screen_UI, false);
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_customization_screen && !isNewCharacter)
         {
-            Debug.Log("6");
+            //Debug.Log("6");
             Change_screen(Character_screen_UI, false);
         }
         else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_customization_screen && isNewCharacter)
         {
-            Debug.Log("7");
+            //Debug.Log("7");
             Change_screen(Main_screen, false);
         }
 

@@ -15,6 +15,7 @@ public class Combat_manager_script : MonoBehaviour
     public int round_counter;
 
     public bool isOngoing;
+    public string battle_result;
 
     private int timer;
     public int round_time;
@@ -286,6 +287,7 @@ public class Combat_manager_script : MonoBehaviour
 
     public void showResults(string result)
     {
+        battle_result = result;
         var enemy = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
         var result_window = GameObject.Find("Battle_results");
 
@@ -302,87 +304,95 @@ public class Combat_manager_script : MonoBehaviour
         result_window.GetComponent<Open_button_script>().Open();
         result_window.GetComponent<Animator>().Play("Battle_results_slide_in_anim");
 
-        var _rewards = battles[battle_id].rewards;
-        string _battleRewards = "";
-
-        int _xpRewards = 0;
-        int _moneyRewards = 0;
-        //int _spellPointRewards = 0;
-
-        if (_rewards[0] != 0)
+        if (result == "Victory")
         {
-            _battleRewards += "[" + _itemScript.items[_rewards[0]].name + "]\n";
+            var _rewards = battles[battle_id].rewards;
+            string _battleRewards = "";
+
+            int _xpRewards = 0;
+            int _moneyRewards = 0;
+            //int _spellPointRewards = 0;
+
+            if (_rewards[0] != 0)
+            {
+                _battleRewards += "[" + _itemScript.items[_rewards[0]].name + "]\n";
+            }
+            if (_rewards[1] != 0)
+            {
+                _battleRewards += "[" + _itemScript.items[_rewards[1]].name + "]\n";
+            }
+            if (_rewards[2] != 0)
+            {
+                _xpRewards += _rewards[2];
+            }
+            if (_rewards[3] != 0)
+            {
+                _moneyRewards += _rewards[3];
+            }
+            /*
+            if (_rewards[4] != 0)
+            {
+                _spellPointRewards += _rewards[4];
+            }
+            */
+
+            //Opponent_1
+            var _firstOpponentRewards = _enemyManagerScript.enemies[battles[battle_id].opponent_ids[0]].rewards;
+
+            if (_firstOpponentRewards[0] != 0)
+            {
+                _battleRewards += "[" + _itemScript.items[_firstOpponentRewards[0]].name + "]\n";
+            }
+
+            if (_firstOpponentRewards[1] != 0)
+            {
+                _battleRewards += "[" + _itemScript.items[_firstOpponentRewards[1]].name + "]\n";
+            }
+
+            if (_firstOpponentRewards[2] != 0)
+            {
+                _xpRewards += _firstOpponentRewards[2];
+            }
+
+            if (_firstOpponentRewards[3] != 0)
+            {
+                _moneyRewards += _firstOpponentRewards[3];
+            }
+
+            //Opponent_2
+            var _secondOpponentRewards = _enemyManagerScript.enemies[battles[battle_id].opponent_ids[1]].rewards;
+
+
+            if (_secondOpponentRewards[0] != 0)
+            {
+                _battleRewards += "[" + _itemScript.items[_secondOpponentRewards[0]].name + "]\n";
+            }
+
+            if (_secondOpponentRewards[1] != 0)
+            {
+                _battleRewards += "[" + _itemScript.items[_secondOpponentRewards[1]].name + "]\n";
+            }
+
+            if (_secondOpponentRewards[2] != 0)
+            {
+                _xpRewards += _secondOpponentRewards[2];
+            }
+
+            if (_secondOpponentRewards[3] != 0)
+            {
+                _moneyRewards += _secondOpponentRewards[3];
+            }
+
+            _battleRewards += "+ " + _xpRewards + " XP\n+" + _moneyRewards + " credits";
+
+            var result_battle_rewards = GameObject.Find("Battle_rewards");
+            result_battle_rewards.GetComponent<Text_animation>().startAnim("<b>Rewards:</b>\n" + _battleRewards, 0.05f);
         }
-        if (_rewards[1] != 0)
+        else if (result == "Defeat")
         {
-            _battleRewards += "[" + _itemScript.items[_rewards[1]].name + "]\n";
-        }
-        if (_rewards[2] != 0)
-        {
-            _xpRewards += _rewards[2];
-        }
-        if (_rewards[3] != 0)
-        {
-            _moneyRewards += _rewards[3];
-        }
-        /*
-        if (_rewards[4] != 0)
-        {
-            _spellPointRewards += _rewards[4];
-        }
-        */
-
-        //Opponent_1
-        var _firstOpponentRewards = _enemyManagerScript.enemies[battles[battle_id].opponent_ids[0]].rewards;
-
-        if (_firstOpponentRewards[0] != 0)
-        {
-            _battleRewards += "[" + _itemScript.items[_firstOpponentRewards[0]].name + "]\n";
+            GameObject.Find("Battle_rewards").GetComponent<Text_animation>().startAnim("<b>Penalty:</b>\n-20% money", 0.05f);
         }
 
-        if (_firstOpponentRewards[1] != 0)
-        {
-            _battleRewards += "[" + _itemScript.items[_firstOpponentRewards[1]].name + "]\n";
-        }
-
-        if (_firstOpponentRewards[2] != 0)
-        {
-            _xpRewards += _firstOpponentRewards[2];
-        }
-
-        if (_firstOpponentRewards[3] != 0)
-        {
-            _moneyRewards += _firstOpponentRewards[3];
-        }
-
-        //Opponent_2
-        var _secondOpponentRewards = _enemyManagerScript.enemies[battles[battle_id].opponent_ids[1]].rewards;
-
-
-        if (_secondOpponentRewards[0] != 0)
-        {
-            _battleRewards += "[" + _itemScript.items[_secondOpponentRewards[0]].name + "]\n";
-        }
-
-        if (_secondOpponentRewards[1] != 0)
-        {
-            _battleRewards += "[" + _itemScript.items[_secondOpponentRewards[1]].name + "]\n";
-        }
-
-        if (_secondOpponentRewards[2] != 0)
-        {
-            _xpRewards += _secondOpponentRewards[2];
-        }
-
-        if (_secondOpponentRewards[3] != 0)
-        {
-            _moneyRewards += _secondOpponentRewards[3];
-        }
-
-        _battleRewards += "+ " + _xpRewards + " XP\n+" + _moneyRewards + " credits";
-
-        var result_battle_rewards = GameObject.Find("Battle_rewards");
-        result_battle_rewards.GetComponent<Text_animation>().startAnim("<b>Rewards:</b>\n" + _battleRewards, 0.05f);
     }
 
     public battleRound getRound()
@@ -435,7 +445,7 @@ public class Combat_manager_script : MonoBehaviour
         battles.AddRange(new List<Battle>()
         {
             {new Battle(0, "Test battle", new int[] { 2, 1 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(1, "JOGIJOGIJOGI", new int[] { 2, 2 }, "Ayayo? Aya. AYAYA!", new int[] { 0, 0, 200, 0, 2 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
+            {new Battle(1, "Training with recruits", new int[] { 4, 4 }, "David asked you to fight with these recruits as a training.", new int[] { 0, 0, 0, 0, 0 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
             {new Battle(2, "10 4 dinosaur", new int[] { 1, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000, 3 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
             {new Battle(3, "Ambush", new int[] { 4, 4 }, "Two rebel rectruits appeared", new int[] { 0, 0, 10, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
 
@@ -444,29 +454,42 @@ public class Combat_manager_script : MonoBehaviour
 
     public void getBattleReward()
     {
-        var enemy = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
-        var _rewards = battles[battle_id].rewards;
+        if (battle_result == "Victory")
+        {
+            var enemy = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
+            var _rewards = battles[battle_id].rewards;
 
-        if (_rewards[0] != 0)
-        {
-            _characterStats.itemPickup(_rewards[0], true);
+            if (_rewards[0] != 0)
+            {
+                _characterStats.itemPickup(_rewards[0], true);
+            }
+            if (_rewards[1] != 0)
+            {
+                _characterStats.itemPickup(_rewards[1], true, true);
+            }
+            if (_rewards[2] != 0)
+            {
+                _characterStats.getXP(_rewards[2]);
+            }
+            if (_rewards[3] != 0)
+            {
+                _characterStats.getMoney(_rewards[3]);
+            }
+            if (_rewards[4] != 0)
+            {
+                _characterStats.getSpellPoint(_rewards[4]);
+            }
+
+            foreach (var opponent in opponents)
+            {
+                opponent.GetComponent<Enemy_script>().GetReward();
+            }
         }
-        if (_rewards[1] != 0)
+        else if (battle_result == "Defeat")
         {
-            _characterStats.itemPickup(_rewards[1], true, true);
+            _characterStats.looseMoney(_characterStats.getPercentOfMoney(20));
         }
-        if (_rewards[2] != 0)
-        {
-            _characterStats.getXP(_rewards[2]);
-        }
-        if (_rewards[3] != 0)
-        {
-            _characterStats.getMoney(_rewards[3]);
-        }
-        if (_rewards[4] != 0)
-        {
-            _characterStats.getSpellPoint(_rewards[4]);
-        }
+
     }
 }
 

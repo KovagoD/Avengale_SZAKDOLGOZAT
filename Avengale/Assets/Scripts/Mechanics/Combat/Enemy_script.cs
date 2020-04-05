@@ -15,6 +15,7 @@ public class Enemy_script : MonoBehaviour
     public SpriteRenderer appearanceSprite;
     public string enemy_name;
     private List<Enemy> enemies;
+    private Combat_manager_script _combatManager;
     private Character_stats _characterStats;
     private Character_manager _characterManager;
     private Ingame_notification_script _notification;
@@ -23,6 +24,7 @@ public class Enemy_script : MonoBehaviour
     {
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        _combatManager = GameObject.Find("Game manager").GetComponent<Combat_manager_script>();
         enemies = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies;
     }
     private void Update()
@@ -70,7 +72,7 @@ public class Enemy_script : MonoBehaviour
         if (enemy_health <= 0)
         {
             opponentDie();
-            GetReward();
+            //GetReward();
         }
     }
 
@@ -138,6 +140,11 @@ public class Enemy_script : MonoBehaviour
         }
         _playerManager.damage_text.GetComponent<Animator>().Play(_hitAnimation);
         GameObject.Find("Battle_scene").GetComponent<Animator>().Play("Screen_shake_1");
+
+        if (_characterStats.Local_health <= 0)
+        {
+            _combatManager.showResults("Defeat");
+        }
     }
 
     public void opponentDie()

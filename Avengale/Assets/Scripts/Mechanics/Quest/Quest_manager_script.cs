@@ -7,10 +7,13 @@ public enum quest_types { combat, conversation, item }
 public class Quest_manager_script : MonoBehaviour
 {
     [Header("References")]
+
+    public List<Quest> available_quests = new List<Quest>();
     public GameObject[] quest_slots = new GameObject[3];
     public List<Quest> quests = new List<Quest>();
     private Ingame_notification_script _notification;
     private Character_stats _characterStats;
+    private Game_manager _gameManager;
 
     public Sprite ConversationIcon, CombatIcon, ItemIcon;
 
@@ -21,20 +24,39 @@ public class Quest_manager_script : MonoBehaviour
             ID, NAME, TYPE, DESCRIPTION, LONG DESCRIPTION, OBJECTIVE, XP, ITEM
         */
 
-        quests.Add(new Quest(0, "", quest_types.combat, "", "", 0, 0, 0));
-        quests.Add(new Quest(1, "Combat test quest", quest_types.combat, "defeat Szisz", "Ayaya? Aya! AYAYA!...AYAYA\n AYAYA AYAYA AYAYA (yamete)", 1, 100, 5));
-        quests.Add(new Quest(2, "Item test quest", quest_types.item, "Get the quest item 11 ", "sadsd21dasdasdasdsad", 11, 100, 6));
-        quests.Add(new Quest(3, "Item reeeee", quest_types.item, "Get the quest item 12", "sadsd21dasdasdasdsad", 12, 100, 6));
-        quests.Add(new Quest(4, "Welcome to the HUB", quest_types.conversation, "Speak with NPC#2 at the HUB", "NPC asked you to speak with NPC#2 about your recruitment.", 2, 100, 8));
+        quests.Add(new Quest(0,0, "", quest_types.combat, "", "", 0, 0, 0));
+        quests.Add(new Quest(1,2, "Welcome to the HUB", quest_types.conversation, "Speak with NPC#2 at the HUB", "NPC asked you to speak with NPC#2 about your recruitment.", 2, 100, 8));
 
+    }
 
+    void Update() {
+        if (available_quests.Count > 1)
+        {
+            _gameManager.hub_button.GetComponent<Screen_change_button_script>().setNotification();
+        }
+        else
+        {
+            _gameManager.hub_button.GetComponent<Screen_change_button_script>().clearNotification();
+        }
+    }
 
+    public void checkAvailableQuests()
+    {
+        available_quests.Clear();
+        foreach (var quest in quests)
+        {
+            if (quest.level_requirement <= _characterStats.Local_level)
+            {
+                available_quests.Add(quest);
+            }
+        }
     }
 
     private void Start()
     {
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        _gameManager = GameObject.Find("Game manager").GetComponent<Game_manager>();
 
     }
 
@@ -123,6 +145,7 @@ public class Quest_manager_script : MonoBehaviour
 
     public void acceptQuest(int id)
     {
+
         if (!isQuestSlotsFull() && !isQuestAlreadyAccepted(id))
         {
             for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
@@ -132,6 +155,15 @@ public class Quest_manager_script : MonoBehaviour
                     _characterStats.accepted_quests[i] = id;
                     _notification.message(quests[id].name + " is accepted!", 3);
                     updateQuestSlots();
+
+                    for (int y = 0; y < available_quests.Count; y++)
+                    {
+                        if (available_quests[y].id == id)
+                        {
+                            available_quests.Remove(available_quests[y]);
+                        }
+                    }
+
                     break;
                 }
             }
@@ -293,6 +325,7 @@ public class Quest_manager_script : MonoBehaviour
 public class Quest
 {
     public int id;
+    public int level_requirement;
     public string name;
     public quest_types type;
     public string description;
@@ -303,7 +336,7 @@ public class Quest
     public int item;
     public int money;
 
-    public Quest(int id, string name, quest_types type, string description, string long_description, int objective, int xp, int item)
+    public Quest(int id, int giver_id, string name, quest_types type, string description, string long_description, int objective, int xp, int item)
     {
         this.id = id;
         this.name = name;

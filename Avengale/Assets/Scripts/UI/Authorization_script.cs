@@ -82,14 +82,14 @@ public class Authorization_script : MonoBehaviour
 
         if (input_mode == "confirmCustomization" || input_mode == "confirmReCustomization")
         {
-            GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
-            gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");
             GameObject.Find("Customization_controller").GetComponent<Character_customization_script>().confirmCustomization();
+            gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");
+            GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
         }
     }
     public void AuthorizationNo()
     {
-        GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
         gameObject.GetComponent<Animator>().Play("Authorization_slide_out_anim");
+        GameObject.Find("Overlay").GetComponent<Overlay_script>().closeOverlay();
     }
 }

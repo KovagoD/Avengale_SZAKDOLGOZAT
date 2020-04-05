@@ -7,6 +7,7 @@ public class Text_animation : MonoBehaviour
 {
     public TextMeshProUGUI ugui = null;
     public TextMeshPro generic = null;
+    [TextArea(0,20)]
     public string Text;
     int counter = 0;
     public float speed = 0.01f;

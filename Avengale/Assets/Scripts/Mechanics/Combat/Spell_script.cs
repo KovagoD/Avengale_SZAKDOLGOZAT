@@ -411,11 +411,20 @@ public class Spell
                             _hitAnimation = "hit_6";
                             break;
                     }
+
                     target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute, 0.05f);
                 }
 
-
                 target.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(_hitAnimation);
+
+                /*
+                GameObject local_character = GameObject.Find("Character");
+                local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + resource_cost + " resource", 0.05f);
+                local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play("resource_1");
+                */
+
+
+
                 if (GameObject.Find("Game manager").GetComponent<Game_manager>().vibrationEnabled)
                 {
                     Handheld.Vibrate();
@@ -446,8 +455,10 @@ public class Spell
             }
             local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
         }
+        /*
         if (type == spell_types.support)
         {
+
             target = GameObject.Find("Game manager");
             GameObject local_character = GameObject.Find("Character");
 
@@ -466,6 +477,7 @@ public class Spell
             local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
 
         }
+        */
 
     }
 

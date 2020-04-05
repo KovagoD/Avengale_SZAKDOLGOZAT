@@ -349,6 +349,7 @@ MonoBehaviour:
   - {fileID: 6734014157344057968}
   - {fileID: 88005041704731091}
   - {fileID: 5741155778717801049}
+  - {fileID: 7122631822610242182}
   children_text_gui: []
 --- !u!114 &2981340200650031501
 MonoBehaviour:
@@ -370,6 +371,7 @@ MonoBehaviour:
   - {fileID: 6734014157344057968}
   - {fileID: 88005041704731091}
   - {fileID: 5741155778717801049}
+  mode: 
   isClickable: 1
 --- !u!1 &5741155778717801049
 GameObject:

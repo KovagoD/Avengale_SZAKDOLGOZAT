@@ -22,7 +22,7 @@ public class Enemy_manager_script : MonoBehaviour
             {new Enemy(1, "Angry thug", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, true, new int[] { 0, 2, 3, 4, 5, 6, 7, 8 }, "attack_1")},
             {new Enemy(2, "Senko-san", false, "long-range", 100, 10, new int[] { 0, 11, 50, 50 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_1"), "attack_2")},
             {new Enemy(3, "Unlawful citizen", false, "melee", 200, 50, new int[] { 0, 0, 1000, 1000 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_2"), "attack_2")},
-            {new Enemy(4, "Rebel recruit", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, true, new int[] { 0, 9, 10, 4, 5, 6, 7, 11 }, "attack_1")},
+            {new Enemy(4, "Recruit", true, "melee", 50, 10, new int[] { 0, 0, 0, 0 }, true, new int[] { 0, 9, 10, 4, 5, 6, 7, 11 }, "attack_1")},
         });
     }
 }
