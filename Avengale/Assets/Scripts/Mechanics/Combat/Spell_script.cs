@@ -12,6 +12,7 @@ public class Spell_script : MonoBehaviour
     public List<Spell> spells = new List<Spell>();
     public GameObject target;
 
+    public GameObject row_2_unlock_text, row_3_unlock_text;
     public int firstRowPoints; public GameObject[] firstRow;
     public int secondRowPoints; public int secondRowNeededPoints = 5; public GameObject[] secondRow; public bool secondRowEnabled = false;
     public int thirdRowPoints; public int thirdRowNeededPoints = 10; public GameObject[] thirdRow; public bool thirdRowEnabled = false;
@@ -19,17 +20,28 @@ public class Spell_script : MonoBehaviour
     {
         initializeSpells();
     }
-
+    
     public void initializeSpells()
     {
+        spells.Clear();
+
+        actualizeSpells();
+    }
+    public void actualizeSpells()
+    {
+        
         var stats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        
+
         List<int> _spentSpellpoints = new List<int>();
+
         foreach (var spell in spells)
         {
             _spentSpellpoints.Add(spell.current_spell_points);
         }
 
         spells.Clear();
+
         /*
             ID, NAME, TYPE, CHARACTER CLASS, DESCRIPTION, ATTRIBUTE, ATTRIBUTE VALUE, RESOURCE COST, ICON, ANIMATION
         */
@@ -40,7 +52,7 @@ public class Spell_script : MonoBehaviour
         }
         else
         {
-            _currentRightHand = "Spell_icons/5";
+            _currentRightHand = "Item_icons/def_right";
         }
 
         spells.AddRange(new List<Spell>()
@@ -61,11 +73,13 @@ public class Spell_script : MonoBehaviour
             spells[i].current_spell_points = _spentSpellpoints[i];
         }
 
+
+
     }
     public void saveSpells()
     {
         Save_script.saveSpells(this);
-        Debug.Log("Item data saved!");
+        Debug.Log("Spell data saved!");
     }
 
     public void loadSpells()
@@ -232,8 +246,8 @@ public class Spell_script : MonoBehaviour
             }
         }
 
-        var _row_2_text = GameObject.Find("row_2_unlock_text").GetComponent<Text_animation>();
-        var _row_3_text = GameObject.Find("row_3_unlock_text").GetComponent<Text_animation>();
+        var _row_2_text = row_2_unlock_text.GetComponent<Text_animation>();
+        var _row_3_text = row_3_unlock_text.GetComponent<Text_animation>();
 
         if (neededForSecond() > 0)
         {

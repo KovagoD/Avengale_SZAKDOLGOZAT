@@ -19,10 +19,10 @@ public class Enemy_manager_script : MonoBehaviour
         enemies.AddRange(new List<Enemy>()
         {
             {new Enemy(0, "", true, "", 0, 0, new int[] { 0, 0, 0, 0 },false,  new int[] { 0, 0, 0, 0, 0 }, new byte[]{0,0,0}, new int[] { 0, 0, 0, 0, 0, 0, 0, 0 }, "")},
-            {new Enemy(1, "Angry thug", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, true, new int[] { 0, 2, 3, 4, 5, 6, 7, 8 }, "attack_1")},
-            {new Enemy(2, "Senko-san", false, "long-range", 100, 10, new int[] { 0, 11, 50, 50 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_1"), "attack_2")},
-            {new Enemy(3, "Unlawful citizen", false, "melee", 200, 50, new int[] { 0, 0, 1000, 1000 }, Resources.Load<Sprite>("Enemy_appearances/senkosan_2"), "attack_2")},
-            {new Enemy(4, "Recruit", true, "melee", 50, 10, new int[] { 0, 0, 0, 0 }, true, new int[] { 0, 9, 10, 4, 5, 6, 7, 11 }, "attack_1")},
+            {new Enemy(1, "Cultist raider", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, true, new int[] { 0, 2, 3, 4, 5, 6, 7, 8 }, "attack_1")},
+            {new Enemy(2, "Senko-san", false, "long-range", 100, 10, new int[] { 0, 11, 50, 50 }, "Enemy_appearances/senkosan_1", "attack_2")},
+            {new Enemy(3, "Unlawful citizen", false, "melee", 200, 50, new int[] { 0, 0, 1000, 1000 }, "Enemy_appearances/senkosan_2", "attack_2")},
+            {new Enemy(4, "Recruit", true, "melee", 10, 10, new int[] { 0, 0, 0, 0 }, true, new int[] { 0, 9, 10, 4, 5, 6, 7, 11 }, "attack_1")},
         });
     }
 }
@@ -46,7 +46,7 @@ public class Enemy
     public bool isRandomAppearance = false;
 
     public int[] equipment;
-    public Sprite non_human_appearance;
+    public string non_human_appearance;
     public string attackAnimation;
 
 
@@ -67,7 +67,7 @@ public class Enemy
         }
     }
 
-    public Enemy(int id, string enemy_name, bool isHuman, string type, int health, int damage, int[] rewards, Sprite non_human_appearance, string attackAnimation)
+    public Enemy(int id, string enemy_name, bool isHuman, string type, int health, int damage, int[] rewards, string non_human_appearance, string attackAnimation)
     {
         this.id = id;
         this.enemy_name = enemy_name;

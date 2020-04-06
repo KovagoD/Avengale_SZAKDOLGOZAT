@@ -31,7 +31,7 @@ public class Spell_preview_script : MonoBehaviour
         spell_description.GetComponent<Text_animation>().startAnim(spell.description, 0.01f);
 
 
-        gameObject.GetComponent<Animator>().Play("Spell_preview_talent_slide_in_anim");
+        gameObject.GetComponent<Animator>().Play("Spell_preview");
 
 
         string effect_text = "";
@@ -132,7 +132,7 @@ public class Spell_preview_script : MonoBehaviour
         }
         else
         {
-            gameObject.GetComponent<Animator>().Play("Spell_preview_talent_slide_out_anim");
+            gameObject.GetComponent<Animator>().Play("Spell_preview_out");
         }
     }
 

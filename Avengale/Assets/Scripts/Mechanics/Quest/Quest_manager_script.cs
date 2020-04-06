@@ -10,6 +10,8 @@ public class Quest_manager_script : MonoBehaviour
 
     public List<Quest> available_quests = new List<Quest>();
     public GameObject[] quest_slots = new GameObject[3];
+
+    public GameObject[] npcs = new GameObject[3];
     public List<Quest> quests = new List<Quest>();
     private Ingame_notification_script _notification;
     private Character_stats _characterStats;
@@ -24,13 +26,17 @@ public class Quest_manager_script : MonoBehaviour
             ID, NAME, TYPE, DESCRIPTION, LONG DESCRIPTION, OBJECTIVE, XP, ITEM
         */
 
-        quests.Add(new Quest(0,0, "", quest_types.combat, "", "", 0, 0, 0));
-        quests.Add(new Quest(1,2, "Welcome to the HUB", quest_types.conversation, "Speak with NPC#2 at the HUB", "NPC asked you to speak with NPC#2 about your recruitment.", 2, 100, 8));
+        quests.Add(new Quest(0, 0, 0, "", quest_types.combat, "", "", 0, 0, 0));
+        quests.Add(new Quest(1, 1, 1, "Welcome to the HUB", quest_types.combat, "Speak with David at the HUB and complete his task.", "<b>Zachary</b> asked you to speak with <b>David</b> about your recruitment.", 4, 100, 8));
+        quests.Add(new Quest(2, 2, 2, "Repel the cultists", quest_types.combat, "Defeat a cultist", "Cultists ambushed the station. Defeat them and defend the station!", 1, 100, 8));
+        //quests.Add(new Quest(2, 2, 2, "Repel the cultists", quest_types.combat, "Defeat 2 cultists", "Cultists ambushed the station. Defeat them and defend the station!", 1, 100, 8));
 
     }
 
-    void Update() {
-        if (available_quests.Count > 1)
+    void Update()
+    {
+        /*
+        if (available_quests.Count > 0)
         {
             _gameManager.hub_button.GetComponent<Screen_change_button_script>().setNotification();
         }
@@ -38,6 +44,7 @@ public class Quest_manager_script : MonoBehaviour
         {
             _gameManager.hub_button.GetComponent<Screen_change_button_script>().clearNotification();
         }
+        */
     }
 
     public void checkAvailableQuests()
@@ -45,7 +52,7 @@ public class Quest_manager_script : MonoBehaviour
         available_quests.Clear();
         foreach (var quest in quests)
         {
-            if (quest.level_requirement <= _characterStats.Local_level)
+            if (quest.id != 0 && quest.level_requirement <= _characterStats.Local_level && !_characterStats.isInCompletedQuests(quest.id) && !_characterStats.isOnQuest(quest.id))
             {
                 available_quests.Add(quest);
             }
@@ -55,13 +62,17 @@ public class Quest_manager_script : MonoBehaviour
     private void Start()
     {
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
-        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _gameManager = GameObject.Find("Game manager").GetComponent<Game_manager>();
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+
+        checkAvailableQuests();
 
     }
 
     public void updateQuestSlots()
     {
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+
         for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
         {
             quest_slots[i].GetComponent<Quest_slot_script>().quest_id = _characterStats.accepted_quests[i];
@@ -117,6 +128,8 @@ public class Quest_manager_script : MonoBehaviour
 
     public bool isQuestSlotsFull()
     {
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+
         for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
         {
             if (_characterStats.accepted_quests[i] == 0)
@@ -130,6 +143,7 @@ public class Quest_manager_script : MonoBehaviour
 
     public bool isQuestAlreadyAccepted(int id)
     {
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         for (int i = 0; i < _characterStats.accepted_quests.Length; i++)
         {
             if (_characterStats.accepted_quests[i] == id)
@@ -145,6 +159,7 @@ public class Quest_manager_script : MonoBehaviour
 
     public void acceptQuest(int id)
     {
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
 
         if (!isQuestSlotsFull() && !isQuestAlreadyAccepted(id))
         {
@@ -170,10 +185,32 @@ public class Quest_manager_script : MonoBehaviour
         }
     }
 
+    public void acceptRandomQuest()
+    {
+        int quest_id = UnityEngine.Random.Range(0, 3);
+        if (!_characterStats.isOnQuest(quest_id) && _characterStats.Local_level >= quests[quest_id].level_requirement)
+        {
+            acceptQuest(quest_id);
+        }
+        else
+        {
+            try
+            {
+                acceptRandomQuest();
+            }
+            catch
+            {
+                _notification.message("No more quest is available this time.", 3, "red");
+            }
+        }
+    }
+
     public void abandonQuest(int slot_id)
     {
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
         _characterStats.accepted_quests[slot_id] = 0;
         sortQuests();
+        checkAvailableQuests();
     }
 
     public void sortQuests()
@@ -200,7 +237,8 @@ public class Quest_manager_script : MonoBehaviour
 
         if (_quest.type == quest_types.combat)
         {
-            if (_characterStats.defeated_enemies.Contains(GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[_quest.objective]))
+            //_characterStats.defeated_enemies.Contains(GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[_quest.objective])
+            if (_characterStats.isInDefeatedEnemies(_quest.objective))
             {
                 return true;
             }
@@ -208,7 +246,7 @@ public class Quest_manager_script : MonoBehaviour
         }
         else if (_quest.type == quest_types.conversation)
         {
-            if (_characterStats.completed_conversations.Contains(GameObject.Find("Conversation").GetComponent<Conversation_script>().conversations[_quest.objective]))
+            if (_characterStats.isInCompletedConversations(_quest.objective))
             {
                 return true;
             }
@@ -233,14 +271,14 @@ public class Quest_manager_script : MonoBehaviour
 
             if (_quest.type == quest_types.combat)
             {
-                if (_characterStats.defeated_enemies.Contains(GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[_quest.objective]))
+                if (_characterStats.isInDefeatedEnemies(_quest.objective))
                 {
                     return true;
                 }
             }
             else if (_quest.type == quest_types.conversation)
             {
-                if (_characterStats.completed_conversations.Contains(GameObject.Find("Conversation").GetComponent<Conversation_script>().conversations[_quest.objective]))
+                if (_characterStats.isInCompletedConversations(_quest.objective))
                 {
                     return true;
                 }
@@ -265,14 +303,24 @@ public class Quest_manager_script : MonoBehaviour
             if (isQuestCompleted(slot_id))
             {
                 _quest.Complete();
-                _characterStats.completed_quests.Add(_quest);
+
+                _characterStats.completed_quests.Add(_quest.id);
                 _notification.message(_quest.name + " is completed!", 3);
 
                 _characterStats.accepted_quests[slot_id] = 0;
+
+                for (int i = 0; i < _characterStats.defeated_enemies.Count; i++)
+                {
+                    if (_characterStats.defeated_enemies[i] == _quest.objective)
+                    {
+                        _characterStats.defeated_enemies.Remove(i);
+                    }
+                }
+
             }
             else
             {
-                _notification.message(_quest.name + " is <b>not</b> completed!", 3);
+                _notification.message(_quest.name + " is <b>not</b> completed!", 3, "red");
             }
         }
         else if (_quest.type == quest_types.conversation)
@@ -280,14 +328,23 @@ public class Quest_manager_script : MonoBehaviour
             if (isQuestCompleted(slot_id))
             {
                 _quest.Complete();
-                _characterStats.completed_quests.Add(_quest);
+                _characterStats.completed_quests.Add(_quest.id);
                 _notification.message(_quest.name + " is completed!", 3);
 
                 _characterStats.accepted_quests[slot_id] = 0;
+                //_characterStats.completed_conversations.Remove(GameObject.Find("Conversation").GetComponent<Conversation_script>().conversations[_quest.objective]);
+
+                for (int i = 0; i < _characterStats.completed_conversations.Count; i++)
+                {
+                    if (_characterStats.completed_conversations[i] == _quest.objective)
+                    {
+                        _characterStats.completed_conversations.Remove(i);
+                    }
+                }
             }
             else
             {
-                _notification.message(_quest.name + " is <b>not</b> completed!", 3);
+                _notification.message(_quest.name + " is <b>not</b> completed!", 3, "red");
             }
         }
         else if (_quest.type == quest_types.item)
@@ -296,7 +353,7 @@ public class Quest_manager_script : MonoBehaviour
             {
 
                 _quest.Complete();
-                _characterStats.completed_quests.Add(_quest);
+                _characterStats.completed_quests.Add(_quest.id);
                 _notification.message(_quest.name + " is completed!", 3);
                 _characterStats.accepted_quests[slot_id] = 0;
 
@@ -311,7 +368,7 @@ public class Quest_manager_script : MonoBehaviour
             }
             else
             {
-                _notification.message(_quest.name + " is <b>not</b> completed!", 3);
+                _notification.message(_quest.name + " is <b>not</b> completed!", 3, "red");
             }
         }
 
@@ -326,6 +383,8 @@ public class Quest
 {
     public int id;
     public int level_requirement;
+
+    public int quest_giver;
     public string name;
     public quest_types type;
     public string description;
@@ -336,9 +395,11 @@ public class Quest
     public int item;
     public int money;
 
-    public Quest(int id, int giver_id, string name, quest_types type, string description, string long_description, int objective, int xp, int item)
+    public Quest(int id, int level_requirement, int quest_giver, string name, quest_types type, string description, string long_description, int objective, int xp, int item)
     {
         this.id = id;
+        this.level_requirement = level_requirement;
+        this.quest_giver = quest_giver;
         this.name = name;
         this.type = type;
         this.description = description;

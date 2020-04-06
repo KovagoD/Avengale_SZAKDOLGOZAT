@@ -71,21 +71,21 @@ public class Conversation_script : MonoBehaviour
         new List<string>() { "exit", "next", "next" }
          )));
 
-        conversations.Add((new Conversation(1, "Exploring the hub", "quest", new List<string>() { "Zachary", "Zachary", "Zachary"},
+        conversations.Add((new Conversation(1, "Exploring the hub", "quest", new List<string>() { "Zachary", "Zachary", "Zachary" },
         new List<string>() {
             "Hello "+_charName+"! I've been waiting for you!",
             "My name is <b>Zachary</b>. I'm the instructor of the new recruits.",
             "Your first task is to find and speak with <b>David</b> in the hub. He might need some urgent help. \n\nAre you ready?"
         },
 
-        new List<string>() { "Hello!", "Nice to meet you Zachary", "I'm ready!"},
+        new List<string>() { "Hello!", "Nice to meet you Zachary", "I'm ready!" },
         new List<string>() { "next", "next", "quest_add:1" },
 
         new List<string>() { "Nevermind.", "Nevermind.", "No." },
         new List<string>() { "exit", "exit", "exit" }
         )));
 
-        conversations.Add((new Conversation(2, "Quest convo", "quest", new List<string>() { "David", "David", "David", "David"},
+        conversations.Add((new Conversation(2, "Welcome to the HUB", "quest", new List<string>() { "David", "David", "David", "David" },
         new List<string>() {
             "Hi! How can I help you?",
             "So are you a recruit? I should've known.\n\nWhats your name?",
@@ -93,12 +93,92 @@ public class Conversation_script : MonoBehaviour
             "You need to defeat these two recruits as a training. If you fail, you can try any time you want."
         },
 
-        new List<string>() { "Zachary told me to speak with you.", "I'm "+_charName, "...", "Let's fight!"},
-        new List<string>() { "next", "next", "next", "start_battle:1"},
+        new List<string>() { "Zachary told me to speak with you.", "I'm " + _charName, "...", "Let's fight!" },
+        new List<string>() { "next", "next", "next", "start_battle:1" },
 
-        new List<string>() { "Nevermind.", "Let's cut to the chase.", "Nevermind.", "No."},
-        new List<string>() { "exit","skip:3", "exit", "exit"}
+        new List<string>() { "Nevermind.", "Let's cut to the chase.", "Nevermind.", "No." },
+        new List<string>() { "exit", "skip:3", "exit", "exit" }
         )));
+
+        conversations.Add((new Conversation(3, "Kaalin's day", "normal", new List<string>() { "Kaalin" },
+        new List<string>() {
+            "I forgot something important...what was that?...\n\nOh...Hi! "
+        },
+
+        new List<string>() { "...Hi!" },
+        new List<string>() { "next" },
+
+        new List<string>() { "Nevermind." },
+        new List<string>() { "exit" }
+        )));
+
+        conversations.Add((new Conversation(4, "Meeting with the others", "normal", new List<string>() { "Kaalin" },
+        new List<string>() {
+            "Hello! Are you new here too?\n\nMy name is <b>Kaalin</b>, I came from Europe! This is my first day. The view is so nice from here!",
+        },
+
+        new List<string>() { "I'm " + _charName + "." },
+        new List<string>() { "next" },
+
+        new List<string>() { "Nevermind." },
+        new List<string>() { "exit" }
+        )));
+
+        conversations.Add((new Conversation(5, "Life in the station", "normal", new List<string>() { "David", "David" },
+        new List<string>() {
+            "Hello recruit!\n\nAre you completed the trials?",
+            "Then wait for your next task! You will receive it soon."
+        },
+
+        new List<string>() { "Yes!", "Ok." },
+        new List<string>() { "next", "exit" },
+
+        new List<string>() { "No!", "Nevermind." },
+        new List<string>() { "change_dialog:6", "exit" }
+        )));
+
+        conversations.Add((new Conversation(6, "The trials", "normal", new List<string>() { "David" },
+        new List<string>() {
+            "Then you should speak with <b>Zachary</b>. ",
+        },
+
+        new List<string>() { "Ok." },
+        new List<string>() { "exit" },
+
+        new List<string>() { "Nevermind." },
+        new List<string>() { "exit" }
+        )));
+
+        conversations.Add((new Conversation(7, "The current situation", "normal", new List<string>() { "Zachary", "Zachary" },
+        new List<string>() {
+            "We are waiting three more supply shipments from Earth. The station requested it a month ago.\n\nThis is worrisome.",
+            "Maybe it's just a mistake...\n\n I should investigate.",
+
+        },
+
+        new List<string>() { "There are problems with the supplies?", "Goodbye." },
+        new List<string>() { "next", "exit" },
+
+        new List<string>() { "Nevermind.", "Nevermind." },
+        new List<string>() { "exit", "exit" }
+        )));
+
+
+        conversations.Add((new Conversation(8, "Repel the cultists", "quest", new List<string>() { "David", "David", "David", "David" },
+        new List<string>() {
+            "Wha...What was that? \n\nDid you heard that noise?",
+            "Someone got inside the station! \n\nStop them! Quickly!"
+        },
+
+        new List<string>() { "What noise?", "I'm on my way!"},
+        new List<string>() { "next", "quest_add:2" },
+
+        new List<string>() { "No.", "Nevermind."},
+        new List<string>() { "exit", "exit"}
+        )));
+
+
+
 
 
 
@@ -132,7 +212,7 @@ public class Conversation_script : MonoBehaviour
         if (option.Contains("exit"))
         {
             conversation.closeConversation();
-            _characterStats.completed_conversations.Add(conversations[conversation.conversation_id]);
+            _characterStats.completed_conversations.Add(conversation.conversation_id);
         }
 
         if (option.Contains("item_add"))
@@ -185,7 +265,7 @@ public class Conversation_script : MonoBehaviour
 
         if (option.Contains("start_battle"))
         {
-            _characterStats.completed_conversations.Add(conversations[conversation.conversation_id]);
+            _characterStats.completed_conversations.Add(conversation.conversation_id);
             string[] split = option.Split(':');
             GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(battle_screen, false);
             GameObject.Find("Game manager").GetComponent<Combat_manager_script>().initializeBattle(int.Parse(split[1]));

@@ -102,12 +102,11 @@ public class Game_manager : MonoBehaviour
             Change_screen(Main_screen, false);
         }
 
-
+        #region Button notificatons
         if (_characterStats.Local_spell_points > 0
         && current_screen != GameObject.Find("Combat_screen_UI")
         && current_screen != GameObject.Find("Main_screen")
-        && current_screen != GameObject.Find("Character_customization_screen")
-        )
+        && current_screen != GameObject.Find("Character_customization_screen"))
         {
             spell_button.GetComponent<Screen_change_button_script>().setNotification();
             //_characterStats.updateMoneyStat();
@@ -115,6 +114,7 @@ public class Game_manager : MonoBehaviour
         else
         {
             spell_button.GetComponent<Screen_change_button_script>().clearNotification();
+
         }
 
         if (_questManager.haveCompletedQuest()
@@ -128,13 +128,26 @@ public class Game_manager : MonoBehaviour
         {
             quest_button.GetComponent<Screen_change_button_script>().clearNotification();
         }
+
+        if (_questManager.available_quests.Count > 0
+        && current_screen != GameObject.Find("Combat_screen_UI")
+        && current_screen != GameObject.Find("Main_screen")
+        && current_screen != GameObject.Find("Character_customization_screen"))
+        {
+            hub_button.GetComponent<Screen_change_button_script>().setNotification();
+        }
+        else
+        {
+            hub_button.GetComponent<Screen_change_button_script>().clearNotification();
+        }
+        #endregion
     }
 
     public void loadSave()
     {
-        gameObject.GetComponent<Character_stats>().loadPlayer();
         gameObject.GetComponent<Item_script>().loadItems();
         gameObject.GetComponent<Spell_script>().loadSpells();
+        gameObject.GetComponent<Character_stats>().loadPlayer();
         conversationWindow.GetComponent<Conversation_script>().initializeConversations();
     }
 
@@ -154,12 +167,12 @@ public class Game_manager : MonoBehaviour
         {
             Inventory.GetComponent<Inventory_ui_script>().closeInventory();
         }
-        
+
         if (GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().isOpened)
         {
             GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().closeQuestPreview();
         }
-        
+
 
         if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
         {
@@ -237,7 +250,7 @@ public class Game_manager : MonoBehaviour
             _characterStats.updateStats();
 
             GameObject.Find("experience_bar").GetComponent<Bar_script>().updateXP();
-            gameObject.GetComponent<Spell_script>().initializeSpells();
+            gameObject.GetComponent<Spell_script>().actualizeSpells();
         }
         else if (current_screen == GameObject.Find("Quest_screen_UI"))
         {

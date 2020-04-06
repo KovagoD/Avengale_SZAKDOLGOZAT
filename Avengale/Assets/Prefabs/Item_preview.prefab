@@ -981,8 +981,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.734, y: 5.37}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchoredPosition: {x: 0.734, y: 5.32}
+  m_SizeDelta: {x: 40, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3959241028935645367
 CanvasRenderer:
@@ -1103,12 +1103,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 76
+  m_fontSize: 75
   m_fontSizeBase: 76
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 50
+  m_fontSizeMax: 76
   m_fontStyle: 0
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0

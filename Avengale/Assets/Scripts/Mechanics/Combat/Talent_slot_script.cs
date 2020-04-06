@@ -83,9 +83,14 @@ public class Talent_slot_script : MonoBehaviour
 
         spell_points_text.GetComponent<Text_animation>().startAnim(_spellScript.spells[spell_id].current_spell_points + "/" + _spellScript.spells[spell_id].max_spell_points, 0.05f);
 
-
-
-
+        if (_spellScript.spells[spell_id].type == spell_types.passive)
+        {
+            slot.GetComponent<SpriteRenderer>().sprite = passive_spell_normal;
+        }
+        else
+        {
+            slot.GetComponent<SpriteRenderer>().sprite = sprite_normal;
+        }
     }
     void Update()
     {
@@ -186,7 +191,7 @@ public class Talent_slot_script : MonoBehaviour
             GameObject.Find("spellpoints_text").GetComponent<Text_animation>().startAnim("Available spellpoints: " + _characterStats.Local_spell_points, 0.05f);
 
             _spellScript.setupAttributes();
-            
+
             if (_spellScript.spells[spell_id].type == spell_types.passive)
             {
                 _spellScript.spells[spell_id].passiveActivate();

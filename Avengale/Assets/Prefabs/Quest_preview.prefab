@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34a0c093c6819d4385d265a006108bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpened: 0
   quest_name: {fileID: 6741286204573116651}
   quest_description: {fileID: 1454211130289211509}
   quest_long_description: {fileID: 4141560825328432703}
@@ -531,7 +532,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -2.62, y: 2.11}
+  m_AnchoredPosition: {x: -2.62, y: 0.83}
   m_SizeDelta: {x: 20, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6385255773277783913

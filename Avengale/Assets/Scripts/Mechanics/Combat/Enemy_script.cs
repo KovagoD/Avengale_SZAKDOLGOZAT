@@ -161,9 +161,9 @@ public class Enemy_script : MonoBehaviour
 
         _notification.message(enemy_name + " is defeated!", 3);
 
-        if (!_characterStats.defeated_enemies.Contains(enemies[id]))
+        if (!_characterStats.isInDefeatedEnemies(id))
         {
-            _characterStats.defeated_enemies.Add(enemies[id]);
+            _characterStats.defeated_enemies.Add(id);
         }
     }
 
@@ -264,7 +264,7 @@ public class Enemy_script : MonoBehaviour
         {
             appearance_human.SetActive(false);
             appearance_non_human.SetActive(true);
-            appearanceSprite.sprite = enemy.non_human_appearance;
+            appearanceSprite.sprite = Resources.Load<Sprite>(enemy.non_human_appearance);
 
         }
 

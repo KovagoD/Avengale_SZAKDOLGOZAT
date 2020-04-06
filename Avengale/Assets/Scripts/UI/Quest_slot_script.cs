@@ -24,10 +24,13 @@ public class Quest_slot_script : MonoBehaviour
     void OnMouseDown()
     {
         GameObject.Find("Quest_preview").GetComponent<Quest_preview_script>().showQuest(ID);
-        if (quest.id != 0)
+
+        /*
+        if (GameObject.Find("Game manager").GetComponent<Character_stats>().accepted_quests[ID] != 0)
         {
             Quest_description.GetComponent<Text_animation>().startAnim(quest.description, 0.01f);
             Quest_name.GetComponent<Text_animation>().startAnim(quest.name, 0.01f);
         }
+        */
     }
 }

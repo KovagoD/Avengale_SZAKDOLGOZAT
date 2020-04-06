@@ -81,7 +81,7 @@ public class Combat_manager_script : MonoBehaviour
         _spellScript = GameObject.Find("Game manager").GetComponent<Spell_script>();
         isPaused = false;
 
-        _spellScript.initializeSpells();
+        _spellScript.actualizeSpells();
         _spellScript.setupAttributes();
 
         _healthBar = GameObject.Find("Health_bar").GetComponent<Bar_script>();
@@ -446,7 +446,7 @@ public class Combat_manager_script : MonoBehaviour
         {
             {new Battle(0, "Test battle", new int[] { 2, 1 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
             {new Battle(1, "Training with recruits", new int[] { 4, 4 }, "David asked you to fight with these recruits as a training.", new int[] { 0, 0, 0, 0, 0 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(2, "10 4 dinosaur", new int[] { 1, 2 }, "oki doki boomer", new int[] { 10, 0, 1000, 5000, 3 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
+            {new Battle(2, "Repelling the cultists", new int[] { 1, 1 }, "Cultists ambushed the station.", new int[] { 10, 0, 1000, 5000, 3 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
             {new Battle(3, "Ambush", new int[] { 4, 4 }, "Two rebel rectruits appeared", new int[] { 0, 0, 10, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
 
         });

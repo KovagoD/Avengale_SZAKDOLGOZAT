@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b1cf7effa697e4bb865a0450cb0ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMenu: 0
   target: {fileID: 0}
   icon: {fileID: 7404334179469842439}
   notification: {fileID: 5565969984299440057}

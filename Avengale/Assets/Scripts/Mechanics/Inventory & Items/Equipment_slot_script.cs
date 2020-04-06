@@ -112,11 +112,10 @@ public class Equipment_slot_script : MonoBehaviour
                     _sprite = Resources.Load<Sprite>("Item_icons/def_shoulder");
                     break;
                 case 5:
-
+                    _sprite = Resources.Load<Sprite>("Item_icons/def_gadget");
                     break;
                 case 6:
                     _sprite = Resources.Load<Sprite>("Item_icons/def_feet");
-
                     break;
                 case 7:
                     _sprite = Resources.Load<Sprite>("Item_icons/def_right");

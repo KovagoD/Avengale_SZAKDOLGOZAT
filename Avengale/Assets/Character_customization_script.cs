@@ -34,14 +34,16 @@ public class Character_customization_script : MonoBehaviour
         isNewCharacter = isNew;
         if (isNewCharacter)
         {
-            equipment_head_id = 0;
-            equipment_body_id = 9;
-            equipment_legs_id = 10;
-            equipment_left_id = 0;
-            equipment_shoulder_id = 0;
-            equipment_gadget_id = 0;
-            equipment_feet_id = 0;
-            equipment_right_id = 0;
+            Character_stats _localCharacter = GameObject.Find("Game manager").GetComponent<Character_stats>();
+            
+            equipment_head_id = _localCharacter.starterEquipments[0];
+            equipment_body_id = _localCharacter.starterEquipments[1];
+            equipment_legs_id = _localCharacter.starterEquipments[2];
+            equipment_left_id = _localCharacter.starterEquipments[3];
+            equipment_shoulder_id = _localCharacter.starterEquipments[4];
+            equipment_gadget_id = _localCharacter.starterEquipments[5];
+            equipment_feet_id = _localCharacter.starterEquipments[6];
+            equipment_right_id = _localCharacter.starterEquipments[7];
 
             randomizeAll();
             character_name.text = null;

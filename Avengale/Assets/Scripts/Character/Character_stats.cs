@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class Character_stats : MonoBehaviour
 {
     public int Local_max_health = 0, Local_health = 0, Local_max_resource = 0, Local_resource = 0, Local_damage = 0, Local_money = 0, Local_spell_points = 0;
-    public List<Enemy> defeated_enemies = new List<Enemy>();
-    public List<Conversation> completed_conversations = new List<Conversation>();
-    public List<Quest> completed_quests = new List<Quest>();
+    public List<int> defeated_enemies = new List<int>();
+    public List<int> completed_conversations = new List<int>();
+    public List<int> completed_quests = new List<int>();
     public int[] accepted_quests = new int[3];
     public string Local_name = "Unknown", Local_title = "the Anone";
     public int Local_class = 1, Local_talent = 1;
@@ -24,6 +24,8 @@ public class Character_stats : MonoBehaviour
     public int Local_xp = 0, Local_needed_xp = 150, Local_level = 1;
     public int[] Inventory = new int[10], Equipments = new int[8], starterEquipments = new int[8] { 0, 9, 10, 0, 0, 0, 0, 0 };
     public int[] Spells = new int[5], Talents = new int[10];
+
+
     public List<Spell> Passive_spells = new List<Spell>();
 
     [Header("References")]
@@ -56,16 +58,17 @@ public class Character_stats : MonoBehaviour
         Save_script.savePlayer(this);
         Debug.Log("Player data saved!");
         _notification.message("Player data saved!", 3, "white");
-        Debug.Log(Application.persistentDataPath);
     }
 
     public void initializePlayer()
     {
         Local_max_health = 50; Local_health = 0; Local_max_resource = 50; Local_resource = 0; Local_damage = 10; Local_money = 1000; Local_spell_points = 0;
-        defeated_enemies = new List<Enemy>();
-        completed_conversations = new List<Conversation>();
+
+        defeated_enemies = new List<int>();
+        completed_conversations = new List<int>();
         accepted_quests = new int[3];
-        completed_quests = new List<Quest>();
+        completed_quests = new List<int>();
+        
         Local_name = "Unknown"; Local_title = "the Unknown";
         Local_class = 1; Local_talent = 1;
         hair_id = 0; eyes_id = 0; nose_id = 0; mouth_id = 0; body_id = 0;
@@ -76,6 +79,9 @@ public class Character_stats : MonoBehaviour
         Passive_spells = new List<Spell>();
 
         gameObject.GetComponent<Spell_script>().initializeSpells();
+        gameObject.GetComponent<Spell_script>().checkRowAvailability();
+        //_questManager.checkAvailableQuests();
+
 
     }
 
@@ -100,6 +106,42 @@ public class Character_stats : MonoBehaviour
                 equipItem(starterEquipments[i]);
             }
         }
+    }
+
+    public bool isInDefeatedEnemies(int id)
+    {
+        foreach (var enemy in defeated_enemies)
+        {
+            if (enemy == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool isInCompletedQuests(int id)
+    {
+        foreach (var quest in completed_quests)
+        {
+            if (quest == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool isInCompletedConversations(int id)
+    {
+        foreach (var conversation in completed_conversations)
+        {
+            if (conversation == id)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void loadPlayer()
@@ -143,16 +185,24 @@ public class Character_stats : MonoBehaviour
             Local_max_health = data.Local_max_health;
             Local_max_resource = data.Local_max_resource;
             Local_damage = data.Local_damage;
-            //defeated_enemies = data.defeated_enemies;
+
+            defeated_enemies = data.defeated_enemies;
             completed_conversations = data.completed_conversations;
             accepted_quests = data.accepted_quests;
             completed_quests = data.completed_quests;
+            
 
             _gameManager.Change_screen(_gameManager.Character_screen_UI, true);
             _gameManager.isNewCharacter = true;
 
-            gameObject.GetComponent<Spell_script>().initializeSpells();
+            //gameObject.GetComponent<Spell_script>().initializeSpells();
+            gameObject.GetComponent<Spell_script>().checkRowAvailability();
+            
             GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
+
+            _questManager.checkAvailableQuests();
+            _questManager.haveCompletedQuest();
+
 
 
 
@@ -170,7 +220,7 @@ public class Character_stats : MonoBehaviour
             Local_needed_xp += 50;
 
             getSpellPoint(1);
-            
+
             _questManager.checkAvailableQuests();
 
 
@@ -303,7 +353,7 @@ public class Character_stats : MonoBehaviour
         Local_max_resource += _itemScript.items[item_id].attributes[1];
         Local_damage += _itemScript.items[item_id].attributes[2];
 
-        gameObject.GetComponent<Spell_script>().initializeSpells();
+        gameObject.GetComponent<Spell_script>().actualizeSpells();
     }
     public void equipItem(int slot_id, int item_id, int sender_slot_id)
     {
