@@ -26,28 +26,23 @@ public class Item_script : MonoBehaviour
         declared_items.AddRange(new List<Item>()
         {
             {new Item(0, "", item_type.body, rarity.empty, -1, -1, 1, "", null, null, null, 0, 0, 0, 0)},
-            {new Item(1, "Cultist's hood", item_type.head, rarity.common, 0, 2, 1, "\tDuis facilisis sodales urna, et ultricies nisl. Nullam mattis erat sed quam blandit vehicula. Mauris et iaculis massa.", "Item_icons/001", "Item_appearances/001","Item_appearances/001", 10, 0, 200, 100)},
-            {new Item(2, "Cultist's robe", item_type.body, rarity.uncommon, 0, 2, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec est eget est mollis venenatis. Praesent consectetur ut tortor vitae rutrum. ", "Item_icons/002", "Item_appearances/002","Item_appearances/002_f", 50, 9, 1, 210)},
-            {new Item(3, "Cultist's kilt", item_type.legs, rarity.poor, 0, 2, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin aliquam tortor a augue pulvinar ornare. Nulla pellentesque porttitor erat, semper ultrices ligula pretium quis.", "Item_icons/003", "Item_appearances/003","Item_appearances/003", 0, 0, 0, 10)},
-            {new Item(4, "test_left", item_type.left_arm, rarity.epic, 4, 5, 1, " Fusce eu orci condimentum, dictum ante in, venenatis dui. In in aliquam justo. Curabitur lorem nulla, efficitur vel quam sit amet, dignissim consectetur purus.", "Item_icons/Icon2", "Item_appearances/004","Item_appearances/004", 0, 0, 0, 30)},
-            {new Item(5, "Cultist's shoulderpad", item_type.shoulder, rarity.rare, 0, 2, 1, "Phasellus sit amet diam malesuada, volutpat nulla non, pretium elit. Maecenas egestas mauris vel dui ultricies tincidunt. ", "Item_icons/005", "Item_appearances/005","Item_appearances/005", 0, 0, 0, 40)},
-            {new Item(6, "test_gadget", item_type.gadget, rarity.uncommon, 1, 2, 1, "Nullam enim dolor, posuere quis lacus ut, sodales aliquet est. Quisque sed dolor non ex porta pulvinar.", "Item_icons/Icon2", "Item_appearances/legs","Item_appearances/legs", 0, 0, 0, 15)},
-            {new Item(7, "Cultist's boots", item_type.feet, rarity.legendary, 4, 5, 1, "Etiam dapibus leo vehicula ipsum hendrerit sodales. Phasellus nec neque nibh.", "Item_icons/007", "Item_appearances/007","Item_appearances/007", 0, 0, 0, 0)},
-            {new Item(8, "Simple baton", item_type.right_arm, rarity.epic, 0, 2, 1, "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "Item_icons/008", "Item_appearances/008","Item_appearances/008", 0, 0, 0, 0)},
-            {new Item(9, "Recruit jacket", item_type.body, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/009", "Item_appearances/009","Item_appearances/009_f", 0, 0, 0, 0)},
-            {new Item(10, "Recruit pants", item_type.legs, rarity.poor, 0, 1, 2, "Hasire sori yo kaze no you ni tsukimihara wo\nPADORU PADORU", "Item_icons/010", "Item_appearances/010","Item_appearances/010", 0, 0, 0, 0)},
-            {new Item(11, "Recruit jacket 2", item_type.body, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/011", "Item_appearances/011","Item_appearances/011_f", 0, 0, 0, 0)},
-            {new Item(12, "Recruit boots", item_type.feet, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/011", "Item_appearances/012","Item_appearances/012", 0, 0, 0, 0)},
-            {new Item(13, "Recruit shoulder", item_type.shoulder, rarity.poor, 0, 1, 1, "Nam nisi diam, egestas vitae odio ut, commodo facilisis lectus. Suspendisse efficitur sodales erat nec molestie.", "Item_icons/011", "Item_appearances/013","Item_appearances/013", 0, 0, 0, 0)},
-            {new Item(14, "Energy sword", item_type.right_arm, rarity.epic, 0, 2, 1, "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "Item_icons/008", "Item_appearances/014","Item_appearances/014", 0, 0, 0, 0)},
-            {new Item(15, "9mm handgun", item_type.right_arm, rarity.epic, 0, 2, 1, "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", "Item_icons/015", "Item_appearances/015","Item_appearances/015", 0, 0, 0, 0)},
+            {new Item(1, "Cultist's hood", item_type.head, rarity.common, 0, 2, 5, "A simple piece of cloth used as a hood by the cultists.", "Item_icons/001", "Item_appearances/001","Item_appearances/001", 10, 5, 0, 100)},
+            {new Item(2, "Cultist's robe", item_type.body, rarity.common, 0, 2, 5, "Every cultist gets one robe after the initiation ritual.", "Item_icons/002", "Item_appearances/002","Item_appearances/002_f", 20, 10, 5, 150)},
+            {new Item(3, "Cultist's kilt", item_type.legs, rarity.common, 0, 2, 5, "Normal pants with a cloth hanging from it.", "Item_icons/003", "Item_appearances/003","Item_appearances/003", 5, 10, 5, 50)},
+            {new Item(4, "Light shield", item_type.left_arm, rarity.common, 1, 3, 1, "Military-grade shield, used by the guards of the station", "Item_icons/004", "Item_appearances/004","Item_appearances/004", 25, 0, 15, 30)},
+            {new Item(5, "Cultist's shoulderpad", item_type.shoulder, rarity.common, 0, 2, 5, "A leather shoulderpad. Very old-fashioned.", "Item_icons/005", "Item_appearances/005","Item_appearances/005", 10, 10, 0, 70)},
+            {new Item(6, "Fresh water", item_type.gadget, rarity.uncommon, 0, 2, 5, "It's important to be hydrated all the time!", "Item_icons/006", null,null, 0, 25, 0, 50)},
+            {new Item(7, "Cultist's boots", item_type.feet, rarity.common, 0, 2, 5, "Leather boots with metal reinforcement.", "Item_icons/007", "Item_appearances/007","Item_appearances/007", 10, 5, 5, 30)},
+            {new Item(8, "Simple baton", item_type.right_arm, rarity.epic, 0, 2, 1, "A baton is the recruit's first real weapon. It's simple, but it can hit very hard.", "Item_icons/008", "Item_appearances/008","Item_appearances/008", 0, 5, 15, 50)},
+            {new Item(9, "Recruit jacket", item_type.body, rarity.poor, 0, 2, 1, "The color of this jacket is representing the wearer's rank.", "Item_icons/009", "Item_appearances/009","Item_appearances/009_f", 5, 5, 5, 50)},
+            {new Item(10, "Recruit pants", item_type.legs, rarity.poor, 0, 2, 2, "Simple military-grade pants.", "Item_icons/010", "Item_appearances/010","Item_appearances/010", 5, 5, 0, 25)},
+            {new Item(11, "Recruit jacket", item_type.body, rarity.poor, 0, 2, 1, "The color of this jacket is representing the wearer's rank.", "Item_icons/011", "Item_appearances/011","Item_appearances/011_f", 5, 5, 5, 60)},
+            {new Item(12, "Recruit boots", item_type.feet, rarity.poor, 0, 2, 1, "Ergonomic boots for daily work.", "Item_icons/012", "Item_appearances/012","Item_appearances/012", 0, 5, 0, 25)},
+            {new Item(13, "Recruit shoulder guard", item_type.shoulder, rarity.poor, 0, 2, 3, "This shoulder guard used by the combat-ready recruits in the station.", "Item_icons/013", "Item_appearances/013","Item_appearances/013", 5, 5, 0, 100)},
+            {new Item(14, "Energy sword", item_type.right_arm, rarity.epic, 4, 5, 5, "The recruits who completed the trials and gain ranks in the military receives this sword. It an emblem of honor.", "Item_icons/014", "Item_appearances/014","Item_appearances/014", 15, 20, 45, 300)},
+            {new Item(15, "9mm handgun", item_type.right_arm, rarity.uncommon, 2, 3, 3, "Military-grade handgun, used by the guards of the station.", "Item_icons/015", "Item_appearances/015","Item_appearances/015", 15, 20, 30, 150)},
+            {new Item(16, "Essential gear", item_type.quest, rarity.quest, 0, 0, 1, "An essential part of something important.", "Item_icons/016", null,null, 0, 0, 0, 100)},
 
-
-
-            /*
-            {new Item(12, "Test quest item 11", item_type.quest, rarity.quest, 0, 0, 1, "Test quest item description.", "Item_icons/001", null,null,  0, 0, 0, 0)},
-            {new Item(13, "Test quest 12", item_type.quest, rarity.quest, 0, 0, 1, " venenatis dui. In in aliquam justo. Curabitur lorem.", "Item_icons/002", null,null, 0, 0, 0, 0)}
-            */
         });
         counter = declared_items.Count - 1;
 
@@ -112,7 +107,9 @@ public class Item
         tmp[2] = damage;
         tmp[3] = value;
         this.attributes = tmp;
-        randomizeRarity(min_rarity, max_rarity);
+        this.min_rarity = min_rarity;
+        this.max_rarity = max_rarity;
+        //randomizeRarity(min_rarity, max_rarity);
     }
 
     public void randomizeRarity(int min_rarity, int max_rarity)
@@ -146,7 +143,7 @@ public class Item
             }
         }
     }
-    public void randomizeStats(int h, int r, int d, int min_rarity, int max_rarity)
+    public void randomizeStats(int h, int r, int d)
     {
 
         Random rnd = new Random();
@@ -156,9 +153,17 @@ public class Item
         attributes[2] = Random.Range(attributes[2], attributes[2] + d);
         attributes[3] = Random.Range(0, 200);
 
-        level = Random.Range(level, level + 10);
-
+        var _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+        if (_characterStats.Local_level > 3)
+        {
+            level = Random.Range(_characterStats.Local_level - 2, _characterStats.Local_level + 2);
+        }
+        else
+        {
+            level = Random.Range(_characterStats.Local_level, _characterStats.Local_level + 2);
+        }
         randomizeRarity(min_rarity, max_rarity);
+        //randomizeRarity(min_rarity, max_rarity);
     }
 
     public void upgradeItem(int attribute, int value)

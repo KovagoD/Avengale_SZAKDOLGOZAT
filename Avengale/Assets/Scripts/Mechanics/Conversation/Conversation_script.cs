@@ -82,7 +82,7 @@ public class Conversation_script : MonoBehaviour
         new List<string>() { "next", "next", "quest_add:1" },
 
         new List<string>() { "Nevermind.", "Nevermind.", "No." },
-        new List<string>() { "exit", "exit", "exit" }
+        new List<string>() { "exit", "exit", "finalexit" }
         )));
 
         conversations.Add((new Conversation(2, "Welcome to the HUB", "quest", new List<string>() { "David", "David", "David", "David" },
@@ -97,7 +97,7 @@ public class Conversation_script : MonoBehaviour
         new List<string>() { "next", "next", "next", "start_battle:1" },
 
         new List<string>() { "Nevermind.", "Let's cut to the chase.", "Nevermind.", "No." },
-        new List<string>() { "exit", "skip:3", "exit", "exit" }
+        new List<string>() { "exit", "skip:3", "exit", "finalexit" }
         )));
 
         conversations.Add((new Conversation(3, "Kaalin's day", "normal", new List<string>() { "Kaalin" },
@@ -106,7 +106,7 @@ public class Conversation_script : MonoBehaviour
         },
 
         new List<string>() { "...Hi!" },
-        new List<string>() { "next" },
+        new List<string>() { "finalexit" },
 
         new List<string>() { "Nevermind." },
         new List<string>() { "exit" }
@@ -131,7 +131,7 @@ public class Conversation_script : MonoBehaviour
         },
 
         new List<string>() { "Yes!", "Ok." },
-        new List<string>() { "next", "exit" },
+        new List<string>() { "next", "finalexit" },
 
         new List<string>() { "No!", "Nevermind." },
         new List<string>() { "change_dialog:6", "exit" }
@@ -167,14 +167,41 @@ public class Conversation_script : MonoBehaviour
         conversations.Add((new Conversation(8, "Repel the cultists", "quest", new List<string>() { "David", "David", "David", "David" },
         new List<string>() {
             "Wha...What was that? \n\nDid you heard that noise?",
-            "Someone got inside the station! \n\nStop them! Quickly!"
+            "Someone got inside the station! \n\nStop them! Quickly!\n\n<color=#828282><i>Use the Random battle console until you find cultists.</i></color>"
         },
 
-        new List<string>() { "What noise?", "I'm on my way!"},
+        new List<string>() { "What noise?", "I'm on my way!" },
         new List<string>() { "next", "quest_add:2" },
 
-        new List<string>() { "No.", "Nevermind."},
-        new List<string>() { "exit", "exit"}
+        new List<string>() { "No.", "Nevermind." },
+        new List<string>() { "exit", "exit" }
+        )));
+
+        conversations.Add((new Conversation(9, "Interrogation", "quest", new List<string>() { "Thief", "Thief", "Thief", "Thief" },
+        new List<string>() {
+            "...I will not say anything to you!\n\n\n...or anyone else...",
+            "I'm innocent! I was dragged into this!",
+            "If I tell you, you will spare me? Right?",
+            "I was with a red haired woman called Kyra. Her friend was in a mask, and used an alias <b>'Delta'</b>."
+        },
+
+        new List<string>() { "Are you sure?", "Tell me your companions' name.", "I will.", "You are free to go. "},
+        new List<string>() { "next", "next", "next", "finalexit" },
+
+        new List<string>() { "Nevermind.", "Nevermind.", "I can't promise anything.", "You will face trial by combat."},
+        new List<string>() { "exit", "exit", "next", "start_battle:4"}
+        )));
+
+         conversations.Add((new Conversation(10, "Stolen supplies", "normal", new List<string>() { "Thief" },
+        new List<string>() {
+            "I've done nothing! Please help me! ",
+        },
+
+        new List<string>() { "..."},
+        new List<string>() { "next" },
+
+        new List<string>() { "Nevermind."},
+        new List<string>() { "exit" }
         )));
 
 
@@ -210,6 +237,11 @@ public class Conversation_script : MonoBehaviour
         }
 
         if (option.Contains("exit"))
+        {
+            conversation.closeConversation();
+        }
+
+        if (option.Contains("finalexit"))
         {
             conversation.closeConversation();
             _characterStats.completed_conversations.Add(conversation.conversation_id);

@@ -6,6 +6,7 @@ using UnityEngine;
 public class CharacterData
 {
     public int Local_max_health, Local_max_resource, Local_damage, Local_money;
+    public double Local_plus_money_rate, Local_penalty_rate;
     public List<int> completed_conversations;
     public int[] accepted_quests;
     public List<int> completed_quests;
@@ -30,7 +31,7 @@ public class CharacterData
 
         sex = player.sex;
         hideHelmet = player.hideHelmet;
-        
+
         hair_id = player.hair_id;
         eyes_id = player.eyes_id;
         nose_id = player.nose_id;
@@ -45,6 +46,8 @@ public class CharacterData
         Local_needed_xp = player.Local_needed_xp;
         Local_level = player.Local_level;
         Local_money = player.Local_money;
+        Local_plus_money_rate = player.Local_plus_money_rate;
+        Local_penalty_rate = player.Local_penalty_rate;
         Inventory = player.Inventory;
         Equipments = player.Equipments;
 

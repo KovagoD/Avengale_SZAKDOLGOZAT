@@ -18,11 +18,14 @@ public class Enemy_manager_script : MonoBehaviour
         */
         enemies.AddRange(new List<Enemy>()
         {
-            {new Enemy(0, "", true, "", 0, 0, new int[] { 0, 0, 0, 0 },false,  new int[] { 0, 0, 0, 0, 0 }, new byte[]{0,0,0}, new int[] { 0, 0, 0, 0, 0, 0, 0, 0 }, "")},
-            {new Enemy(1, "Cultist raider", true, "melee", 50, 5, new int[] { 5, 0, 100, 100 }, true, new int[] { 0, 2, 3, 4, 5, 6, 7, 8 }, "attack_1")},
-            {new Enemy(2, "Senko-san", false, "long-range", 100, 10, new int[] { 0, 11, 50, 50 }, "Enemy_appearances/senkosan_1", "attack_2")},
-            {new Enemy(3, "Unlawful citizen", false, "melee", 200, 50, new int[] { 0, 0, 1000, 1000 }, "Enemy_appearances/senkosan_2", "attack_2")},
-            {new Enemy(4, "Recruit", true, "melee", 10, 10, new int[] { 0, 0, 0, 0 }, true, new int[] { 0, 9, 10, 4, 5, 6, 7, 11 }, "attack_1")},
+            {new Enemy(0, "", true, "", new int[] { 0, 0, 0, 0 },false,  new int[] { 0, 0, 0, 0, 0 }, new byte[]{0,0,0}, new int[] { 0, 0, 0, 0, 0, 0, 0, 0 }, "")},
+            {new Enemy(1, "Cultist raider", true, "melee", new int[] { 0, 0, 100, 100 }, true, new int[] { 0, 2, 3, 0, 5, 6, 7, 15 }, "attack_3")},
+            {new Enemy(2, "Corrupted console", false, "long-range", new int[] { 0, 11, 50, 50 }, "Enemy_appearances/corrupted_console", "attack_2")},
+            {new Enemy(3, "Cultist leader", true, "melee", new int[] { 0, 0, 100, 100 }, true, new int[] { 1, 2, 3, 4, 13, 6, 7, 14 }, "attack_1")},
+            {new Enemy(4, "Recruit", true, "melee", new int[] { 0, 0, 20, 0 }, true, new int[] { 0, 9, 10, 4, 0, 0, 12, 8  }, "attack_2")},
+            {new Enemy(5, "Thief", true, "melee", new int[] { 0, 0, 20, 0 }, false, new int[] { 1, 2, 1, 3, 0 }, new byte[]{64,95,113}, new int[] { 0, 9, 10, 0, 13, 0, 12, 0  }, "attack_1")},
+            {new Enemy(6, "Supply looter", true, "melee", new int[] { 0, 0, 20, 0 }, true, new int[] { 0, 9, 10, 0, 13, 0, 12, 15}, "attack_3")},
+
         });
     }
 }
@@ -67,27 +70,24 @@ public class Enemy
         }
     }
 
-    public Enemy(int id, string enemy_name, bool isHuman, string type, int health, int damage, int[] rewards, string non_human_appearance, string attackAnimation)
+    public Enemy(int id, string enemy_name, bool isHuman, string type, int[] rewards, string non_human_appearance, string attackAnimation)
     {
         this.id = id;
         this.enemy_name = enemy_name;
         this.isHuman = isHuman;
         this.type = type;
-        this.health = health;
-        this.damage = damage;
         this.rewards = rewards;
         this.non_human_appearance = non_human_appearance;
         this.attackAnimation = attackAnimation;
     }
 
-    public Enemy(int id, string enemy_name, bool isHuman, string type, int health, int damage, int[] rewards, bool sex, int[] appearance, byte[] hair_color, int[] equipment, string attackAnimation)
+    public Enemy(int id, string enemy_name, bool isHuman, string type, int[] rewards, bool sex, int[] appearance, byte[] hair_color, int[] equipment, string attackAnimation)
     {
         this.id = id;
         this.enemy_name = enemy_name;
         this.isHuman = isHuman;
         this.type = type;
-        this.health = health;
-        this.damage = damage;
+
         this.rewards = rewards;
 
         this.sex = sex;
@@ -97,14 +97,12 @@ public class Enemy
         this.attackAnimation = attackAnimation;
     }
 
-    public Enemy(int id, string enemy_name, bool isHuman, string type, int health, int damage, int[] rewards, bool isRandomAppearance, int[] equipment, string attackAnimation)
+    public Enemy(int id, string enemy_name, bool isHuman, string type, int[] rewards, bool isRandomAppearance, int[] equipment, string attackAnimation)
     {
         this.id = id;
         this.enemy_name = enemy_name;
         this.isHuman = isHuman;
         this.type = type;
-        this.health = health;
-        this.damage = damage;
         this.rewards = rewards;
 
         this.isRandomAppearance = isRandomAppearance;

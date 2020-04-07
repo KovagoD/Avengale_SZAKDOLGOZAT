@@ -7,7 +7,7 @@ public class Enemy_script : MonoBehaviour
 {
     [Header("Enemy details")]
     public GameObject selected;
-    public int id, enemy_health, enemy_damage;
+    public int id, enemy_health, enemy_max_health, enemy_damage;
 
     [Header("References")]
     public GameObject health_bar, health_text, appearance_human, appearance_non_human, turn_sign;
@@ -38,7 +38,7 @@ public class Enemy_script : MonoBehaviour
 
     public void opponentUpdateHealthBar()
     {
-        int health_in_percent = Convert.ToInt32(Math.Round(((double)enemy_health / (double)GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[id].health) * 100));
+        int health_in_percent = Convert.ToInt32(Math.Round(((double)enemy_health / (double)enemy_max_health) * 100));
         SpriteRenderer _healthBar = health_bar.GetComponent<SpriteRenderer>();
         if (health_in_percent >= 100)
         {
@@ -61,25 +61,28 @@ public class Enemy_script : MonoBehaviour
             _healthBar.sprite = Resources.Load<Sprite>("enemy hp bar/0");
         }
 
-        health_text.GetComponent<Text_animation>().startAnim(enemy_health + "/" + GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[id].health, 0.05f);
+        health_text.GetComponent<Text_animation>().startAnim(enemy_max_health + "/" + enemy_health, 0.05f);
     }
 
+    public int getPercentOfHealth(double percentage)
+    {
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)enemy_max_health * onePercent)));
+    }
     public void opponentTakeDamage(int amount)
     {
         enemy_health -= amount;
-        //Debug.Log(enemies[id].enemy_name + ": " + enemies[id].health + "/" + enemy_health + " hp");
         opponentUpdateHealthBar();
         if (enemy_health <= 0)
         {
             opponentDie();
-            //GetReward();
         }
     }
 
     public void opponentAttack()
     {
         var _playerManager = GameObject.Find("Character").GetComponent<Character_manager>();
-        var _playerHealthPercent = _characterStats.getPercentOfHealth(enemies[id].damage);
+        //var _playerHealthPercent = _characterStats.getPercentOfHealth(enemies[id].damage);
 
         if (GameObject.Find("Game manager").GetComponent<Game_manager>().vibrationEnabled)
         {
@@ -96,7 +99,7 @@ public class Enemy_script : MonoBehaviour
 
         if (random_crit > 90)
         {
-            _characterStats.looseHealth(_playerHealthPercent * 2);
+            _characterStats.looseHealth(enemy_damage * 2);
             int random_hit = UnityEngine.Random.Range(1, 3);
             switch (random_hit)
             {
@@ -107,11 +110,11 @@ public class Enemy_script : MonoBehaviour
                     _hitAnimation = "crit_hit_2";
                     break;
             }
-            _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + _playerHealthPercent * 2 + " CRITICAL!", 0.05f);
+            _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + enemy_damage * 2 + " CRITICAL!", 0.05f);
         }
         else
         {
-            _characterStats.looseHealth(_playerHealthPercent);
+            _characterStats.looseHealth(enemy_damage);
             int random_hit = UnityEngine.Random.Range(1, 7);
             switch (random_hit)
             {
@@ -134,10 +137,9 @@ public class Enemy_script : MonoBehaviour
                     _hitAnimation = "hit_6";
                     break;
             }
-            _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + _playerHealthPercent, 0.05f);
-
-            //Debug.Log(enemies[id].enemy_name + "'s attack animaton: " + enemies[id].attackAnimation);
+            _playerManager.damage_text.GetComponent<Text_animation>().startAnim("-" + enemy_damage, 0.05f);
         }
+
         _playerManager.damage_text.GetComponent<Animator>().Play(_hitAnimation);
         GameObject.Find("Battle_scene").GetComponent<Animator>().Play("Screen_shake_1");
 
@@ -200,11 +202,16 @@ public class Enemy_script : MonoBehaviour
 
     public void enemyInitialize(int input_id)
     {
+
         var enemy = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>().enemies[input_id];
         _characterManager = gameObject.GetComponent<Character_manager>();
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
+
         enemy_name = enemy.enemy_name;
-        enemy_damage = enemy.damage;
-        enemy_health = enemy.health;
+
+        enemy_damage = UnityEngine.Random.Range(_characterStats.getPercentOfHealth(5), _characterStats.getPercentOfHealth(25));
+        enemy_max_health = UnityEngine.Random.Range(_characterStats.getPercentOfHealth(40),_characterStats.getPercentOfHealth(150));
+        enemy_health = enemy_max_health;
         id = input_id;
 
         opponentUpdateHealthBar();
@@ -270,6 +277,8 @@ public class Enemy_script : MonoBehaviour
 
 
         gameObject.GetComponent<Visibility_script>().setVisible();
+
+
     }
 
     void OnMouseOver()

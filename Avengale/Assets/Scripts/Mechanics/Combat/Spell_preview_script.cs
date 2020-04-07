@@ -35,7 +35,11 @@ public class Spell_preview_script : MonoBehaviour
 
 
         string effect_text = "";
-        if (spell.attribute_type == spell_attribute_value_types.percentage)
+        if (spell.attribute_name == spell_attribute_types.money)
+        {
+            effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % more credits";
+        }
+        else if (spell.attribute_type == spell_attribute_value_types.percentage)
         {
             effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % " + spell.attribute_name;
         }
@@ -45,6 +49,7 @@ public class Spell_preview_script : MonoBehaviour
         }
 
         spell_effect.GetComponent<Text_animation>().startAnim(effect_text, 0.01f);
+
 
         spell_cost.GetComponent<Text_animation>().startAnim("<color=#2E5AB3>-" + spell.resource_cost + " resource", 0.01f);
 
@@ -81,8 +86,15 @@ public class Spell_preview_script : MonoBehaviour
 
 
         string effect_text = "";
-
-        if (spell.attribute_type == spell_attribute_value_types.percentage)
+        if (spell.attribute_name == spell_attribute_types.money)
+        {
+            effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % more credits";
+        }
+        else if (spell.attribute_name == spell_attribute_types.penalty)
+        {
+            effect_text = "Effect: <color=#00FF00>" + spell.attribute + " % less penalty from dying";
+        }
+        else if (spell.attribute_type == spell_attribute_value_types.percentage)
         {
             effect_text = "Effect: <color=#00FF00>+" + spell.attribute + " % " + spell.attribute_name;
         }

@@ -20,6 +20,7 @@ public class Game_manager : MonoBehaviour
     private Spell_script _spellScript;
     private Character_stats _characterStats;
     private Quest_manager_script _questManager;
+    private Combat_manager_script _combatManager;
 
     public GameObject Inventory, conversationWindow;
 
@@ -52,7 +53,7 @@ public class Game_manager : MonoBehaviour
     void Update()
     {
 
-        if ((Input.GetKey(KeyCode.Escape) && current_screen != Combat_screen && (GameObject.Find("Inventory_back").GetComponent<Visibility_script>().isOpened ||
+        if ((Input.GetKeyUp(KeyCode.Escape) && current_screen != Combat_screen && (GameObject.Find("Inventory_back").GetComponent<Visibility_script>().isOpened ||
         GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpened ||
         GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened ||
         GameObject.Find("Spell_preview_talent") && GameObject.Find("Spell_preview_talent").GetComponent<Visibility_script>().isOpened ||
@@ -64,39 +65,39 @@ public class Game_manager : MonoBehaviour
             closeOpenedWindows();
             //Debug.Log("0");
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen != Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpened)
+        else if (Input.GetKeyUp(KeyCode.Escape) && current_screen != Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpened)
         {
             //Debug.Log("1");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen == Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpened)
+        else if (Input.GetKeyUp(KeyCode.Escape) && current_screen == Combat_screen && GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().isOpened)
         {
             //Debug.Log("2");
             gameObject.GetComponent<Combat_manager_script>().resumeBattle();
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().closePauseMenu();
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen == Combat_screen)
+        else if (Input.GetKeyUp(KeyCode.Escape) && current_screen == Combat_screen)
         {
             //Debug.Log("3");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().showPauseMenu();
             gameObject.GetComponent<Combat_manager_script>().pauseBattle();
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_screen_UI)
+        else if (Input.GetKeyUp(KeyCode.Escape) && current_screen == Character_screen_UI)
         {
             //Debug.Log("4");
             GameObject.Find("Pause_menu").GetComponent<Pause_menu_script>().showPauseMenu();
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen != Main_screen && current_screen != Character_customization_screen)
+        else if (Input.GetKeyUp(KeyCode.Escape) && current_screen != Main_screen && current_screen != Character_customization_screen)
         {
             //Debug.Log("5");
             Change_screen(Character_screen_UI, false);
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_customization_screen && !isNewCharacter)
+        else if (Input.GetKeyUp(KeyCode.Escape) && current_screen == Character_customization_screen && !isNewCharacter)
         {
             //Debug.Log("6");
             Change_screen(Character_screen_UI, false);
         }
-        else if (Input.GetKey(KeyCode.Escape) && current_screen == Character_customization_screen && isNewCharacter)
+        else if (Input.GetKeyUp(KeyCode.Escape) && current_screen == Character_customization_screen && isNewCharacter)
         {
             //Debug.Log("7");
             Change_screen(Main_screen, false);
@@ -267,7 +268,7 @@ public class Game_manager : MonoBehaviour
         }
         else if (current_screen == GameObject.Find("Combat_screen_UI"))
         {
-            GameObject.Find("Game manager").GetComponent<Combat_manager_script>().initializeBattle(UnityEngine.Random.Range(0, 4));
+            GameObject.Find("Game manager").GetComponent<Combat_manager_script>().initializeBattle(UnityEngine.Random.Range(0, 6));
 
             _characterStats.Local_health = _characterStats.Local_max_health;
             _characterStats.Local_resource = _characterStats.Local_max_resource;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 [System.Serializable]
 public enum spell_types { damage, heal, support, passive }
-public enum spell_attribute_types { health, resource, damage }
+public enum spell_attribute_types { health, resource, damage, money, penalty }
 public enum spell_attribute_value_types { percentage, number }
 public class Spell_script : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class Spell_script : MonoBehaviour
     {
         initializeSpells();
     }
-    
+
     public void initializeSpells()
     {
         spells.Clear();
@@ -29,9 +29,9 @@ public class Spell_script : MonoBehaviour
     }
     public void actualizeSpells()
     {
-        
+
         var stats = GameObject.Find("Game manager").GetComponent<Character_stats>();
-        
+
 
         List<int> _spentSpellpoints = new List<int>();
 
@@ -57,24 +57,25 @@ public class Spell_script : MonoBehaviour
 
         spells.AddRange(new List<Spell>()
         {
-            {new Spell(0, "", spell_types.damage, "", "", spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 0, "nothing", null, 0, 0, 0)},
-            {new Spell(1, "Simple attack", spell_types.damage, "warrior", "Deals ", spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 10, _currentRightHand, "attack_1", 1, 5, 2)},
-            {new Spell(2, "Enraged blow", spell_types.damage, "warrior", "attacks the <b>target</b> furiously.", spell_attribute_types.damage, spell_attribute_value_types.number, 15, 15, 10, "Spell_icons/2", "attack_1", 2, 3, 0)},
-            {new Spell(3, "Fast regeneration", spell_types.heal, "warrior", "Heal <b>yourself</b>.", spell_attribute_types.health, spell_attribute_value_types.percentage, 20, 20, 10, "Spell_icons/3", "heal_1", 2, 5, 0)},
-            {new Spell(4, "Energy surge", spell_types.support, "warrior", "In metus ante, malesuada nec libero non, laoreet condimentum lectus. ", spell_attribute_types.resource, spell_attribute_value_types.number, 25, 25, 10, "Spell_icons/4", "resource_1", 5, 5, 0)},
-            {new Spell(5, "Multi planetary healthcare", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", "attack_1", 1, 5, 0)},
-            {new Spell(6, "Multi planetary energy boost", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.resource, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/6", "attack_1", 1, 5, 0)},
-            {new Spell(7, "Multi planetary damage boost", spell_types.passive, "warrior", "grants extra health passively.", spell_attribute_types.damage, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/7", "attack_1", 1, 5, 0)},
-
+            {new Spell(0, "", spell_types.damage, spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 0, "nothing", null, 0, 0, 0)},
+            {new Spell(1, "Simple attack", spell_types.damage, spell_attribute_types.damage, spell_attribute_value_types.number, 0, 0, 5, _currentRightHand, "attack_1", 1, 5, 1)},
+            {new Spell(2, "Enraged blow", spell_types.damage, spell_attribute_types.damage, spell_attribute_value_types.number, 15, 15, 10, "Spell_icons/2", "attack_2", 2, 3, 0)},
+            {new Spell(3, "Fast regeneration", spell_types.heal, spell_attribute_types.health, spell_attribute_value_types.number, 20, 20, 10, "Spell_icons/3", "heal_1", 2, 5, 0)},
+            {new Spell(4, "Energy surge", spell_types.support, spell_attribute_types.resource, spell_attribute_value_types.number, 25, 25, 10, "Spell_icons/4", "resource_1", 3, 5, 0)},
+            {new Spell(5, "Multi planetary healthcare", spell_types.passive, spell_attribute_types.health, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/5", null, 5, 3, 0)},
+            {new Spell(6, "Rested state", spell_types.passive, spell_attribute_types.resource, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/6", null, 5, 3, 0)},
+            {new Spell(7, "Constant rage", spell_types.passive, spell_attribute_types.damage, spell_attribute_value_types.number, 50, 100, 0, "Spell_icons/7", null, 5, 3, 0)},
+            {new Spell(8, "Decimating blow", spell_types.damage,spell_attribute_types.damage, spell_attribute_value_types.percentage, 50, 50, 25, "Spell_icons/8", "attack_3", 5, 1, 0)},
+            {new Spell(9, "Inspiration", spell_types.support,  spell_attribute_types.resource, spell_attribute_value_types.percentage, 50, 50, 10, "Spell_icons/9", "resource_1", 7, 1, 0)},
+            {new Spell(10, "Healing meditation", spell_types.heal, spell_attribute_types.health, spell_attribute_value_types.percentage, 50, 50, 30, "Spell_icons/10", "heal_1", 7, 2, 0)},
+            {new Spell(11, "Natural charm", spell_types.passive, spell_attribute_types.money, spell_attribute_value_types.number, 10, 10, 30, "Spell_icons/11", null, 1, 7, 0)},
+            {new Spell(12, "Special treatment", spell_types.passive, spell_attribute_types.penalty, spell_attribute_value_types.number, 10, 10, 30, "Spell_icons/12", null, 1, 5, 0)},
         });
 
         for (int i = 0; i < _spentSpellpoints.Count; i++)
         {
             spells[i].current_spell_points = _spentSpellpoints[i];
         }
-
-
-
     }
     public void saveSpells()
     {
@@ -129,8 +130,24 @@ public class Spell_script : MonoBehaviour
 
             if (spell.type == spell_types.damage)
             {
+                /*
                 spell.attribute = Convert.ToInt32((spell.starterAttribute + _characterStats.Local_damage) * _multiplier);
                 spell.description = "Deals +" + spell.attribute + " damage to the <b>target<b>.";
+                */
+
+                if (spell.attribute_type == spell_attribute_value_types.percentage)
+                {
+                    spell.lastAttribute = spell.attribute;
+                    spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
+                    spell.description = "Deals +" + spell.attribute + "% damage to the <b>target<b>.";
+
+                }
+                else if (spell.attribute_type == spell_attribute_value_types.number)
+                {
+                    spell.lastAttribute = spell.attribute;
+                    spell.attribute = Convert.ToInt32((spell.starterAttribute + _characterStats.Local_damage) * _multiplier);
+                    spell.description = "Deals +" + spell.attribute + " damage to the <b>target<b>.";
+                }
             }
 
             if (spell.type == spell_types.heal)
@@ -155,53 +172,46 @@ public class Spell_script : MonoBehaviour
 
             if (spell.type == spell_types.support)
             {
-                spell.lastAttribute = spell.attribute;
-                spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
-                spell.description = "Gives you +" + spell.attribute + " resource.";
+                if (spell.attribute_type == spell_attribute_value_types.percentage)
+                {
+                    spell.lastAttribute = spell.attribute;
+                    spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
+                    spell.description = "You regain +" + spell.attribute + "% resource.";
+                }
+                else if (spell.attribute_type == spell_attribute_value_types.number)
+                {
+                    spell.lastAttribute = spell.attribute;
+                    spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
+                    spell.description = "You regain +" + spell.attribute + " resource.";
+                }
             }
 
             if (spell.type == spell_types.passive)
             {
-                if (spell.attribute_type == spell_attribute_value_types.percentage)
+                if (spell.attribute_type == spell_attribute_value_types.number)
                 {
+                    spell.lastAttribute = spell.attribute;
+                    spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
                     if (spell.attribute_name == spell_attribute_types.health)
                     {
-                        spell.lastAttribute = spell.attribute;
-                        spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
-                        spell.description = "Grants you +" + spell.attribute + "% health passively.";
-                    }
-                    else if (spell.attribute_name == spell_attribute_types.resource)
-                    {
-                        spell.lastAttribute = spell.attribute;
-                        spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
-                        spell.description = "Grants you +" + spell.attribute + "% resource passively.";
-                    }
-                    else if (spell.attribute_name == spell_attribute_types.damage)
-                    {
-                        spell.lastAttribute = spell.attribute;
-                        spell.attribute = Convert.ToInt32(spell.starterAttribute * _multiplier);
-                        spell.description = "Grants you +" + spell.attribute + "% damage passively.";
-                    }
-                }
-                else if (spell.attribute_type == spell_attribute_value_types.number)
-                {
-                    if (spell.attribute_name == spell_attribute_types.health)
-                    {
-                        spell.lastAttribute = spell.attribute;
-                        spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
+
                         spell.description = "Grants you +" + spell.attribute + " health passively.";
                     }
                     else if (spell.attribute_name == spell_attribute_types.resource)
                     {
-                        spell.lastAttribute = spell.attribute;
-                        spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
                         spell.description = "Grants you +" + spell.attribute + " resource passively.";
                     }
                     else if (spell.attribute_name == spell_attribute_types.damage)
                     {
-                        spell.lastAttribute = spell.attribute;
-                        spell.attribute = Convert.ToInt32((spell.starterAttribute * _multiplier));
                         spell.description = "Grants you +" + spell.attribute + " damage passively.";
+                    }
+                    else if (spell.attribute_name == spell_attribute_types.money)
+                    {
+                        spell.description = "Grants you +" + spell.attribute + "% more credits from quests, rewards and selling items.";
+                    }
+                    else if (spell.attribute_name == spell_attribute_types.penalty)
+                    {
+                        spell.description = "-" + spell.attribute + "% penalty when you are defeated.";
                     }
                 }
             }
@@ -303,13 +313,11 @@ public class Spell
     public int current_spell_points;
     public int level_requirement;
     public string icon;
-    public Spell(int id, string name, spell_types type, string char_class, string description, spell_attribute_types attribute_name, spell_attribute_value_types attribute_type, int starterAttribute, int attribute, int resource_cost, string icon, string animation, int level_requirement, int max_spell_points, int current_spell_points)
+    public Spell(int id, string name, spell_types type, spell_attribute_types attribute_name, spell_attribute_value_types attribute_type, int starterAttribute, int attribute, int resource_cost, string icon, string animation, int level_requirement, int max_spell_points, int current_spell_points)
     {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.char_class = char_class;
-        this.description = description;
         this.attribute_name = attribute_name;
 
         this.attribute = attribute;
@@ -359,6 +367,22 @@ public class Spell
                 }
                 _characterStats.Local_damage += attribute;
             }
+            else if (attribute_name == spell_attribute_types.money)
+            {
+                if (current_spell_points >= 2)
+                {
+                    _characterStats.Local_plus_money_rate -= lastAttribute;
+                }
+                _characterStats.Local_plus_money_rate += attribute;
+            }
+            else if (attribute_name == spell_attribute_types.penalty)
+            {
+                if (current_spell_points >= 2)
+                {
+                    _characterStats.Local_penalty_rate -= lastAttribute;
+                }
+                _characterStats.Local_penalty_rate += attribute;
+            }
         }
     }
 
@@ -382,7 +406,16 @@ public class Spell
 
                 if (random_crit > 90)
                 {
-                    target.GetComponent<Enemy_script>().opponentTakeDamage(attribute * 2);
+                    if (attribute_type == spell_attribute_value_types.percentage)
+                    {
+                        target.GetComponent<Enemy_script>().opponentTakeDamage(target.GetComponent<Enemy_script>().getPercentOfHealth(attribute) * 2);
+                        target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + target.GetComponent<Enemy_script>().getPercentOfHealth(attribute) * 2 + " CRITICAL!", 0.05f);
+                    }
+                    else
+                    {
+                        target.GetComponent<Enemy_script>().opponentTakeDamage(attribute);
+                        target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute * 2 + " CRITICAL!", 0.05f);
+                    }
 
                     int random_hit = UnityEngine.Random.Range(1, 3);
                     switch (random_hit)
@@ -395,11 +428,22 @@ public class Spell
                             break;
                     }
 
-                    target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute * 2 + " CRITICAL!", 0.05f);
                 }
                 else
                 {
-                    target.GetComponent<Enemy_script>().opponentTakeDamage(attribute);
+                    if (attribute_type == spell_attribute_value_types.percentage)
+                    {
+                        Debug.Log(target.GetComponent<Enemy_script>().getPercentOfHealth(attribute));
+                        target.GetComponent<Enemy_script>().opponentTakeDamage(target.GetComponent<Enemy_script>().getPercentOfHealth(attribute));
+                        target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + target.GetComponent<Enemy_script>().getPercentOfHealth(attribute), 0.05f);
+
+                    }
+                    else
+                    {
+                        target.GetComponent<Enemy_script>().opponentTakeDamage(attribute);
+                        target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute, 0.05f);
+
+                    }
 
                     int random_hit = UnityEngine.Random.Range(1, 7);
 
@@ -426,16 +470,15 @@ public class Spell
                             break;
                     }
 
-                    target.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + attribute, 0.05f);
                 }
 
                 target.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(_hitAnimation);
 
-                /*
+
                 GameObject local_character = GameObject.Find("Character");
                 local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("-" + resource_cost + " resource", 0.05f);
                 local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play("resource_1");
-                */
+
 
 
 
@@ -468,8 +511,9 @@ public class Spell
                 GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealthAddition();
             }
             local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
+
         }
-        /*
+
         if (type == spell_types.support)
         {
 
@@ -478,6 +522,7 @@ public class Spell
 
             if (attribute_type == spell_attribute_value_types.percentage)
             {
+                Debug.Log(target.GetComponent<Character_stats>().getPercentOfResource(attribute));
                 target.GetComponent<Character_stats>().getResource(target.GetComponent<Character_stats>().getPercentOfResource(attribute));
                 local_character.GetComponent<Character_manager>().damage_text.GetComponent<Text_animation>().startAnim("+" + target.GetComponent<Character_stats>().getPercentOfResource(attribute) + " resource", 0.05f);
                 GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
@@ -489,9 +534,7 @@ public class Spell
                 GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
             }
             local_character.GetComponent<Character_manager>().damage_text.GetComponent<Animator>().Play(animation);
-
         }
-        */
 
     }
 

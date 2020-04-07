@@ -26,10 +26,12 @@ public class Quest_manager_script : MonoBehaviour
             ID, NAME, TYPE, DESCRIPTION, LONG DESCRIPTION, OBJECTIVE, XP, ITEM
         */
 
-        quests.Add(new Quest(0, 0, 0, "", quest_types.combat, "", "", 0, 0, 0));
-        quests.Add(new Quest(1, 1, 1, "Welcome to the HUB", quest_types.combat, "Speak with David at the HUB and complete his task.", "<b>Zachary</b> asked you to speak with <b>David</b> about your recruitment.", 4, 100, 8));
-        quests.Add(new Quest(2, 2, 2, "Repel the cultists", quest_types.combat, "Defeat a cultist", "Cultists ambushed the station. Defeat them and defend the station!", 1, 100, 8));
-        //quests.Add(new Quest(2, 2, 2, "Repel the cultists", quest_types.combat, "Defeat 2 cultists", "Cultists ambushed the station. Defeat them and defend the station!", 1, 100, 8));
+        quests.Add(new Quest(0, 0, 0, "", quest_types.combat, "", "", 0, 0, 0, 0));
+        quests.Add(new Quest(1, 1, 1, "Welcome to the HUB", quest_types.combat, "Speak with <b>David</b> in the HUB and complete his task", "<b>Zachary</b> asked you to speak with <b>David</b> about your recruitment.", 4, 100, 100, 8));
+        quests.Add(new Quest(2, 2, 2, "Repel the cultists", quest_types.combat, "Defeat a cultist", "Cultists ambushed the station. Defeat them and defend the station!", 1, 100, 200, 0));
+        quests.Add(new Quest(3, 0, 2, "Supply problem", quest_types.combat, "Defeat a <b>Supply looter<B>", "After <b>Zachary</b> investigated about the missing supplies, he found two looters.", 6, 100, 50, 0));
+        quests.Add(new Quest(4, 0, 2, "The essential gear", quest_types.item, "Get the '<b>Essential gear</b>' from the store", "An important part is missing! <b>Zachary</b> asked you to buy it from the store.", 16, 100, 200, 0));
+        quests.Add(new Quest(5, 0, 2, "Interrogation", quest_types.conversation, "Interrogate the <b>Thief</b> in the HUB", "After the guards arrested one of the thieves they took him immediately to the HUB for interrogation. ", 9, 100, 150, 0));
 
     }
 
@@ -187,22 +189,23 @@ public class Quest_manager_script : MonoBehaviour
 
     public void acceptRandomQuest()
     {
-        int quest_id = UnityEngine.Random.Range(0, 3);
-        if (!_characterStats.isOnQuest(quest_id) && _characterStats.Local_level >= quests[quest_id].level_requirement)
+        int quest_id = UnityEngine.Random.Range(3, 6);
+        if (!isQuestSlotsFull())
         {
-            acceptQuest(quest_id);
-        }
-        else
-        {
-            try
+            if (!_characterStats.isOnQuest(quest_id) && _characterStats.Local_level >= quests[quest_id].level_requirement)
+            {
+                acceptQuest(quest_id);
+            }
+            else
             {
                 acceptRandomQuest();
             }
-            catch
-            {
-                _notification.message("No more quest is available this time.", 3, "red");
-            }
         }
+        else
+        {
+            _notification.message("You cannot pick up another quest!", 3,"red");
+        }
+
     }
 
     public void abandonQuest(int slot_id)
@@ -297,6 +300,7 @@ public class Quest_manager_script : MonoBehaviour
     public void questComplete(int slot_id)
     {
         var _quest = quests[_characterStats.accepted_quests[slot_id]];
+        _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
 
         if (_quest.type == quest_types.combat)
         {
@@ -313,7 +317,7 @@ public class Quest_manager_script : MonoBehaviour
                 {
                     if (_characterStats.defeated_enemies[i] == _quest.objective)
                     {
-                        _characterStats.defeated_enemies.Remove(i);
+                        _characterStats.defeated_enemies.RemoveAt(i);
                     }
                 }
 
@@ -336,9 +340,11 @@ public class Quest_manager_script : MonoBehaviour
 
                 for (int i = 0; i < _characterStats.completed_conversations.Count; i++)
                 {
+                    Debug.Log(_characterStats.completed_conversations[i] + " " + _quest.objective);
+
                     if (_characterStats.completed_conversations[i] == _quest.objective)
                     {
-                        _characterStats.completed_conversations.Remove(i);
+                        _characterStats.completed_conversations.RemoveAt(i);
                     }
                 }
             }
@@ -395,7 +401,7 @@ public class Quest
     public int item;
     public int money;
 
-    public Quest(int id, int level_requirement, int quest_giver, string name, quest_types type, string description, string long_description, int objective, int xp, int item)
+    public Quest(int id, int level_requirement, int quest_giver, string name, quest_types type, string description, string long_description, int objective, int xp, int money, int item)
     {
         this.id = id;
         this.level_requirement = level_requirement;
@@ -406,6 +412,7 @@ public class Quest
         this.long_description = long_description;
         this.objective = objective;
         this.xp = xp;
+        this.money = money;
         this.item = item;
     }
 

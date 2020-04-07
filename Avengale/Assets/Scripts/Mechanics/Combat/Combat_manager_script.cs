@@ -13,7 +13,7 @@ public class Combat_manager_script : MonoBehaviour
     public battleRound current_round;
 
     public int round_counter;
-
+    public int item_id;
     public bool isOngoing;
     public string battle_result;
 
@@ -129,6 +129,7 @@ public class Combat_manager_script : MonoBehaviour
 
         opponents[0].GetComponent<Enemy_script>().enemyInitialize(battles[id].opponent_ids[0]);
         opponents[1].GetComponent<Enemy_script>().enemyInitialize(battles[id].opponent_ids[1]);
+
 
         _notification.message("¤" + battles[id].battle_name, 3);
 
@@ -313,10 +314,16 @@ public class Combat_manager_script : MonoBehaviour
             int _moneyRewards = 0;
             //int _spellPointRewards = 0;
 
-            if (_rewards[0] != 0)
+            if (_rewards[0] != 0 && !battles[battle_id].isRandomReward)
             {
                 _battleRewards += "[" + _itemScript.items[_rewards[0]].name + "]\n";
             }
+            else if (battles[battle_id].isRandomReward)
+            {
+                item_id = UnityEngine.Random.Range(1, _itemScript.declared_items.Count);
+                _battleRewards += "[" + _itemScript.items[item_id].name + "]\n";
+            }
+
             if (_rewards[1] != 0)
             {
                 _battleRewards += "[" + _itemScript.items[_rewards[1]].name + "]\n";
@@ -382,15 +389,14 @@ public class Combat_manager_script : MonoBehaviour
             {
                 _moneyRewards += _secondOpponentRewards[3];
             }
-
-            _battleRewards += "+ " + _xpRewards + " XP\n+" + _moneyRewards + " credits";
+            _battleRewards += "+ " + _xpRewards + " XP\n+" + Convert.ToInt32(Math.Round(((double)_moneyRewards * ((_characterStats.Local_plus_money_rate/100)+1)))) + " credits";
 
             var result_battle_rewards = GameObject.Find("Battle_rewards");
             result_battle_rewards.GetComponent<Text_animation>().startAnim("<b>Rewards:</b>\n" + _battleRewards, 0.05f);
         }
         else if (result == "Defeat")
         {
-            GameObject.Find("Battle_rewards").GetComponent<Text_animation>().startAnim("<b>Penalty:</b>\n-20% money", 0.05f);
+            GameObject.Find("Battle_rewards").GetComponent<Text_animation>().startAnim("<b>Penalty:</b>\n-"+ (20 - ((_characterStats.Local_penalty_rate)*1)) + "% money", 0.05f);
         }
 
     }
@@ -444,11 +450,12 @@ public class Combat_manager_script : MonoBehaviour
         */
         battles.AddRange(new List<Battle>()
         {
-            {new Battle(0, "Test battle", new int[] { 2, 1 }, "This is the descriptioon of Test Battle", new int[] { 5, 0, 1000, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(1, "Training with recruits", new int[] { 4, 4 }, "David asked you to fight with these recruits as a training.", new int[] { 0, 0, 0, 0, 0 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(2, "Repelling the cultists", new int[] { 1, 1 }, "Cultists ambushed the station.", new int[] { 10, 0, 1000, 5000, 3 }, Resources.Load<Sprite>("Item_icons/Icon2"))},
-            {new Battle(3, "Ambush", new int[] { 4, 4 }, "Two rebel rectruits appeared", new int[] { 0, 0, 10, 100, 1 }, Resources.Load<Sprite>("Item_icons/Icon2"))}
-
+            {new Battle(0, "Corrupting the system", new int[] { 2, 1 }, "Consoles int the station started to do weird things. The Cultists are behind this!", false, new int[] { 0, 0, 50, 10, 0 }, Resources.Load<Sprite>("Battle_backgrounds/Battle_bg_3"))},
+            {new Battle(1, "Training with recruits", new int[] { 4, 4 }, "David asked you to fight with these recruits as a training.", true, new int[] { 0, 0, 50, 10, 0 }, Resources.Load<Sprite>("Battle_backgrounds/Battle_bg_1"))},
+            {new Battle(2, "Repelling the cultists", new int[] { 1, 1 }, "Cultists ambushed the station.", true, new int[] { 0, 0, 50, 10, 0}, Resources.Load<Sprite>("Battle_backgrounds/Battle_bg_3"))},
+            {new Battle(3, "Ambush", new int[] { 4, 4 }, "Two rebel recruits appeared", true, new int[] { 0, 0, 10, 10, 0 }, Resources.Load<Sprite>("Battle_backgrounds/Battle_bg_1"))},
+            {new Battle(4, "Interrogation", new int[] { 5, 6 }, "", true, new int[] { 0, 0, 50, 10, 0}, Resources.Load<Sprite>("Battle_backgrounds/Battle_bg_2"))},
+            {new Battle(5, "Looting supplies", new int[] { 6, 6 }, "", true,new int[] { 0, 0, 50, 10, 0 }, Resources.Load<Sprite>("Battle_backgrounds/Battle_bg_3"))},
         });
     }
 
@@ -459,9 +466,13 @@ public class Combat_manager_script : MonoBehaviour
             var enemy = GameObject.Find("Game manager").GetComponent<Enemy_manager_script>();
             var _rewards = battles[battle_id].rewards;
 
-            if (_rewards[0] != 0)
+            if (_rewards[0] != 0 && !battles[battle_id].isRandomReward)
             {
                 _characterStats.itemPickup(_rewards[0], true);
+            }
+            else if (battles[battle_id].isRandomReward)
+            {
+                _characterStats.itemPickup(item_id, true);
             }
             if (_rewards[1] != 0)
             {
@@ -487,7 +498,7 @@ public class Combat_manager_script : MonoBehaviour
         }
         else if (battle_result == "Defeat")
         {
-            _characterStats.looseMoney(_characterStats.getPercentOfMoney(20));
+            _characterStats.looseMoney(_characterStats.getPercentOfMoney((20 - ((_characterStats.Local_penalty_rate)*1))));
         }
 
     }
@@ -499,16 +510,18 @@ public class Battle
     public int id;
     public int[] opponent_ids;
     public string description;
+    public bool isRandomReward;
     public int[] rewards;
     public Sprite background;
 
 
-    public Battle(int id, string battle_name, int[] opponent_ids, string description, int[] rewards, Sprite background)
+    public Battle(int id, string battle_name, int[] opponent_ids, string description, bool isRandomReward, int[] rewards, Sprite background)
     {
         this.id = id;
         this.battle_name = battle_name;
         this.opponent_ids = opponent_ids;
         this.description = description;
+        this.isRandomReward = isRandomReward;
         this.rewards = rewards;
         this.background = background;
     }

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Character_stats : MonoBehaviour
 {
     public int Local_max_health = 0, Local_health = 0, Local_max_resource = 0, Local_resource = 0, Local_damage = 0, Local_money = 0, Local_spell_points = 0;
+    public double Local_plus_money_rate = 0, Local_penalty_rate = 0;
     public List<int> defeated_enemies = new List<int>();
     public List<int> completed_conversations = new List<int>();
     public List<int> completed_quests = new List<int>();
@@ -62,13 +63,13 @@ public class Character_stats : MonoBehaviour
 
     public void initializePlayer()
     {
-        Local_max_health = 50; Local_health = 0; Local_max_resource = 50; Local_resource = 0; Local_damage = 10; Local_money = 1000; Local_spell_points = 0;
+        Local_max_health = 50; Local_health = 0; Local_max_resource = 50; Local_resource = 0; Local_damage = 10; Local_money = 100; Local_plus_money_rate = 0; Local_penalty_rate = 0; Local_spell_points = 0;
 
         defeated_enemies = new List<int>();
         completed_conversations = new List<int>();
         accepted_quests = new int[3];
         completed_quests = new List<int>();
-        
+
         Local_name = "Unknown"; Local_title = "the Unknown";
         Local_class = 1; Local_talent = 1;
         hair_id = 0; eyes_id = 0; nose_id = 0; mouth_id = 0; body_id = 0;
@@ -132,6 +133,18 @@ public class Character_stats : MonoBehaviour
         return false;
     }
 
+    public bool isQuestSlotsFull()
+    {
+        for (int i = 0; i < accepted_quests.Length; i++)
+        {
+            if (accepted_quests[i] == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public bool isInCompletedConversations(int id)
     {
         foreach (var conversation in completed_conversations)
@@ -177,6 +190,8 @@ public class Character_stats : MonoBehaviour
             Local_needed_xp = data.Local_needed_xp;
             Local_level = data.Local_level;
             Local_money = data.Local_money;
+            Local_plus_money_rate = data.Local_plus_money_rate;
+            Local_penalty_rate = data.Local_penalty_rate;
             Inventory = data.Inventory;
             Equipments = data.Equipments;
             Spells = data.Spells;
@@ -190,14 +205,14 @@ public class Character_stats : MonoBehaviour
             completed_conversations = data.completed_conversations;
             accepted_quests = data.accepted_quests;
             completed_quests = data.completed_quests;
-            
+
 
             _gameManager.Change_screen(_gameManager.Character_screen_UI, true);
             _gameManager.isNewCharacter = true;
 
             //gameObject.GetComponent<Spell_script>().initializeSpells();
             gameObject.GetComponent<Spell_script>().checkRowAvailability();
-            
+
             GameObject.Find("Conversation").GetComponent<Conversation_script>().initializeConversations();
 
             _questManager.checkAvailableQuests();
@@ -490,13 +505,12 @@ public class Character_stats : MonoBehaviour
                 }
             }
         }
+    }
 
-        /*
-        for (int i = 0; i < Inventory.Length; i++)
-        {
-            Debug.Log(i + " : " + _itemScript.items[Inventory[i]].rarity);
-        }
-        */
+    public void randomItemPickup()
+    {
+        int item_id = UnityEngine.Random.Range(1, _itemScript.declared_items.Count);
+        itemPickup(item_id, true);
     }
 
     public void itemPickup(int item_id, bool isNew)
@@ -512,7 +526,9 @@ public class Character_stats : MonoBehaviour
                     var tmp_item = new Item(_itemScript.items.Count, dec_items.name, dec_items.type, dec_items.rarity, dec_items.min_rarity,
                     dec_items.max_rarity, dec_items.level, dec_items.description, dec_items.icon, dec_items.sprite_male, dec_items.sprite_female,
                     dec_items.attributes[0], dec_items.attributes[1], dec_items.attributes[2], dec_items.attributes[3]);
-                    tmp_item.randomizeStats(10, 10, 10, 0, 5);
+                    tmp_item.randomizeStats(10, 10, 10);
+                    //tmp_item.randomizeStats(10, 10, 10, 0, 5);
+
 
                     _itemScript.items.Add(tmp_item);
                     Inventory[i] = tmp_item.id;
@@ -570,6 +586,7 @@ public class Character_stats : MonoBehaviour
         return Convert.ToInt32(Math.Round(((double)Local_health / (double)Local_max_health) * 100));
     }
 
+
     public int getPercentOfHealth(double percentage)
     {
         double onePercent = percentage * 0.01;
@@ -582,15 +599,23 @@ public class Character_stats : MonoBehaviour
         return Convert.ToInt32(Math.Round(((double)Local_money * onePercent)));
     }
 
+    public int getPercentOfDamage(double percentage)
+    {
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)Local_damage * onePercent)));
+    }
+
 
     public int getPercentOfResource(double percentage)
     {
-        return Convert.ToInt32(Math.Round(((double)Local_max_resource * percentage)));
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)Local_max_resource * onePercent)));
     }
 
     public void getMoney(int amount)
     {
-        Local_money += amount;
+        //Local_money += amount * 1.20;
+        Local_money += Convert.ToInt32(Math.Round(((double)amount * ((Local_plus_money_rate / 100) + 1))));
         _notification.message("+" + amount + " credit", 3);
         updateStats();
 
