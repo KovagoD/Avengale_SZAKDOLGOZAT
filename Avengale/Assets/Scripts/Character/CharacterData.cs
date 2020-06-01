@@ -5,29 +5,28 @@ using UnityEngine;
 [System.Serializable]
 public class CharacterData
 {
-    public int Local_max_health, Local_max_resource, Local_damage, Local_money;
-    public double Local_plus_money_rate, Local_penalty_rate;
+    public int Player_max_health, Player_max_resource, Player_damage, Player_money;
+    public double Player_plus_money_rate, Player_penalty_rate;
     public List<int> completed_conversations;
     public int[] accepted_quests;
     public List<int> completed_quests;
     public List<int> defeated_enemies;
-    public string Local_name, Local_title;
-    public int Local_class, Local_talent;
+    public string Player_name, Player_title;
+    public int Player_class, Player_talent;
     public bool sex, hideHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
     public byte[] hair_color;
 
-    public int Local_xp, Local_needed_xp, Local_level;
+    public int Player_xp, Player_needed_xp, Player_level;
     public int[] Inventory, Equipments;
     public int[] Spells, Talents;
-    public int Local_spell_points;
+    public int Player_spell_points;
     public CharacterData(Character_stats player)
     {
         //customization
-        Local_name = player.Local_name;
-        Local_title = player.Local_title;
-        Local_class = player.Local_class;
-        Local_talent = player.Local_talent;
+        Player_name = player.Player_name;
+        Player_class = player.Player_class;
+        Player_talent = player.Player_talent;
 
         sex = player.sex;
         hideHelmet = player.hideHelmet;
@@ -42,23 +41,23 @@ public class CharacterData
 
 
         //stats
-        Local_xp = player.Local_xp;
-        Local_needed_xp = player.Local_needed_xp;
-        Local_level = player.Local_level;
-        Local_money = player.Local_money;
-        Local_plus_money_rate = player.Local_plus_money_rate;
-        Local_penalty_rate = player.Local_penalty_rate;
+        Player_xp = player.Player_xp;
+        Player_needed_xp = player.Player_needed_xp;
+        Player_level = player.Player_level;
+        Player_money = player.Player_money;
+        Player_plus_money_rate = player.Player_plus_money_rate;
+        Player_penalty_rate = player.Player_penalty_rate;
         Inventory = player.Inventory;
         Equipments = player.Equipments;
 
         Spells = player.Spells;
         Talents = player.Talents;
-        Local_spell_points = player.Local_spell_points;
+        Player_spell_points = player.Player_spell_points;
 
 
-        Local_max_health = player.Local_max_health;
-        Local_max_resource = player.Local_max_resource;
-        Local_damage = player.Local_damage;
+        Player_max_health = player.Player_max_health;
+        Player_max_resource = player.Player_max_resource;
+        Player_damage = player.Player_damage;
         defeated_enemies = player.defeated_enemies;
         completed_conversations = player.completed_conversations;
         accepted_quests = player.accepted_quests;

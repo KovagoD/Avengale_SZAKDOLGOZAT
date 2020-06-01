@@ -35,11 +35,11 @@ public class Bar_script_gui : MonoBehaviour
     {
         if (mode == "health")
         {
-            _percentage = ((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * size;
+            _percentage = ((float)_characterStats.Player_health / (float)_characterStats.Player_max_health) * size;
         }
         else if (mode == "resource")
         {
-            _percentage = ((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * size;
+            _percentage = ((float)_characterStats.Player_resource / (float)_characterStats.Player_max_resource) * size;
         }
 
         var pos = bar.transform.position;
@@ -56,15 +56,15 @@ public class Bar_script_gui : MonoBehaviour
 
     public void updateHealth()
     {
-        updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
+        updateBar(_characterStats.Player_max_health + "/" + _characterStats.Player_health.ToString()
         , "",
-        (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
+        (((float)_characterStats.Player_health / (float)_characterStats.Player_max_health) * 100f).ToString("0") + " %");
     }
 
     public void updateResource()
     {
-        updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
+        updateBar(_characterStats.Player_max_resource + "/" + _characterStats.Player_resource.ToString()
         , "",
-        (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");
+        (((float)_characterStats.Player_resource / (float)_characterStats.Player_max_resource) * 100f).ToString("0") + " %");
     }
 }

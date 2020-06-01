@@ -31,15 +31,15 @@ public class Bar_script : MonoBehaviour
     {
         if (mode == "health")
         {
-            _percentage = ((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * size;
+            _percentage = ((float)_characterStats.Player_health / (float)_characterStats.Player_max_health) * size;
         }
         else if (mode == "resource")
         {
-            _percentage = ((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * size;
+            _percentage = ((float)_characterStats.Player_resource / (float)_characterStats.Player_max_resource) * size;
         }
         else if (mode == "xp")
         {
-            _percentage = ((float)_characterStats.Local_xp / (float)_characterStats.Local_needed_xp) * size;
+            _percentage = ((float)_characterStats.Player_xp / (float)_characterStats.Player_needed_xp) * size;
         }
 
         var pos = bar.transform.position;
@@ -51,12 +51,6 @@ public class Bar_script : MonoBehaviour
             pos.x = _percentage;
             bar.transform.position = pos;
         }
-
-        if (GameObject.Find("Item_preview").GetComponent<Visibility_script>().isOpened)
-        {
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        }
-        else { gameObject.GetComponent<BoxCollider2D>().enabled = true; }
     }
 
     public void updateBar(string left_text, string center_text, string right_text)
@@ -69,35 +63,35 @@ public class Bar_script : MonoBehaviour
     public void updateHealthAddition()
     {
         gameObject.GetComponent<Animator>().Play("Bar_init");
-        updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
+        updateBar(_characterStats.Player_max_health + "/" + _characterStats.Player_health.ToString()
         , "health",
-        (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
+        (((float)_characterStats.Player_health / (float)_characterStats.Player_max_health) * 100f).ToString("0") + " %");
     }
     public void updateHealth()
     {
         gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
-        updateBar(_characterStats.Local_max_health + "/" + _characterStats.Local_health.ToString()
+        updateBar(_characterStats.Player_max_health + "/" + _characterStats.Player_health.ToString()
         , "health",
-        (((float)_characterStats.Local_health / (float)_characterStats.Local_max_health) * 100f).ToString("0") + " %");
+        (((float)_characterStats.Player_health / (float)_characterStats.Player_max_health) * 100f).ToString("0") + " %");
     }
     public void updateResourceAddition()
     {
         gameObject.GetComponent<Animator>().Play("Bar_init");
-        updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
+        updateBar(_characterStats.Player_max_resource + "/" + _characterStats.Player_resource.ToString()
         , "resource",
-        (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");
+        (((float)_characterStats.Player_resource / (float)_characterStats.Player_max_resource) * 100f).ToString("0") + " %");
     }
     public void updateResource()
     {
         gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
-        updateBar(_characterStats.Local_max_resource + "/" + _characterStats.Local_resource.ToString()
+        updateBar(_characterStats.Player_max_resource + "/" + _characterStats.Player_resource.ToString()
         , "resource",
-        (((float)_characterStats.Local_resource / (float)_characterStats.Local_max_resource) * 100f).ToString("0") + " %");
+        (((float)_characterStats.Player_resource / (float)_characterStats.Player_max_resource) * 100f).ToString("0") + " %");
     }
     public void updateXP()
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
-        if (_characterStats.Local_xp > 0)
+        if (_characterStats.Player_xp > 0)
         {
             gameObject.GetComponent<Animator>().Play("Bar_init");
         }
@@ -105,8 +99,8 @@ public class Bar_script : MonoBehaviour
         {
             gameObject.GetComponent<Animator>().Play("Bar_init_reverse");
         }
-        updateBar("Level " + _characterStats.Local_level.ToString()
-        , _characterStats.Local_xp + "/" + _characterStats.Local_needed_xp.ToString(),
+        updateBar("Level " + _characterStats.Player_level.ToString()
+        , _characterStats.Player_xp + "/" + _characterStats.Player_needed_xp.ToString(),
         _characterStats.getPercentOfXP().ToString() + " %");
         
     }

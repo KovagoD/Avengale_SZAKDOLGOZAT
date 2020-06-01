@@ -26,7 +26,7 @@ public class XP_bar_script : MonoBehaviour
     {
         _characterStats = GameObject.Find("Game manager").GetComponent<Character_stats>();
 
-        _percentage = ((float)_characterStats.Local_xp / (float)_characterStats.Local_needed_xp) * size;
+        _percentage = ((float)_characterStats.Player_xp / (float)_characterStats.Player_needed_xp) * size;
         var pos = bar.transform.position;
         pos.x = _percentage;
         bar.transform.position = pos;
@@ -40,8 +40,8 @@ public class XP_bar_script : MonoBehaviour
 
     public void updateXP()
     {
-        xp.GetComponent<Text_animation>().startAnim(_characterStats.Local_xp.ToString() + "/" + _characterStats.Local_needed_xp.ToString(), 1f);
-        level.GetComponent<Text_animation>().startAnim("Level " + _characterStats.Local_level.ToString(), 0.01f);
+        xp.GetComponent<Text_animation>().startAnim(_characterStats.Player_xp.ToString() + "/" + _characterStats.Player_needed_xp.ToString(), 1f);
+        level.GetComponent<Text_animation>().startAnim("Level " + _characterStats.Player_level.ToString(), 0.01f);
         percentage.GetComponent<Text_animation>().startAnim(_characterStats.getPercentOfXP().ToString() + " %", 1f);
     }
 

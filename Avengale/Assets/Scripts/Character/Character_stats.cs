@@ -8,29 +8,26 @@ using UnityEngine.UI;
 
 public class Character_stats : MonoBehaviour
 {
-    public int Local_max_health = 0, Local_health = 0, Local_max_resource = 0, Local_resource = 0, Local_damage = 0, Local_money = 0, Local_spell_points = 0;
-    public double Local_plus_money_rate = 0, Local_penalty_rate = 0;
+    public int Player_max_health = 0, Player_health = 0, Player_max_resource = 0, Player_resource = 0, Player_damage = 0, Player_money = 0, Player_spell_points = 0;
+    public double Player_plus_money_rate = 0, Player_penalty_rate = 0;
     public List<int> defeated_enemies = new List<int>();
     public List<int> completed_conversations = new List<int>();
     public List<int> completed_quests = new List<int>();
     public int[] accepted_quests = new int[3];
-    public string Local_name = "Unknown", Local_title = "the Anone";
-    public int Local_class = 1, Local_talent = 1;
-
+    public string Player_name = "Unknown";
+    public int Player_class = 1, Player_talent = 1;
     public bool sex, hideHelmet;
     public int hair_id, eyes_id, nose_id, mouth_id, body_id;
-
     public byte[] hair_color = new byte[3] { 0, 0, 0 };
-
-    public int Local_xp = 0, Local_needed_xp = 150, Local_level = 1;
+    public int Player_xp = 0, Player_needed_xp = 150, Player_level = 1;
     public int[] Inventory = new int[10], Equipments = new int[8], starterEquipments = new int[8] { 0, 9, 10, 0, 0, 0, 0, 0 };
     public int[] Spells = new int[5], Talents = new int[10];
-
-
     public List<Spell> Passive_spells = new List<Spell>();
 
+
+
     [Header("References")]
-    public TextMeshProUGUI NameAndTitle, Statistics;
+    public TextMeshPro NameAndTitle, Statistics;
     public GameObject Money;
     public GameObject XP_bar;
 
@@ -53,110 +50,40 @@ public class Character_stats : MonoBehaviour
         _notification = GameObject.Find("Notification").GetComponent<Ingame_notification_script>();
         _questManager = GameObject.Find("Game manager").GetComponent<Quest_manager_script>();
     }
-
-    public void savePlayer()
-    {
-        Save_script.savePlayer(this);
-        Debug.Log("Player data saved!");
-        _notification.message("Player data saved!", 3, "white");
-    }
-
     public void initializePlayer()
     {
-        Local_max_health = 50; Local_health = 0; Local_max_resource = 50; Local_resource = 0; Local_damage = 10; Local_money = 100; Local_plus_money_rate = 0; Local_penalty_rate = 0; Local_spell_points = 0;
+        Player_max_health = 50; Player_health = 0;
+        Player_max_resource = 50; Player_resource = 0;
+        Player_damage = 10;
+        Player_money = 100; Player_plus_money_rate = 0;
+        Player_penalty_rate = 0;
+        Player_spell_points = 1;
 
         defeated_enemies = new List<int>();
         completed_conversations = new List<int>();
         accepted_quests = new int[3];
         completed_quests = new List<int>();
 
-        Local_name = "Unknown"; Local_title = "the Unknown";
-        Local_class = 1; Local_talent = 1;
+        Player_name = "default_name";
+        Player_class = 1; Player_talent = 1;
         hair_id = 0; eyes_id = 0; nose_id = 0; mouth_id = 0; body_id = 0;
-        Local_xp = 0; Local_needed_xp = 150; Local_level = 1;
-        Inventory = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; Equipments = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+        Player_xp = 0; Player_needed_xp = 150; Player_level = 1;
+        Inventory = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        Equipments = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 }; starterEquipments = new int[8] { 0, 9, 10, 0, 0, 0, 12, 0 };
         Spells = new int[5] { 1, 0, 0, 0, 0 };
-        //Talents = new int[10];
         Passive_spells = new List<Spell>();
 
         gameObject.GetComponent<Spell_script>().initializeSpells();
         gameObject.GetComponent<Spell_script>().checkRowAvailability();
-        //_questManager.checkAvailableQuests();
-
-
     }
 
-    public bool isOnQuest(int id)
+    #region Save&Load
+    public void savePlayer()
     {
-        for (int i = 0; i < accepted_quests.Length; i++)
-        {
-            if (accepted_quests[i] == id)
-            {
-                return true;
-            }
-        }
-        return false;
+        Save_script.savePlayer(this);
+        Debug.Log("Player data saved!");
+        _notification.message("Player data saved!", 3, "white");
     }
-
-    public void equipStarterItems()
-    {
-        for (int i = 0; i < starterEquipments.Length; i++)
-        {
-            if (starterEquipments[i] != 0)
-            {
-                equipItem(starterEquipments[i]);
-            }
-        }
-    }
-
-    public bool isInDefeatedEnemies(int id)
-    {
-        foreach (var enemy in defeated_enemies)
-        {
-            if (enemy == id)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool isInCompletedQuests(int id)
-    {
-        foreach (var quest in completed_quests)
-        {
-            if (quest == id)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool isQuestSlotsFull()
-    {
-        for (int i = 0; i < accepted_quests.Length; i++)
-        {
-            if (accepted_quests[i] == 0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public bool isInCompletedConversations(int id)
-    {
-        foreach (var conversation in completed_conversations)
-        {
-            if (conversation == id)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void loadPlayer()
     {
         CharacterData data = Save_script.loadPlayer();
@@ -169,10 +96,9 @@ public class Character_stats : MonoBehaviour
         else
         {
             //customization
-            Local_name = data.Local_name;
-            Local_title = data.Local_title;
-            Local_class = data.Local_class;
-            Local_talent = data.Local_talent;
+            Player_name = data.Player_name;
+            Player_class = data.Player_class;
+            Player_talent = data.Player_talent;
 
             sex = data.sex;
             hideHelmet = data.hideHelmet;
@@ -186,20 +112,20 @@ public class Character_stats : MonoBehaviour
             hair_color = data.hair_color;
 
             //stats
-            Local_xp = data.Local_xp;
-            Local_needed_xp = data.Local_needed_xp;
-            Local_level = data.Local_level;
-            Local_money = data.Local_money;
-            Local_plus_money_rate = data.Local_plus_money_rate;
-            Local_penalty_rate = data.Local_penalty_rate;
+            Player_xp = data.Player_xp;
+            Player_needed_xp = data.Player_needed_xp;
+            Player_level = data.Player_level;
+            Player_money = data.Player_money;
+            Player_plus_money_rate = data.Player_plus_money_rate;
+            Player_penalty_rate = data.Player_penalty_rate;
             Inventory = data.Inventory;
             Equipments = data.Equipments;
             Spells = data.Spells;
             Talents = data.Talents;
-            Local_spell_points = data.Local_spell_points;
-            Local_max_health = data.Local_max_health;
-            Local_max_resource = data.Local_max_resource;
-            Local_damage = data.Local_damage;
+            Player_spell_points = data.Player_spell_points;
+            Player_max_health = data.Player_max_health;
+            Player_max_resource = data.Player_max_resource;
+            Player_damage = data.Player_damage;
 
             defeated_enemies = data.defeated_enemies;
             completed_conversations = data.completed_conversations;
@@ -224,17 +150,115 @@ public class Character_stats : MonoBehaviour
             _notification.message("Save loaded!", 3, "white");
         }
     }
+    #endregion
+    #region Statistics
+    public int getPercentOfXP()
+    {
+        return Convert.ToInt32(Math.Round(((double)Player_xp / (double)Player_needed_xp) * 100));
+    }
+    public int getPercentOfHealth()
+    {
+        return Convert.ToInt32(Math.Round(((double)Player_health / (double)Player_max_health) * 100));
+    }
+    public int getPercentOfHealth(double percentage)
+    {
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)Player_max_health * onePercent)));
+    }
+    public int getPercentOfMoney(double percentage)
+    {
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)Player_money * onePercent)));
+    }
+    public int getPercentOfDamage(double percentage)
+    {
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)Player_damage * onePercent)));
+    }
+    public int getPercentOfResource(double percentage)
+    {
+        double onePercent = percentage * 0.01;
+        return Convert.ToInt32(Math.Round(((double)Player_max_resource * onePercent)));
+    }
+    public void getMoney(int amount)
+    {
+        //Player_money += amount * 1.20;
+        Player_money += Convert.ToInt32(Math.Round(((double)amount * ((Player_plus_money_rate / 100) + 1))));
+        _notification.message("+" + amount + " credit", 3);
+        updateStats();
+
+    }
+    public void getSpellPoint(int amount)
+    {
+        Player_spell_points += amount;
+        _notification.message("+" + amount + " skill point", 3);
+        updateStats();
+    }
+    public void looseMoney(int amount)
+    {
+        Player_money -= amount;
+        _notification.message("-" + amount + " credit", 3);
+        updateStats();
+    }
+    public void looseHealth(int amount)
+    {
+        Player_health -= amount;
+
+        if ((Player_health - amount) < 0)
+        {
+            Player_health = 0;
+        }
+
+        _notification.message("-" + amount + " health", 3, "red");
+        GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
+    }
+    public void getHealth(int amount)
+    {
+        if ((Player_health + amount) > Player_max_health)
+        {
+            Player_health = Player_max_health;
+        }
+        else { Player_health += amount; }
+        _notification.message("+" + amount + " health", 3, "uncommon");
+        GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealthAddition();
+
+    }
+    public void looseResource(int amount)
+    {
+        Player_resource -= amount;
+
+        if ((Player_resource - amount) < 0)
+        {
+            Player_resource = 0;
+        }
+
+        _notification.message("-" + amount + " energy", 3, "blue");
+        GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();
+    }
+    public void getResource(int amount)
+    {
+        if ((Player_resource + amount) > Player_max_resource)
+        {
+            Player_resource = Player_max_health;
+        }
+        else { Player_resource += amount; }
+
+        _notification.message("+" + amount + " energy", 3, "uncommon");
+        GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
+
+    }
+
     public void getXP(int xp)
     {
-        Local_xp += xp;
+        Player_xp += xp;
         _notification.message("+" + xp + " xp!", 3);
-        while (Local_xp >= Local_needed_xp)
+        while (Player_xp >= Player_needed_xp)
         {
-            Local_xp = Local_xp - Local_needed_xp;
-            Local_level++;
-            Local_needed_xp += 50;
+            Player_xp = Player_xp - Player_needed_xp;
+            Player_level++;
+            Player_needed_xp += 50;
 
-            getSpellPoint(1);
+            getSpellPoint(2);
 
             _questManager.checkAvailableQuests();
 
@@ -244,23 +268,87 @@ public class Character_stats : MonoBehaviour
 
         XP_bar.GetComponent<Bar_script>().updateXP();
     }
-
     public void updateStats()
     {
-        NameAndTitle.GetComponent<Text_animation>().startAnim(Local_name, 0.01f);
-
-        Statistics.GetComponent<Text_animation>().startAnim("Health: " + Local_max_health + "\n" +
-            "Resource: " + Local_max_resource + "\n" +
-            "Damage: " + Local_damage, 5f);
+        NameAndTitle.GetComponent<Text_animation>().startAnim(Player_name, 0.01f);
+        
+        Statistics.GetComponent<Text_animation>().startAnim("Health: " + Player_max_health + "\n" +
+            "Energy: " + Player_max_resource + "\n" +
+            "Damage: " + Player_damage, 5f);
+        
 
         updateMoneyStat();
     }
-
     public void updateMoneyStat()
     {
-        Money.GetComponent<Text_animation>().startAnim(Local_money + " credit", 0.01f);
+        Money.GetComponent<Text_animation>().startAnim(Player_money + " credit", 0.01f);
     }
 
+    public bool isInDefeatedEnemies(int id)
+    {
+        if (defeated_enemies.Any(a => a == id))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool isInCompletedQuests(int id)
+    {
+        foreach (var quest in completed_quests)
+        {
+            if (quest == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool isQuestSlotsFull()
+    {
+        for (int i = 0; i < accepted_quests.Length; i++)
+        {
+            if (accepted_quests[i] == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public bool isInCompletedConversations(int id)
+    {
+
+        if (completed_conversations.Any(a => a == id))
+        {
+            return true;
+        }
+        return false;
+
+    }
+
+    public bool isOnQuest(int id)
+    {
+        for (int i = 0; i < accepted_quests.Length; i++)
+        {
+            if (accepted_quests[i] == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    #endregion
+    #region Inventory
+    public void equipStarterItems()
+    {
+        for (int i = 0; i < starterEquipments.Length; i++)
+        {
+            if (starterEquipments[i] != 0)
+            {
+                equipItem(starterEquipments[i]);
+            }
+        }
+    }
     public bool isInventoryFull()
     {
         for (int i = 0; i < Inventory.Length; i++)
@@ -277,7 +365,7 @@ public class Character_stats : MonoBehaviour
     }
     public void buyItem(int slot_id)
     {
-        if (Local_money >= gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[3])
+        if (Player_money >= gameObject.GetComponent<Item_script>().items[gameObject.GetComponent<Store_manager>().Store[slot_id]].attributes[3])
         {
             if (!isInventoryFull())
             {
@@ -291,12 +379,11 @@ public class Character_stats : MonoBehaviour
             _notification.message("You don't have enough credit to buy this!", 3, "red");
         }
     }
-
     public void unequipItem(int slot_id)
     {
-        Local_max_health -= _itemScript.items[Equipments[slot_id]].attributes[0];
-        Local_max_resource -= _itemScript.items[Equipments[slot_id]].attributes[1];
-        Local_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
+        Player_max_health -= _itemScript.items[Equipments[slot_id]].attributes[0];
+        Player_max_resource -= _itemScript.items[Equipments[slot_id]].attributes[1];
+        Player_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
 
         if (!isInventoryFull())
         {
@@ -306,30 +393,24 @@ public class Character_stats : MonoBehaviour
         }
 
     }
-
     public void replaceItem(int equipment_slot_id, int sender_slot_id, int item_id)
     {
         int tmp = Equipments[equipment_slot_id];
 
-        Local_max_health -= _itemScript.items[Equipments[equipment_slot_id]].attributes[0];
-        Local_max_resource -= _itemScript.items[Equipments[equipment_slot_id]].attributes[1];
-        Local_damage -= _itemScript.items[Equipments[equipment_slot_id]].attributes[2];
+        Player_max_health -= _itemScript.items[Equipments[equipment_slot_id]].attributes[0];
+        Player_max_resource -= _itemScript.items[Equipments[equipment_slot_id]].attributes[1];
+        Player_damage -= _itemScript.items[Equipments[equipment_slot_id]].attributes[2];
 
 
         Equipments[equipment_slot_id] = item_id;
 
-        Local_max_health += _itemScript.items[item_id].attributes[0];
-        Local_max_resource += _itemScript.items[item_id].attributes[1];
-        Local_damage += _itemScript.items[item_id].attributes[2];
+        Player_max_health += _itemScript.items[item_id].attributes[0];
+        Player_max_resource += _itemScript.items[item_id].attributes[1];
+        Player_damage += _itemScript.items[item_id].attributes[2];
 
         Inventory[sender_slot_id] = tmp;
 
         updateStats();
-    }
-
-    public void changePlayerName()
-    {
-        GameObject.Find("Game manager").GetComponent<Game_manager>().Change_screen(GameObject.Find("Game manager").GetComponent<Game_manager>().current_screen, false);
     }
 
     public void equipItem(int item_id)
@@ -364,22 +445,22 @@ public class Character_stats : MonoBehaviour
                 break;
         }
         Equipments[slot_id] = item_id;
-        Local_max_health += _itemScript.items[item_id].attributes[0];
-        Local_max_resource += _itemScript.items[item_id].attributes[1];
-        Local_damage += _itemScript.items[item_id].attributes[2];
+        Player_max_health += _itemScript.items[item_id].attributes[0];
+        Player_max_resource += _itemScript.items[item_id].attributes[1];
+        Player_damage += _itemScript.items[item_id].attributes[2];
 
         gameObject.GetComponent<Spell_script>().actualizeSpells();
     }
     public void equipItem(int slot_id, int item_id, int sender_slot_id)
     {
-        if (_itemScript.items[item_id].level <= Local_level)
+        if (_itemScript.items[item_id].level <= Player_level)
         {
             if (Equipments[slot_id] == 0)
             {
                 Equipments[slot_id] = item_id;
-                Local_max_health += _itemScript.items[item_id].attributes[0];
-                Local_max_resource += _itemScript.items[item_id].attributes[1];
-                Local_damage += _itemScript.items[item_id].attributes[2];
+                Player_max_health += _itemScript.items[item_id].attributes[0];
+                Player_max_resource += _itemScript.items[item_id].attributes[1];
+                Player_damage += _itemScript.items[item_id].attributes[2];
 
                 Inventory[sender_slot_id] = 0;
 
@@ -417,9 +498,9 @@ public class Character_stats : MonoBehaviour
 
             var item = _itemScript.items[_itemScript.GetComponent<Character_stats>().Equipments[slot_id]];
 
-            Local_max_health -= _itemScript.items[Equipments[slot_id]].attributes[0];
-            Local_max_resource -= _itemScript.items[Equipments[slot_id]].attributes[1];
-            Local_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
+            Player_max_health -= _itemScript.items[Equipments[slot_id]].attributes[0];
+            Player_max_resource -= _itemScript.items[Equipments[slot_id]].attributes[1];
+            Player_damage -= _itemScript.items[Equipments[slot_id]].attributes[2];
 
             _itemScript.GetComponent<Character_stats>().getMoney(item.attributes[3]);
 
@@ -430,7 +511,6 @@ public class Character_stats : MonoBehaviour
             updateStats();
         }
     }
-
     public void sortInventory()
     {
         for (int i = 0; i < Inventory.Length - 1; i++)
@@ -512,44 +592,48 @@ public class Character_stats : MonoBehaviour
         int item_id = UnityEngine.Random.Range(1, _itemScript.declared_items.Count);
         itemPickup(item_id, true);
     }
-
     public void itemPickup(int item_id, bool isNew)
     {
-        if (isNew && !isInventoryFull())
+        if (!isInventoryFull())
         {
-            for (int i = 0; i < Inventory.Length; i++)
+            if (isNew)
             {
-                if (Inventory[i] == 0)
+                for (int i = 0; i < Inventory.Length; i++)
                 {
-                    var dec_items = _itemScript.declared_items[item_id];
+                    if (Inventory[i] == 0)
+                    {
+                        var dec_items = _itemScript.declared_items[item_id];
 
-                    var tmp_item = new Item(_itemScript.items.Count, dec_items.name, dec_items.type, dec_items.rarity, dec_items.min_rarity,
-                    dec_items.max_rarity, dec_items.level, dec_items.description, dec_items.icon, dec_items.sprite_male, dec_items.sprite_female,
-                    dec_items.attributes[0], dec_items.attributes[1], dec_items.attributes[2], dec_items.attributes[3]);
-                    tmp_item.randomizeStats(10, 10, 10);
-                    //tmp_item.randomizeStats(10, 10, 10, 0, 5);
+                        var tmp_item = new Item(_itemScript.items.Count, dec_items.name,
+                        dec_items.type, dec_items.rarity, dec_items.min_rarity,
+                        dec_items.max_rarity, dec_items.level, dec_items.description,
+                        dec_items.icon, dec_items.sprite_male, dec_items.sprite_female,
+                        dec_items.attributes[0], dec_items.attributes[1], dec_items.attributes[2],
+                        dec_items.attributes[3]);
+                        tmp_item.randomizeStats();
 
 
-                    _itemScript.items.Add(tmp_item);
-                    Inventory[i] = tmp_item.id;
-                    _notification.message(_itemScript.items[item_id].name + " picked up.", 3, tmp_item.rarity.ToString());
 
-                    break;
+                        _itemScript.items.Add(tmp_item);
+                        Inventory[i] = tmp_item.id;
+                        _notification.message(_itemScript.items[item_id].name + " picked up.", 3, tmp_item.rarity.ToString());
+
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Inventory.Length; i++)
+                {
+                    if (Inventory[i] == 0)
+                    {
+                        Inventory[i] = _itemScript.items[item_id].id;
+                        break;
+                    }
                 }
             }
         }
-        else
-        {
-            for (int i = 0; i < Inventory.Length; i++)
-            {
-                if (Inventory[i] == 0)
-                {
-                    Inventory[i] = _itemScript.items[item_id].id;
-                    break;
-                }
-            }
-        }
-
     }
     public void itemPickup(int item_id, bool isNew, bool isQuest)
     {
@@ -577,117 +661,6 @@ public class Character_stats : MonoBehaviour
             }
         }
     }
-    public int getPercentOfXP()
-    {
-        return Convert.ToInt32(Math.Round(((double)Local_xp / (double)Local_needed_xp) * 100));
-    }
-    public int getPercentOfHealth()
-    {
-        return Convert.ToInt32(Math.Round(((double)Local_health / (double)Local_max_health) * 100));
-    }
 
-
-    public int getPercentOfHealth(double percentage)
-    {
-        double onePercent = percentage * 0.01;
-        return Convert.ToInt32(Math.Round(((double)Local_max_health * onePercent)));
-    }
-
-    public int getPercentOfMoney(double percentage)
-    {
-        double onePercent = percentage * 0.01;
-        return Convert.ToInt32(Math.Round(((double)Local_money * onePercent)));
-    }
-
-    public int getPercentOfDamage(double percentage)
-    {
-        double onePercent = percentage * 0.01;
-        return Convert.ToInt32(Math.Round(((double)Local_damage * onePercent)));
-    }
-
-
-    public int getPercentOfResource(double percentage)
-    {
-        double onePercent = percentage * 0.01;
-        return Convert.ToInt32(Math.Round(((double)Local_max_resource * onePercent)));
-    }
-
-    public void getMoney(int amount)
-    {
-        //Local_money += amount * 1.20;
-        Local_money += Convert.ToInt32(Math.Round(((double)amount * ((Local_plus_money_rate / 100) + 1))));
-        _notification.message("+" + amount + " credit", 3);
-        updateStats();
-
-    }
-
-
-    public void getSpellPoint(int amount)
-    {
-        Local_spell_points += amount;
-        _notification.message("+" + amount + " skill point", 3);
-        updateStats();
-    }
-
-    public void looseMoney(int amount)
-    {
-        Local_money -= amount;
-        _notification.message("-" + amount + " credit", 3);
-        updateStats();
-    }
-
-    public void looseHealth(int amount)
-    {
-        Local_health -= amount;
-
-        if ((Local_health - amount) < 0)
-        {
-            Local_health = 0;
-        }
-
-        _notification.message("-" + amount + " health", 3, "red");
-        GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealth();
-    }
-
-    public void getHealth(int amount)
-    {
-        if ((Local_health + amount) > Local_max_health)
-        {
-            Local_health = Local_max_health;
-        }
-        else { Local_health += amount; }
-        _notification.message("+" + amount + " health", 3, "uncommon");
-        GameObject.Find("Health_bar").GetComponent<Bar_script>().updateHealthAddition();
-
-    }
-
-    public void looseResource(int amount)
-    {
-        Local_resource -= amount;
-
-        if ((Local_resource - amount) < 0)
-        {
-            Local_resource = 0;
-        }
-
-        _notification.message("-" + amount + " resource", 3, "blue");
-        GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResource();
-    }
-
-    public void getResource(int amount)
-    {
-        if ((Local_resource + amount) > Local_max_resource)
-        {
-            Local_resource = Local_max_health;
-        }
-        else { Local_resource += amount; }
-
-        _notification.message("+" + amount + " resource", 3, "uncommon");
-        GameObject.Find("Resource_bar").GetComponent<Bar_script>().updateResourceAddition();
-
-    }
-
+    #endregion
 }
-
-
-
